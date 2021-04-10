@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:news/src/constants/ColorConstants.dart';
 import 'package:news/src/extensions/Color.dart';
-import 'package:news/src/ui/TestScreen.dart';
 
 class NavigationScreen extends StatefulWidget {
   _NavigationScreenState createState() => _NavigationScreenState();
