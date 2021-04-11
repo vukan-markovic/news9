@@ -17,7 +17,9 @@ class AuthenticationRepository {
     });
   }
 
-  bool isEmailVerified() => _firebaseAuth.currentUser.emailVerified;
+  bool isEmailVerified() => _firebaseAuth.currentUser != null
+      ? _firebaseAuth.currentUser.emailVerified
+      : false;
 
   Future<void> logInWithEmailAndPassword({
     @required String email,
