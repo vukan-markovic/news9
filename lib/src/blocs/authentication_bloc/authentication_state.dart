@@ -4,8 +4,6 @@ enum AuthenticationStatus {
   authenticated,
   unauthenticated,
   unknown,
-  verified,
-  unverified,
 }
 
 class AuthenticationState extends Equatable {
@@ -21,12 +19,6 @@ class AuthenticationState extends Equatable {
 
   const AuthenticationState.unauthenticated()
       : this._(status: AuthenticationStatus.unauthenticated);
-
-  const AuthenticationState.verified()
-      : this._(status: AuthenticationStatus.verified);
-
-  const AuthenticationState.unverified()
-      : this._(status: AuthenticationStatus.unverified);
 
   final AuthenticationStatus status;
   final AppUser user;

@@ -17,6 +17,8 @@ class AuthenticationRepository {
     });
   }
 
+  bool isEmailVerified() => _firebaseAuth.currentUser.emailVerified;
+
   Future<void> logInWithEmailAndPassword({
     @required String email,
     @required String password,
@@ -34,6 +36,6 @@ class AuthenticationRepository {
 
 extension on firebase_auth.User {
   AppUser get toUser {
-    return AppUser(id: uid, email: email);
+    return AppUser(id: uid, email: email, emailVerified: emailVerified);
   }
 }

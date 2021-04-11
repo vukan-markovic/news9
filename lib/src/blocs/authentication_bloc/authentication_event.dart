@@ -15,12 +15,3 @@ class AuthenticationUserChanged extends AuthenticationEvent {
   @override
   List<Object> get props => [user];
 }
-
-class AuthenticationIsEmailVerified extends AuthenticationEvent {
-  const AuthenticationIsEmailVerified(this.isEmailVerified);
-
-  final bool isEmailVerified;
-
-  @override
-  List<Object> get props => [isEmailVerified];
-}

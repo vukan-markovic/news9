@@ -28,8 +28,6 @@ class AuthenticationBloc
   ) async* {
     if (event is AuthenticationUserChanged) {
       yield _mapAuthenticationUserChangedToState(event);
-    } else if (event is AuthenticationIsEmailVerified) {
-      yield _mapAuthenticationIsEmailVerifiedToState(event);
     }
   }
 
@@ -42,16 +40,9 @@ class AuthenticationBloc
   AuthenticationState _mapAuthenticationUserChangedToState(
     AuthenticationUserChanged event,
   ) {
-    return event.user != AppUser.empty
-        ? AuthenticationState.authenticated(event.user)
-        : const AuthenticationState.unauthenticated();
-  }
-
-  AuthenticationState _mapAuthenticationIsEmailVerifiedToState(
-    AuthenticationIsEmailVerified event,
-  ) {
-    return event.isEmailVerified
-        ? const AuthenticationState.verified()
-        : const AuthenticationState.unverified();
+    if (event.user != AppUser.empty && event.user.emailVerified)
+      return AuthenticationState.authenticated(event.user);
+    else
+      return AuthenticationState.unauthenticated();
   }
 }

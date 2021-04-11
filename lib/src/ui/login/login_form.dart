@@ -10,7 +10,19 @@ class LoginForm extends StatelessWidget {
     return BlocListener<LoginCubit, LoginState>(
       listener: (context, state) {
         if (state.status.isSubmissionFailure) {
-          _showDialog(context);
+          _showDialog(
+            context: context,
+            title: 'Incorrect password/email!',
+            body:
+                'The email and/or password you entered are incorrect. Please try again.',
+          );
+        } else if (state.status.isSubmissionSuccess && !state.emailVerified) {
+          _showDialog(
+            context: context,
+            title: 'Email not verified',
+            body:
+                'Your email is not verified. Please verify your email address.',
+          );
         }
       },
       child: Center(
@@ -126,7 +138,12 @@ class _LoginButton extends StatelessWidget {
                     style: TextStyle(fontSize: 24),
                   ),
                   onPressed: state.status.isValidated
-                      ? () => context.read<LoginCubit>().logInWithCredentials()
+                      ? () async {
+                          await context
+                              .read<LoginCubit>()
+                              .logInWithCredentials();
+                          context.read<LoginCubit>().isEmailVerified();
+                        }
                       : null,
                 ),
               );
@@ -135,18 +152,17 @@ class _LoginButton extends StatelessWidget {
   }
 }
 
-Future<void> _showDialog(context) async {
+Future<void> _showDialog({context, title, body}) async {
   return showDialog<void>(
     context: context,
     barrierDismissible: true,
     builder: (BuildContext context) {
       return AlertDialog(
-        title: Text('Incorrect password/email!'),
+        title: Text(title),
         content: SingleChildScrollView(
           child: ListBody(
             children: <Widget>[
-              Text(
-                  'The email and/or password you entered are incorrect. Please try again'),
+              Text(body),
             ],
           ),
         ),

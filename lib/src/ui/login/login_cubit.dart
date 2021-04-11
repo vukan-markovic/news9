@@ -41,4 +41,9 @@ class LoginCubit extends Cubit<LoginState> {
       emit(state.copyWith(status: FormzStatus.submissionFailure));
     }
   }
+
+  void isEmailVerified() {
+    emit(state.copyWith(
+        emailVerified: _authenticationRepository.isEmailVerified()));
+  }
 }

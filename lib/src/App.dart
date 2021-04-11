@@ -4,7 +4,8 @@ import 'package:news/src/resources/user_repository.dart';
 import 'package:news/src/ui/home_page.dart';
 import 'package:news/src/ui/login/login_page.dart';
 import 'package:news/src/ui/splash_page.dart';
-import 'blocs/authentication_bloc/bloc/authentication_bloc.dart';
+
+import 'blocs/authentication_bloc/authentication_bloc.dart';
 
 class App extends StatelessWidget {
   final AuthenticationRepository authenticationRepository =

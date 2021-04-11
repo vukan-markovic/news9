@@ -8,7 +8,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:news/main.dart';
 import 'package:news/src/App.dart';
 
 void main() {
