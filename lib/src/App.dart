@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:news/src/ui/NavigationScreen.dart';
 
 class App extends StatefulWidget {
   @override
@@ -8,13 +9,8 @@ class App extends StatefulWidget {
 class _AppState extends State<App> {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        theme: ThemeData.dark(),
-        home: Scaffold(
-          appBar: AppBar(
-            title: Text("News9"),
-          ),
-          body: Center(child: Text("Levi9 News Network")),
-        ));
+    return MaterialApp(routes: {
+      '/NavigationScreen': (context) => NavigationScreen(),
+    }, theme: ThemeData.light(), home: NavigationScreen());
   }
 }
