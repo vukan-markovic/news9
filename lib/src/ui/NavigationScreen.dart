@@ -5,6 +5,10 @@ import 'package:news/src/extensions/Color.dart';
 
 class NavigationScreen extends StatefulWidget {
   _NavigationScreenState createState() => _NavigationScreenState();
+
+  static Route route() {
+    return MaterialPageRoute<void>(builder: (_) => NavigationScreen());
+  }
 }
 
 class _NavigationScreenState extends State<NavigationScreen> {
