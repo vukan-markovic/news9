@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news/src/resources/user_repository.dart';
-import 'package:news/src/ui/home_page.dart';
+import 'package:news/src/ui/NavigationScreen.dart';
 import 'package:news/src/ui/login/login_page.dart';
 import 'package:news/src/ui/splash_page.dart';
 
@@ -46,7 +46,7 @@ class _AppViewState extends State<AppView> {
             switch (state.status) {
               case AuthenticationStatus.authenticated:
                 _navigator.pushAndRemoveUntil<void>(
-                  HomePage.route(),
+                  NavigationScreen.route(),
                   (route) => false,
                 );
                 break;
