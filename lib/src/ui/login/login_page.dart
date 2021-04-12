@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:news/src/blocs/login_bloc/login_cubit.dart';
 import 'package:news/src/resources/user_repository.dart';
-import 'login_cubit.dart';
 import 'login_form.dart';
 
 class LoginPage extends StatelessWidget {
