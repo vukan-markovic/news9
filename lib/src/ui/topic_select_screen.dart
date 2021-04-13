@@ -66,44 +66,7 @@ class _TopicSelectScreenState extends State<TopicSelectScreen> {
                       fontWeight: FontWeight.w600,
                       color: HexColor.fromHex(ColorConstants.silverGray))),
             ),
-            Container(
-              alignment: Alignment.center,
-              child: GridView.builder(
-                  scrollDirection: Axis.vertical,
-                  shrinkWrap: true,
-                  gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                      maxCrossAxisExtent: 200,
-                      childAspectRatio: 5 / 2.5,
-                      crossAxisSpacing: 12,
-                      mainAxisSpacing: 12),
-                  itemCount: _categories.length,
-                  itemBuilder: (context, index) {
-                    return GestureDetector(
-                      onTap: () {
-                        setTileState(index);
-                      },
-                      child: Card(
-                        color: _selectedCategories.contains(_categories[index])
-                            ? HexColor.fromHex(ColorConstants.primaryColor)
-                            : Colors.white,
-                        child: Center(
-                          child: Text(
-                            _categories[index],
-                            style: TextStyle(
-                                fontWeight: FontWeight.w600,
-                                fontSize: 16,
-                                color: _selectedCategories
-                                        .contains(_categories[index])
-                                    ? HexColor.fromHex(
-                                        ColorConstants.secondaryWhite)
-                                    : HexColor.fromHex(
-                                        ColorConstants.lightBlack)),
-                          ),
-                        ),
-                      ),
-                    );
-                  }),
-            ),
+            Container(alignment: Alignment.center, child: _gridView()),
             Expanded(
               child: Container(
                 alignment: Alignment.bottomCenter,
@@ -112,8 +75,11 @@ class _TopicSelectScreenState extends State<TopicSelectScreen> {
                       width: double.infinity, height: 60),
                   child: ElevatedButton(
                     style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all( _selectedCategories.length >= 2
-                            ? HexColor.fromHex(ColorConstants.primaryColor) : HexColor.fromHex(ColorConstants.primaryColorDisabled))),
+                        backgroundColor: MaterialStateProperty.all(
+                            _selectedCategories.length >= 2
+                                ? HexColor.fromHex(ColorConstants.primaryColor)
+                                : HexColor.fromHex(
+                                    ColorConstants.primaryColorDisabled))),
                     onPressed: _selectedCategories.length >= 2
                         ? () {
                             categoryBloc.deleteCategoriesByUid(
@@ -136,6 +102,41 @@ class _TopicSelectScreenState extends State<TopicSelectScreen> {
         ),
       ),
     );
+  }
+
+  _gridView() {
+    return GridView.builder(
+        scrollDirection: Axis.vertical,
+        shrinkWrap: true,
+        gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+            maxCrossAxisExtent: 200,
+            childAspectRatio: 5 / 2.5,
+            crossAxisSpacing: 12,
+            mainAxisSpacing: 12),
+        itemCount: _categories.length,
+        itemBuilder: (context, index) {
+          return GestureDetector(
+            onTap: () {
+              setTileState(index);
+            },
+            child: Card(
+              color: _selectedCategories.contains(_categories[index])
+                  ? HexColor.fromHex(ColorConstants.primaryColor)
+                  : Colors.white,
+              child: Center(
+                child: Text(
+                  _categories[index],
+                  style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 16,
+                      color: _selectedCategories.contains(_categories[index])
+                          ? HexColor.fromHex(ColorConstants.secondaryWhite)
+                          : HexColor.fromHex(ColorConstants.lightBlack)),
+                ),
+              ),
+            ),
+          );
+        });
   }
 
   void setTileState(int index) {
