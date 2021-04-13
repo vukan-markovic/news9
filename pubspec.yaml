@@ -34,6 +34,7 @@ dependencies:
   http_parser: ^4.0.0
   http: ^0.13.1
   intl: ^0.17.0
+  jiffy: ^4.1.0
   firebase_core: ^1.0.3
   firebase_auth_web: ^1.0.5
   firebase_auth: ^1.0.3

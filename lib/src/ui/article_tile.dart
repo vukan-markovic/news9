@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+import 'package:jiffy/jiffy.dart';
 
 class ArticleTile extends StatelessWidget {
   final String author,
@@ -21,12 +21,7 @@ class ArticleTile extends StatelessWidget {
   });
 
   formatDate(String date) {
-    // find a way to implement date from now e.g. 5 minutes ago, 3 days ago
-    final DateTime _dateToFormat = DateTime.parse(date);
-    final String _formattedDate =
-        DateFormat('dd. MMMM yyyy.').format(_dateToFormat);
-
-    return _formattedDate;
+    return Jiffy(date).fromNow();
   }
 
   @override
@@ -53,7 +48,12 @@ class ArticleTile extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text('Category placeholder'),
-                    Text(formatDate(publishedAt)),
+                    Text(
+                      formatDate(publishedAt),
+                      style: TextStyle(
+                        color: Colors.grey,
+                      ),
+                    ),
                   ],
                 ),
                 SizedBox(
@@ -72,7 +72,6 @@ class ArticleTile extends StatelessWidget {
                 ),
                 Text(
                   title,
-                  maxLines: 2,
                   style: TextStyle(
                       color: Colors.black87,
                       fontSize: 20,

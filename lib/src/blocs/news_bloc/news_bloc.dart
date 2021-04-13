@@ -18,4 +18,4 @@ class NewsBloc {
   }
 }
 
-final bloc = NewsBloc();
+final newsBloc = NewsBloc();

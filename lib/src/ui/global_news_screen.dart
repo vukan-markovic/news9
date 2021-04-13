@@ -12,20 +12,21 @@ class GlobalNews extends StatefulWidget {
 class _GlobalNewsState extends State<GlobalNews> {
   @override
   void initState() {
+    newsBloc.fetchAllNews();
     super.initState();
-    bloc.fetchAllNews();
   }
 
   @override
   void dispose() {
-    bloc.dispose();
+    // uncomment when saving articles offline is implemented? not disposing a bloc could lead to memory leak
+    // newsBloc.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-      stream: bloc.allNews,
+      stream: newsBloc.allNews,
       builder: (context, AsyncSnapshot<ArticleModel> snapshot) {
         if (snapshot.hasData) {
           return buildList(snapshot);
