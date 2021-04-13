@@ -26,7 +26,8 @@ class CategoryRepository {
 
   deleteCategoriesByUid(uid) async {
     var connection = await database;
-    return await connection.rawDelete("DELETE FROM selected_category WHERE uid =?", [uid]);
+    return await connection
+        .rawDelete("DELETE FROM selected_category WHERE uid =?", [uid]);
   }
 
   getAllCategories(table) async {

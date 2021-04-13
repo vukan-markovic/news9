@@ -112,8 +112,8 @@ class _TopicSelectScreenState extends State<TopicSelectScreen> {
                       width: double.infinity, height: 60),
                   child: ElevatedButton(
                     style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all(
-                            HexColor.fromHex(ColorConstants.primaryColor))),
+                        backgroundColor: MaterialStateProperty.all( _selectedCategories.length >= 2
+                            ? HexColor.fromHex(ColorConstants.primaryColor) : HexColor.fromHex(ColorConstants.primaryColorDisabled))),
                     onPressed: _selectedCategories.length >= 2
                         ? () {
                             categoryBloc.deleteCategoriesByUid(
