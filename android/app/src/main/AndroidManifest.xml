@@ -1,8 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.levi9.news9">
    <application
-        android:label="news"
-        android:icon="@mipmap/ic_launcher">
+        android:label="News9"
+        android:icon="@mipmap/launcher_icon">
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"
