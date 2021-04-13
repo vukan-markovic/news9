@@ -1,13 +1,11 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:news/src/blocs/category_bloc/category_bloc.dart';
 import 'package:news/src/constants/Strings.dart';
+import 'package:news/src/models/category.dart';
 
 import '../constants/ColorConstants.dart';
-import '../constants/ColorConstants.dart';
-import '../constants/ColorConstants.dart';
-import '../extensions/Color.dart';
-import '../extensions/Color.dart';
-import '../extensions/Color.dart';
 import '../extensions/Color.dart';
 
 class TopicSelectScreen extends StatefulWidget {
@@ -29,13 +27,18 @@ class _TopicSelectScreenState extends State<TopicSelectScreen> {
     "Technology"
   ];
 
+  List<String> _selectedCategories = [];
 
   @override
   void initState() {
-    _selectedCategories = List.filled(7, false);
+    super.initState();
+    getFromFuture();
+    _selectedCategories = _selectedCategories ?? [];
   }
 
-  List<bool> _selectedCategories = [];
+  getFromFuture() async {
+    _selectedCategories = await categoryBloc.getAllCategories();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -77,35 +80,70 @@ class _TopicSelectScreenState extends State<TopicSelectScreen> {
                   itemBuilder: (context, index) {
                     return GestureDetector(
                       onTap: () {
-                        setState(() {
-                          _selectedCategories[index] = _selectedCategories[index] == true ? false : true;
-                        });
+                        setTileState(index);
                       },
                       child: Card(
-                        color: _selectedCategories[index] == true
-                            ? Colors.blue
+                        color: _selectedCategories.contains(_categories[index])
+                            ? HexColor.fromHex(ColorConstants.primaryColor)
                             : Colors.white,
                         child: Center(
                           child: Text(
                             _categories[index],
                             style: TextStyle(
-                                fontWeight: FontWeight.w600, fontSize: 16),
+                                fontWeight: FontWeight.w600,
+                                fontSize: 16,
+                                color: _selectedCategories
+                                        .contains(_categories[index])
+                                    ? HexColor.fromHex(
+                                        ColorConstants.secondaryWhite)
+                                    : HexColor.fromHex(
+                                        ColorConstants.lightBlack)),
                           ),
                         ),
                       ),
                     );
                   }),
             ),
-            Container(
-              alignment: Alignment.bottomCenter,
-              child: ElevatedButton(
-                onPressed: () {},
-                child: Text(Strings.finish),
+            Expanded(
+              child: Container(
+                alignment: Alignment.bottomCenter,
+                child: ConstrainedBox(
+                  constraints: BoxConstraints.tightFor(
+                      width: double.infinity, height: 60),
+                  child: ElevatedButton(
+                    style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all(
+                            HexColor.fromHex(ColorConstants.primaryColor))),
+                    onPressed: _selectedCategories.length >= 2
+                        ? () {
+                            categoryBloc.deleteCategoriesByUid(
+                                FirebaseAuth.instance.currentUser?.uid ??
+                                    "wOJ3BsX5EnNgFAZYvPeGdK3TCVf2");
+                            categoryBloc.insetCategoryList(_selectedCategories);
+                          }
+                        : null,
+                    child: Text(
+                      Strings.finish,
+                      style: TextStyle(
+                          color:
+                              HexColor.fromHex(ColorConstants.secondaryWhite)),
+                    ),
+                  ),
+                ),
               ),
             )
           ],
         ),
       ),
     );
+  }
+
+  void setTileState(int index) {
+    setState(() {
+      _selectedCategories.contains(_categories[index])
+          ? _selectedCategories.remove(_categories[index])
+          : _selectedCategories.add(_categories[index]);
+      print(_selectedCategories);
+    });
   }
 }
