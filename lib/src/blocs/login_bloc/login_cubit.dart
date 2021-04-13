@@ -1,8 +1,8 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:formz/formz.dart';
-import 'package:news/src/models/email.dart';
-import 'package:news/src/models/password.dart';
+import 'package:news/src/models/forms/email.dart';
+import 'package:news/src/models/forms/password.dart';
 import 'package:news/src/resources/user_repository.dart';
 
 part 'login_state.dart';
