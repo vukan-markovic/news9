@@ -216,7 +216,7 @@ class _PasswordInput extends StatelessWidget {
   }
 }
 
-enum Gender { male, women }
+enum Gender { male, female }
 
 Gender _gender = Gender.male;
 
@@ -250,9 +250,9 @@ class __GenderInputState extends State<_GenderInput> {
                 ),
               ),
               ListTile(
-                title: Text('Women'),
+                title: Text('Female'),
                 leading: Radio<Gender>(
-                  value: Gender.women,
+                  value: Gender.female,
                   groupValue: _gender,
                   onChanged: (Gender value) {
                     setState(() {
@@ -289,7 +289,7 @@ class _SignUpButton extends StatelessWidget {
                 onPressed: state.status.isValidated
                     ? () {
                         String gender =
-                            _gender == Gender.male ? 'Male' : 'Women';
+                            _gender == Gender.male ? 'Male' : 'Female';
                         context.read<SignUpCubit>().signUpFormSubmitted(gender);
                       }
                     : null,
