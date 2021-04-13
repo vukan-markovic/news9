@@ -12,10 +12,6 @@ class ArticleModel {
     for (int i = 0; i < _listLength; i++) {
       _Article article = _Article(parsedJson['articles'][i]);
 
-      if (article.urlToImage == null) {
-        continue;
-      }
-
       temp.add(article);
     }
     _articles = temp;

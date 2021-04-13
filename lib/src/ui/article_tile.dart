@@ -60,13 +60,15 @@ class ArticleTile extends StatelessWidget {
                   height: 10,
                 ),
                 ClipRRect(
-                    borderRadius: BorderRadius.circular(6),
-                    child: Image.network(
-                      imgUrl,
-                      height: 200,
-                      width: MediaQuery.of(context).size.width,
-                      fit: BoxFit.cover,
-                    )),
+                  borderRadius: BorderRadius.circular(6),
+                  child: FadeInImage.assetNetwork(
+                    placeholder: 'lib/src/images/placeholder.png',
+                    image: imgUrl,
+                    height: 200,
+                    width: MediaQuery.of(context).size.width,
+                    fit: BoxFit.cover,
+                  ),
+                ),
                 SizedBox(
                   height: 10,
                 ),
