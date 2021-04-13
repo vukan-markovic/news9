@@ -4,6 +4,7 @@ import 'package:news/src/resources/user_repository.dart';
 import 'package:news/src/ui/NavigationScreen.dart';
 import 'package:news/src/ui/login/login_page.dart';
 import 'package:news/src/ui/splash_page.dart';
+import 'package:news/src/ui/topic_select_screen.dart';
 
 import 'blocs/authentication_bloc/authentication_bloc.dart';
 
@@ -52,7 +53,7 @@ class _AppViewState extends State<AppView> {
                 break;
               case AuthenticationStatus.unauthenticated:
                 _navigator.pushAndRemoveUntil<void>(
-                  LoginPage.route(),
+                  TopicSelectScreen.route(),
                   (route) => false,
                 );
                 break;

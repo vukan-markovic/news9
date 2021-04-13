@@ -8,6 +8,7 @@ import '../constants/ColorConstants.dart';
 import '../extensions/Color.dart';
 import '../extensions/Color.dart';
 import '../extensions/Color.dart';
+import '../extensions/Color.dart';
 
 class TopicSelectScreen extends StatefulWidget {
   static Route route() {
@@ -28,7 +29,13 @@ class _TopicSelectScreenState extends State<TopicSelectScreen> {
     "Technology"
   ];
 
-  List<Strings> _selectedCategories = [];
+
+  @override
+  void initState() {
+    _selectedCategories = List.filled(7, false);
+  }
+
+  List<bool> _selectedCategories = [];
 
   @override
   Widget build(BuildContext context) {
@@ -68,16 +75,25 @@ class _TopicSelectScreenState extends State<TopicSelectScreen> {
                       mainAxisSpacing: 12),
                   itemCount: _categories.length,
                   itemBuilder: (context, index) {
-                    return Card(
-                        child: InkWell(
-                      child: Center(
-                        child: Text(
-                          _categories[index],
-                          style: TextStyle(
-                              fontWeight: FontWeight.w600, fontSize: 16),
+                    return GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          _selectedCategories[index] = _selectedCategories[index] == true ? false : true;
+                        });
+                      },
+                      child: Card(
+                        color: _selectedCategories[index] == true
+                            ? Colors.blue
+                            : Colors.white,
+                        child: Center(
+                          child: Text(
+                            _categories[index],
+                            style: TextStyle(
+                                fontWeight: FontWeight.w600, fontSize: 16),
+                          ),
                         ),
                       ),
-                    ));
+                    );
                   }),
             ),
             Container(
