@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:news/src/constants/ColorConstants.dart';
 import 'package:news/src/extensions/Color.dart';
+import 'global_news_screen.dart';
 
 class NavigationScreen extends StatefulWidget {
   _NavigationScreenState createState() => _NavigationScreenState();
@@ -16,7 +17,7 @@ class _NavigationScreenState extends State<NavigationScreen> {
 
   //Todo Replace the Containers with the screens when created
   final List<Widget> _pageOptions = [
-    Container(child: Text("Global news")),
+    Container(child: GlobalNews()),
     Container(child: Text("Recommended news")),
     Container(child: Text("Favorite news")),
     Container(child: Text("Profile")),

@@ -1,8 +1,10 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:formz/formz.dart';
+import 'package:news/src/blocs/login_bloc/login_cubit.dart';
+import 'package:news/src/ui/sign_up/sign_up_page.dart';
 
-import 'login_cubit.dart';
+import '../dialog.dart';
 
 class LoginForm extends StatelessWidget {
   @override
@@ -10,14 +12,14 @@ class LoginForm extends StatelessWidget {
     return BlocListener<LoginCubit, LoginState>(
       listener: (context, state) {
         if (state.status.isSubmissionFailure) {
-          _showDialog(
+          AppDialog.showAppDialog(
             context: context,
             title: 'Incorrect password/email!',
             body:
                 'The email and/or password you entered are incorrect. Please try again.',
           );
         } else if (state.status.isSubmissionSuccess && !state.emailVerified) {
-          _showDialog(
+          AppDialog.showAppDialog(
             context: context,
             title: 'Email not verified',
             body:
@@ -56,7 +58,8 @@ class LoginForm extends StatelessWidget {
                 ),
                 SizedBox(height: 24.0),
                 TextButton(
-                  onPressed: () {},
+                  onPressed: () =>
+                      Navigator.of(context).pushReplacement(SignUpPage.route()),
                   child: Text('Sign up'),
                 ),
               ],
@@ -150,31 +153,4 @@ class _LoginButton extends StatelessWidget {
       },
     );
   }
-}
-
-Future<void> _showDialog({context, title, body}) async {
-  return showDialog<void>(
-    context: context,
-    barrierDismissible: true,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        title: Text(title),
-        content: SingleChildScrollView(
-          child: ListBody(
-            children: <Widget>[
-              Text(body),
-            ],
-          ),
-        ),
-        actions: <Widget>[
-          TextButton(
-            child: Text('OK'),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-          ),
-        ],
-      );
-    },
-  );
 }

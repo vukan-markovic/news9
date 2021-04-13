@@ -1,9 +1,12 @@
 import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:meta/meta.dart';
 import 'package:news/src/models/user.dart';
 
 class LogInWithEmailAndPasswordFailure implements Exception {}
+
+class SignUpFailure implements Exception {}
 
 class AuthenticationRepository {
   AuthenticationRepository({firebase_auth.FirebaseAuth firebaseAuth})
@@ -13,7 +16,7 @@ class AuthenticationRepository {
 
   Stream<AppUser> get user {
     return _firebaseAuth.authStateChanges().map((firebaseUser) {
-      return firebaseUser == null ? AppUser.empty : firebaseUser.toUser;
+      return firebaseUser == null ? AppUser.empty : toUser(firebaseUser);
     });
   }
 
@@ -34,10 +37,34 @@ class AuthenticationRepository {
       throw LogInWithEmailAndPasswordFailure();
     }
   }
-}
 
-extension on firebase_auth.User {
-  AppUser get toUser {
-    return AppUser(id: uid, email: email, emailVerified: emailVerified);
+  Future<void> signUp({
+    @required String email,
+    @required String password,
+    @required String firstName,
+    @required String lastName,
+    @required String dateOfBirth,
+    @required String gender,
+  }) async {
+    try {
+      await _firebaseAuth.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+    } on Exception {
+      throw SignUpFailure();
+    }
+  }
+
+  AppUser toUser(User firebaseUser) {
+    return AppUser(
+      id: firebaseUser.uid,
+      email: firebaseUser.email,
+      emailVerified: firebaseUser.emailVerified,
+      firstName: '',
+      lastName: '',
+      dateOfBirth: '',
+      gender: '',
+    );
   }
 }
