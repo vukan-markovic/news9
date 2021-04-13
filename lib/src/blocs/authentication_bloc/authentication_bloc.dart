@@ -40,7 +40,8 @@ class AuthenticationBloc
   AuthenticationState _mapAuthenticationUserChangedToState(
     AuthenticationUserChanged event,
   ) {
-    if (event.user != AppUser.empty && event.user.emailVerified)
+    if (event.user != AppUser.empty &&
+        _authenticationRepository.checkEmailVerification())
       return AuthenticationState.authenticated(event.user);
     else
       return AuthenticationState.unauthenticated();
