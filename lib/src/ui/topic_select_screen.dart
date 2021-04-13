@@ -17,15 +17,7 @@ class TopicSelectScreen extends StatefulWidget {
 }
 
 class _TopicSelectScreenState extends State<TopicSelectScreen> {
-  final List<String> _categories = [
-    "Business",
-    "Entertainment",
-    "General",
-    "Health",
-    "Science",
-    "Sports",
-    "Technology"
-  ];
+
 
   List<String> _selectedCategories = [];
 
@@ -113,23 +105,23 @@ class _TopicSelectScreenState extends State<TopicSelectScreen> {
             childAspectRatio: 5 / 2.5,
             crossAxisSpacing: 12,
             mainAxisSpacing: 12),
-        itemCount: _categories.length,
+        itemCount: Strings.categories.length,
         itemBuilder: (context, index) {
           return GestureDetector(
             onTap: () {
               setTileState(index);
             },
             child: Card(
-              color: _selectedCategories.contains(_categories[index])
+              color: _selectedCategories.contains(Strings.categories[index])
                   ? HexColor.fromHex(ColorConstants.primaryColor)
                   : Colors.white,
               child: Center(
                 child: Text(
-                  _categories[index],
+                  Strings.categories[index],
                   style: TextStyle(
                       fontWeight: FontWeight.w600,
                       fontSize: 16,
-                      color: _selectedCategories.contains(_categories[index])
+                      color: _selectedCategories.contains(Strings.categories[index])
                           ? HexColor.fromHex(ColorConstants.secondaryWhite)
                           : HexColor.fromHex(ColorConstants.lightBlack)),
                 ),
@@ -141,9 +133,9 @@ class _TopicSelectScreenState extends State<TopicSelectScreen> {
 
   void setTileState(int index) {
     setState(() {
-      _selectedCategories.contains(_categories[index])
-          ? _selectedCategories.remove(_categories[index])
-          : _selectedCategories.add(_categories[index]);
+      _selectedCategories.contains(Strings.categories[index])
+          ? _selectedCategories.remove(Strings.categories[index])
+          : _selectedCategories.add(Strings.categories[index]);
       print(_selectedCategories);
     });
   }
