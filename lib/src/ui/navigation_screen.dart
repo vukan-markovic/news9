@@ -20,7 +20,7 @@ class _NavigationScreenState extends State<NavigationScreen> {
 
   //Todo Replace the Containers with the screens when created
   final List<Widget> _pageOptions = [
-    Container(child: GlobalNews()),
+    GlobalNews(),
     Container(child: Text("Recommended news")),
     FavoriteNewsScreen(),
     Container(child: Text("Profile")),
