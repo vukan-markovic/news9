@@ -147,7 +147,6 @@ class _LoginButton extends StatelessWidget {
                           await context
                               .read<LoginCubit>()
                               .logInWithCredentials();
-                          context.read<LoginCubit>().isEmailVerified();
                         }
                       : null,
                 ),

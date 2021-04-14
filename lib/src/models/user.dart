@@ -5,7 +5,6 @@ class AppUser extends Equatable {
   const AppUser({
     @required this.email,
     @required this.id,
-    @required this.emailVerified,
     @required this.firstName,
     @required this.lastName,
     @required this.dateOfBirth,
@@ -14,7 +13,6 @@ class AppUser extends Equatable {
 
   final String email;
   final String id;
-  final bool emailVerified;
   final String firstName;
   final String lastName;
   final String dateOfBirth;
@@ -23,7 +21,6 @@ class AppUser extends Equatable {
   static const empty = AppUser(
     email: '',
     id: '',
-    emailVerified: false,
     firstName: '',
     lastName: '',
     dateOfBirth: '',
@@ -32,5 +29,5 @@ class AppUser extends Equatable {
 
   @override
   List<Object> get props =>
-      [email, id, emailVerified, firstName, lastName, dateOfBirth, gender];
+      [email, id, firstName, lastName, dateOfBirth, gender];
 }

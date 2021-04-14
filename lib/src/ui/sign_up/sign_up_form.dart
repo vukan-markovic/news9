@@ -287,10 +287,13 @@ class _SignUpButton extends StatelessWidget {
                   primary: Colors.blue,
                 ),
                 onPressed: state.status.isValidated
-                    ? () {
+                    ? () async {
                         String gender =
                             _gender == Gender.male ? 'Male' : 'Female';
-                        context.read<SignUpCubit>().signUpFormSubmitted(gender);
+                        await context
+                            .read<SignUpCubit>()
+                            .signUpFormSubmitted(gender);
+                        context.read<SignUpCubit>().sendVerificationEmail();
                       }
                     : null,
               );
