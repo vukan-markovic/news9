@@ -33,7 +33,7 @@ class CategoryBloc {
     // _categoryFetches.sink.add(categories);
   }
 
-  dispose(){
+  dispose() {
     _categoryFetches.close();
   }
 }
