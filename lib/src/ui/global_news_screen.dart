@@ -19,7 +19,7 @@ class _GlobalNewsState extends State<GlobalNews> {
   @override
   void dispose() {
     // uncomment when saving articles offline is implemented? not disposing a bloc could lead to memory leak
-    newsBloc.dispose();
+    // newsBloc.dispose();
     super.dispose();
   }
 

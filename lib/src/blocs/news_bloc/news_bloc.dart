@@ -52,7 +52,7 @@ class NewsBloc {
   }
 
   dispose() {
-    // _newsFetcher.close();
+    _newsFetcher.close();
   }
 }
 

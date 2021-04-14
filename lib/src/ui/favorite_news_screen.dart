@@ -12,7 +12,7 @@ class FavoriteNewsScreen extends StatefulWidget {
 class _FavoriteNewsScreenState extends State<FavoriteNewsScreen> {
   @override
   void initState() {
-    newsBloc.fetchNewsFromDatabase();
+    newsBloc.fetchFavoriteNewsFromDatabase();
     super.initState();
   }
 
@@ -50,7 +50,7 @@ class _FavoriteNewsScreenState extends State<FavoriteNewsScreen> {
 
   @override
   void dispose() {
-    newsBloc.dispose();
+    // newsBloc.dispose();
     super.dispose();
   }
 }
