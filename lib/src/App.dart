@@ -42,15 +42,14 @@ class _AppViewState extends State<AppView> {
     return MaterialApp(
       theme: ThemeData(
         textTheme: ThemeData.light().textTheme.copyWith(
-              headline4: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 28,
-                color: Colors.black,
-              ),
-              subtitle2: TextStyle(
-                color: HexColor.fromHex(ColorConstants.primaryColor),
-              )
+            headline4: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 28,
+              color: Colors.black,
             ),
+            subtitle2: TextStyle(
+              color: HexColor.fromHex(ColorConstants.primaryColor),
+            )),
       ),
       navigatorKey: _navigatorKey,
       builder: (context, child) {
