@@ -28,9 +28,12 @@ class _GlobalNewsState extends State<GlobalNews> {
     return StreamBuilder(
       stream: newsBloc.allNews,
       builder: (context, AsyncSnapshot<ArticleModel> snapshot) {
+        print(snapshot);
         if (snapshot.hasData) {
+          print("Global news has data");
           return buildList(snapshot);
         } else if (snapshot.hasError) {
+          print("Global news error");
           return Text(snapshot.error.toString());
         }
         return Center(child: CircularProgressIndicator());
@@ -46,12 +49,7 @@ class _GlobalNewsState extends State<GlobalNews> {
           shrinkWrap: true,
           physics: ClampingScrollPhysics(),
           itemBuilder: (context, index) {
-            return ArticleTile(
-              title: snapshot.data.articles[index].title ?? "",
-              publishedAt: snapshot.data.articles[index].publishedAt ?? "",
-              imgUrl: snapshot.data.articles[index].urlToImage ?? "",
-              postUrl: snapshot.data.articles[index].url ?? "",
-            );
+            return ArticleTile(article: snapshot.data.articles[index]);
           }),
     );
   }
