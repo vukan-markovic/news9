@@ -1,5 +1,4 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:news/src/models/category.dart';
 import 'package:rxdart/rxdart.dart';
 import '../../resources/news_repository.dart';
 import '../../models/article_model.dart';
@@ -34,6 +33,7 @@ class NewsBloc {
     int counter = 0;
     articlesModel.articles.forEach((element) {
       if (counter > 30) return;
+      print(element.publishedAt);
       insertNews("offline_news", element);
       counter++;
     });
