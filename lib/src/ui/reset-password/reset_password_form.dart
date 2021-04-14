@@ -1,30 +1,29 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:formz/formz.dart';
-import 'package:news/src/blocs/login_bloc/login_cubit.dart';
-import 'package:news/src/ui/reset-password/reset_password_page.dart';
-import 'package:news/src/ui/sign_up/sign_up_page.dart';
+import 'package:news/src/blocs/reset_password_bloc/reset_password_cubit.dart';
+import 'package:news/src/blocs/reset_password_bloc/reset_password_state.dart';
+import 'package:news/src/ui/login/login_page.dart';
 
 import '../dialog.dart';
 
-class LoginForm extends StatelessWidget {
+class ResetPasswordForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return BlocListener<LoginCubit, LoginState>(
+    return BlocListener<ResetPasswordCubit, ResetPasswordState>(
       listener: (context, state) {
         if (state.status.isSubmissionFailure) {
           AppDialog.showAppDialog(
             context: context,
-            title: 'Incorrect password/email!',
-            body:
-                'The email and/or password you entered are incorrect. Please try again.',
+            title: 'Incorrect email!',
+            body: 'The email you entered are incorrect. Please try again.',
           );
-        } else if (state.status.isSubmissionSuccess && !state.emailVerified) {
+        } else if (state.status.isSubmissionSuccess) {
+          Navigator.of(context).pushReplacement(LoginPage.route());
           AppDialog.showAppDialog(
             context: context,
-            title: 'Email not verified',
-            body:
-                'Your email is not verified. Please verify your email address.',
+            title: 'Reset password email sent!',
+            body: 'Please check your inbox and follow the instructions.',
           );
         }
       },
@@ -38,7 +37,7 @@ class LoginForm extends StatelessWidget {
                 Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    'Login',
+                    'Reset password',
                     textAlign: TextAlign.left,
                     style: TextStyle(
                       fontSize: 36,
@@ -49,20 +48,12 @@ class LoginForm extends StatelessWidget {
                 SizedBox(height: 16.0),
                 _EmailInput(),
                 SizedBox(height: 8.0),
-                _PasswordInput(),
+                _ResetPasswordButton(),
                 SizedBox(height: 8.0),
-                _LoginButton(),
-                SizedBox(height: 8.0),
-                TextButton(
-                  onPressed: () => Navigator.of(context)
-                      .pushReplacement(ResetPasswordPage.route()),
-                  child: Text('Reset password'),
-                ),
-                SizedBox(height: 24.0),
                 TextButton(
                   onPressed: () =>
-                      Navigator.of(context).pushReplacement(SignUpPage.route()),
-                  child: Text('Sign up'),
+                      Navigator.of(context).pushReplacement(LoginPage.route()),
+                  child: Text('Sign in'),
                 ),
               ],
             ),
@@ -76,12 +67,13 @@ class LoginForm extends StatelessWidget {
 class _EmailInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<LoginCubit, LoginState>(
+    return BlocBuilder<ResetPasswordCubit, ResetPasswordState>(
       buildWhen: (previous, current) => previous.email != current.email,
       builder: (context, state) {
         return TextField(
-          key: const Key('loginForm_emailInput_textField'),
-          onChanged: (email) => context.read<LoginCubit>().emailChanged(email),
+          key: const Key('resetPasswordForm_emailInput_textField'),
+          onChanged: (email) =>
+              context.read<ResetPasswordCubit>().emailChanged(email),
           keyboardType: TextInputType.emailAddress,
           decoration: InputDecoration(
             prefixIcon: Icon(Icons.person),
@@ -95,35 +87,10 @@ class _EmailInput extends StatelessWidget {
   }
 }
 
-class _PasswordInput extends StatelessWidget {
+class _ResetPasswordButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<LoginCubit, LoginState>(
-      buildWhen: (previous, current) => previous.password != current.password,
-      builder: (context, state) {
-        return TextField(
-          key: const Key('loginForm_passwordInput_textField'),
-          onChanged: (password) =>
-              context.read<LoginCubit>().passwordChanged(password),
-          obscureText: true,
-          enableSuggestions: false,
-          autocorrect: false,
-          decoration: InputDecoration(
-            prefixIcon: Icon(Icons.vpn_key),
-            labelText: 'Password',
-            helperText: '',
-            errorText: state.password.invalid ? 'Invalid password' : null,
-          ),
-        );
-      },
-    );
-  }
-}
-
-class _LoginButton extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return BlocBuilder<LoginCubit, LoginState>(
+    return BlocBuilder<ResetPasswordCubit, ResetPasswordState>(
       buildWhen: (previous, current) => previous.status != current.status,
       builder: (context, state) {
         return state.status.isSubmissionInProgress
@@ -131,7 +98,7 @@ class _LoginButton extends StatelessWidget {
             : Container(
                 width: 200,
                 child: ElevatedButton(
-                  key: const Key('loginForm_continue_raisedButton'),
+                  key: const Key('resetPasswordForm_continue_raisedButton'),
                   style: ElevatedButton.styleFrom(
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(5.0),
@@ -139,14 +106,14 @@ class _LoginButton extends StatelessWidget {
                     primary: Colors.blue,
                   ),
                   child: Text(
-                    'LOG IN',
+                    'Reset password',
                     style: TextStyle(fontSize: 24),
                   ),
                   onPressed: state.status.isValidated
                       ? () async {
                           await context
-                              .read<LoginCubit>()
-                              .logInWithCredentials();
+                              .read<ResetPasswordCubit>()
+                              .resetPassword();
                         }
                       : null,
                 ),
