@@ -38,6 +38,7 @@ class _AppViewState extends State<AppView> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       theme: ThemeData.light(),
       navigatorKey: _navigatorKey,
       builder: (context, child) {
