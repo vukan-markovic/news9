@@ -15,12 +15,23 @@ class AuthenticationRepository {
   final firebase_auth.FirebaseAuth _firebaseAuth;
 
   Stream<AppUser> get user {
-    return _firebaseAuth.authStateChanges().map((firebaseUser) {
+    return _firebaseAuth.idTokenChanges().map((firebaseUser) {
       return firebaseUser == null ? AppUser.empty : toUser(firebaseUser);
     });
   }
 
-  bool isEmailVerified() => _firebaseAuth.currentUser != null
+  Future<void> sendVerificationEmail() async {
+    if (!_firebaseAuth.currentUser.emailVerified) {
+      await _firebaseAuth.currentUser.sendEmailVerification();
+    }
+  }
+
+  Future<bool> isEmailVerified() async {
+    await _firebaseAuth.currentUser.reload();
+    return _firebaseAuth.currentUser.emailVerified;
+  }
+
+  bool checkEmailVerification() => _firebaseAuth.currentUser != null
       ? _firebaseAuth.currentUser.emailVerified
       : false;
 
@@ -60,7 +71,6 @@ class AuthenticationRepository {
     return AppUser(
       id: firebaseUser.uid,
       email: firebaseUser.email,
-      emailVerified: firebaseUser.emailVerified,
       firstName: '',
       lastName: '',
       dateOfBirth: '',

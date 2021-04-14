@@ -36,14 +36,11 @@ class LoginCubit extends Cubit<LoginState> {
         email: state.email.value,
         password: state.password.value,
       );
-      emit(state.copyWith(status: FormzStatus.submissionSuccess));
+      bool isVerified = await _authenticationRepository.isEmailVerified();
+      emit(state.copyWith(
+          status: FormzStatus.submissionSuccess, emailVerified: isVerified));
     } on Exception {
       emit(state.copyWith(status: FormzStatus.submissionFailure));
     }
-  }
-
-  void isEmailVerified() {
-    emit(state.copyWith(
-        emailVerified: _authenticationRepository.isEmailVerified()));
   }
 }
