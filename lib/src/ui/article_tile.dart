@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:news/src/blocs/news_bloc/news_bloc.dart';
 import 'package:news/src/models/article_model.dart';
+import 'article_details.dart';
 
 class ArticleTile extends StatefulWidget {
   _ArticleTileState createState() => _ArticleTileState();
@@ -13,8 +14,7 @@ class ArticleTile extends StatefulWidget {
 
 class _ArticleTileState extends State<ArticleTile> {
   Article article;
-
-  Alignment _alignment = Alignment.bottomRight;
+  String _placeholderImageUrl = 'https://iitpkd.ac.in/sites/default/files/default_images/default-news-image_0.png';
 
   @override
   void initState() {
@@ -26,9 +26,14 @@ class _ArticleTileState extends State<ArticleTile> {
     return Jiffy(date).fromNow();
   }
 
+  void _openArticleDetails(BuildContext context, Article article) {
+    Navigator.of(context).push(MaterialPageRoute(builder: (context) => ArticleDetails(article)));
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      onTap: () => _openArticleDetails(context, article),
       onLongPress: () {
         setState(() {
           //Add animation to the card so that it moves and shows buttons for add to favorites and share article
@@ -77,7 +82,7 @@ class _ArticleTileState extends State<ArticleTile> {
                         ClipRRect(
                           borderRadius: BorderRadius.circular(6),
                           child: Image.network(
-                            article.urlToImage ?? 'assets/placeholder.png',
+                            article.urlToImage ?? _placeholderImageUrl,
                             height: 200,
                             width: MediaQuery.of(context).size.width,
                             fit: BoxFit.cover,
