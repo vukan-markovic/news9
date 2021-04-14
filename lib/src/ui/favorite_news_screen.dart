@@ -22,7 +22,6 @@ class _FavoriteNewsScreenState extends State<FavoriteNewsScreen> {
       child: StreamBuilder(
         stream: newsBloc.favoriteNews,
         builder: (context, snapshot) {
-          print(snapshot);
           if (snapshot.hasData) {
             print("i have data");
             return buildList(snapshot);

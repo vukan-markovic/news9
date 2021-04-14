@@ -36,6 +36,6 @@ class NewsRepository {
   deleteNewsByUid(String uid) async {
     var connection = await database;
     return await connection
-        .rawDelete("DELETE FROM favorite_news WHERE uid =?", [uid]);
+        .rawDelete("DELETE FROM offline_news WHERE uid =?", [uid]);
   }
 }
