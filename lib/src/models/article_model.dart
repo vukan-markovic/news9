@@ -14,7 +14,7 @@ class ArticleModel {
           res["url"],
           res["urlToImage"],
           res["publishedAt"],
-          res["content"]));
+          res["source"]));
     });
   }
 
@@ -46,10 +46,10 @@ class Article {
   String _url;
   String _urlToImage;
   String _publishedAt;
-  String _content;
+  Source _source;
 
   Article.create(this._author, this._title, this._description, this._url,
-      this._urlToImage, this._publishedAt, this._content);
+      this._urlToImage, this._publishedAt, this._source);
 
   Article(article) {
     _author = article['author'];
@@ -58,7 +58,7 @@ class Article {
     _url = article['url'];
     _urlToImage = article['urlToImage'];
     _publishedAt = article['publishedAt'];
-    _content = article['content'];
+    _source = Source.fromJson(article['source']);
   }
 
   String get author => _author;
@@ -73,7 +73,7 @@ class Article {
 
   String get publishedAt => _publishedAt;
 
-  String get content => _content;
+  String get source => _source.name;
 
   toMap() {
     var map = Map<String, dynamic>();
@@ -83,9 +83,24 @@ class Article {
     map['url'] = this.url;
     map['urlToImage'] = this.urlToImage;
     map['publishedAt'] = this.publishedAt;
-    map['content'] = this.content;
+    map['source'] = this.source;
     map['uid'] = FirebaseAuth.instance.currentUser?.uid ??
         "wOJ3BsX5EnNgFAZYvPeGdK3TCVf2"; //adamrumunce@gmail.com uid added for testing purposes
     return map;
   }
+}
+
+class Source{
+  String id;
+  String name;
+
+  Source({this.id, this.name});
+
+  factory Source.fromJson(Map<String, dynamic> parsedJson){
+    return Source(
+      id: parsedJson['id'],
+      name : parsedJson['name'],
+    );
+  }
+
 }

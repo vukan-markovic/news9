@@ -5,7 +5,9 @@ import 'package:news/src/ui/navigation_screen.dart';
 import 'package:news/src/ui/splash_page.dart';
 
 import 'blocs/authentication_bloc/authentication_bloc.dart';
-import 'ui/topic_select_screen.dart';
+import 'constants/ColorConstants.dart';
+import 'extensions/Color.dart';
+import 'ui/login/login_page.dart';
 
 class App extends StatelessWidget {
   final AuthenticationRepository authenticationRepository =
@@ -38,7 +40,18 @@ class _AppViewState extends State<AppView> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData.light(),
+      theme: ThemeData(
+        textTheme: ThemeData.light().textTheme.copyWith(
+              headline4: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 28,
+                color: Colors.black,
+              ),
+              subtitle2: TextStyle(
+                color: HexColor.fromHex(ColorConstants.primaryColor),
+              )
+            ),
+      ),
       navigatorKey: _navigatorKey,
       builder: (context, child) {
         return BlocListener<AuthenticationBloc, AuthenticationState>(
@@ -52,7 +65,7 @@ class _AppViewState extends State<AppView> {
                 break;
               case AuthenticationStatus.unauthenticated:
                 _navigator.pushAndRemoveUntil<void>(
-                  NavigationScreen.route(),
+                  LoginPage.route(),
                   (route) => false,
                 );
                 break;
