@@ -1,8 +1,9 @@
 import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:hive/hive.dart';
 import 'package:meta/meta.dart';
-import 'package:news/src/models/user.dart';
+import 'package:news/src/models/user/user.dart';
 
 class LogInWithEmailAndPasswordFailure implements Exception {}
 
@@ -62,6 +63,15 @@ class AuthenticationRepository {
         email: email,
         password: password,
       );
+
+      Box<AppUser> box = Hive.box<AppUser>('user');
+
+      box.add(AppUser(
+          firstName: firstName,
+          lastName: lastName,
+          dateOfBirth: dateOfBirth,
+          email: email,
+          gender: gender));
     } on Exception {
       throw SignUpFailure();
     }

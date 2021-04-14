@@ -17,8 +17,8 @@ class ChangeThemeBloc extends Bloc<ChangeThemeEvent, ChangeThemeState> {
   @override
   Stream<ChangeThemeState> mapEventToState(ChangeThemeEvent event) async* {
     if (event is DecideTheme) {
-      print('inside Theme decision body');
       final int optionValue = await getOption();
+
       if (optionValue == 0) {
         yield ChangeThemeState.lightTheme();
       } else if (optionValue == 1) {
@@ -27,8 +27,6 @@ class ChangeThemeBloc extends Bloc<ChangeThemeEvent, ChangeThemeState> {
     }
 
     if (event is DarkTheme) {
-      print('inside darktheme body');
-
       yield ChangeThemeState.darkTheme();
       try {
         _saveOptionValue(1);
@@ -36,9 +34,8 @@ class ChangeThemeBloc extends Bloc<ChangeThemeEvent, ChangeThemeState> {
         throw Exception("Could not persist change");
       }
     }
-    if (event is LightTheme) {
-      print('inside LightTheme body');
 
+    if (event is LightTheme) {
       yield ChangeThemeState.lightTheme();
       try {
         _saveOptionValue(0);
@@ -60,6 +57,3 @@ class ChangeThemeBloc extends Bloc<ChangeThemeEvent, ChangeThemeState> {
     return option;
   }
 }
-
-final ChangeThemeBloc changeThemeBloc = ChangeThemeBloc()
-  ..onDecideThemeChange();

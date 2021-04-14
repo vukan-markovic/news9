@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
-import 'package:news/src/models/user.dart';
+import 'package:news/src/models/user/user.dart';
 import 'package:news/src/resources/user_repository.dart';
 
 part 'authentication_event.dart';
