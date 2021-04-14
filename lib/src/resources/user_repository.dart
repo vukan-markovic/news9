@@ -70,12 +70,14 @@ class AuthenticationRepository {
 
       Box<AppUser> box = Hive.box<AppUser>('user');
 
-      box.add(AppUser(
-          firstName: firstName,
-          lastName: lastName,
-          dateOfBirth: dateOfBirth,
-          email: email,
-          gender: gender));
+      box.put(
+          'user',
+          AppUser(
+              firstName: firstName,
+              lastName: lastName,
+              dateOfBirth: dateOfBirth,
+              email: email,
+              gender: gender));
     } on Exception {
       throw SignUpFailure();
     }

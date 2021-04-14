@@ -12,7 +12,7 @@ class UserPage extends StatelessWidget {
     return ValueListenableBuilder(
       valueListenable: Hive.box<AppUser>('user').listenable(),
       builder: (context, box, widget) {
-        AppUser user = box.getAt(0);
+        AppUser user = box.get('user');
         return Center(
           child: Container(
             margin: EdgeInsets.symmetric(horizontal: 24),
