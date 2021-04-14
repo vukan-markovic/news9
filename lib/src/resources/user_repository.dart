@@ -38,6 +38,10 @@ class AuthenticationRepository {
     }
   }
 
+  Future<void> resetPassword({String email}) async {
+    await _firebaseAuth.sendPasswordResetEmail(email: email);
+  }
+
   Future<void> signUp({
     @required String email,
     @required String password,
