@@ -9,6 +9,8 @@ class LogInWithEmailAndPasswordFailure implements Exception {}
 
 class SignUpFailure implements Exception {}
 
+class LogOutFailure implements Exception {}
+
 class AuthenticationRepository {
   AuthenticationRepository({firebase_auth.FirebaseAuth firebaseAuth})
       : _firebaseAuth = firebaseAuth ?? firebase_auth.FirebaseAuth.instance;
@@ -71,7 +73,7 @@ class AuthenticationRepository {
       Box<AppUser> box = Hive.box<AppUser>('user');
 
       box.put(
-          'user',
+          email,
           AppUser(
               firstName: firstName,
               lastName: lastName,
@@ -80,6 +82,14 @@ class AuthenticationRepository {
               gender: gender));
     } on Exception {
       throw SignUpFailure();
+    }
+  }
+
+  Future<void> logOut() async {
+    try {
+      await _firebaseAuth.signOut();
+    } on Exception {
+      throw LogOutFailure();
     }
   }
 

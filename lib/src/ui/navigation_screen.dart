@@ -1,10 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:news/src/blocs/authentication_bloc/authentication_bloc.dart';
 import 'package:news/src/constants/ColorConstants.dart';
 import 'package:news/src/extensions/Color.dart';
 import 'package:news/src/ui/favorite_news_screen.dart';
 import 'package:news/src/ui/user_page.dart';
 import 'global_news_screen.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class NavigationScreen extends StatefulWidget {
   _NavigationScreenState createState() => _NavigationScreenState();
@@ -19,7 +21,7 @@ class _NavigationScreenState extends State<NavigationScreen> {
 
   //Todo Replace the Containers with the screens when created
   final List<Widget> _pageOptions = [
-    Container(child: GlobalNews()),
+    GlobalNews(),
     Container(child: Text("Recommended news")),
     FavoriteNewsScreen(),
     UserPage(),
@@ -31,6 +33,14 @@ class _NavigationScreenState extends State<NavigationScreen> {
       appBar: AppBar(
         title: Text("Flutter News9"),
         backgroundColor: HexColor.fromHex(ColorConstants.primaryColor),
+        actions: <Widget>[
+          IconButton(
+            icon: const Icon(Icons.logout),
+            onPressed: () => context
+                .read<AuthenticationBloc>()
+                .add(AuthenticationLogoutRequested()),
+          ),
+        ],
       ),
       body: _pageOptions[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(

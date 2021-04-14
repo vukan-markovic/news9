@@ -4,6 +4,7 @@ import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 import 'package:news/src/models/user/user.dart';
 import 'package:news/src/resources/user_repository.dart';
+import 'package:pedantic/pedantic.dart';
 
 part 'authentication_event.dart';
 part 'authentication_state.dart';
@@ -28,6 +29,8 @@ class AuthenticationBloc
   ) async* {
     if (event is AuthenticationUserChanged) {
       yield _mapAuthenticationUserChangedToState(event);
+    } else if (event is AuthenticationLogoutRequested) {
+      unawaited(_authenticationRepository.logOut());
     }
   }
 

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+import 'package:news/src/blocs/authentication_bloc/authentication_bloc.dart';
 import 'package:news/src/blocs/change_theme_bloc/bloc/change_theme_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news/src/models/user/user.dart';
@@ -12,7 +13,8 @@ class UserPage extends StatelessWidget {
     return ValueListenableBuilder(
       valueListenable: Hive.box<AppUser>('user').listenable(),
       builder: (context, box, widget) {
-        AppUser user = box.get('user');
+        AppUser user =
+            box.get(context.read<AuthenticationBloc>().state.user.email);
         return Center(
           child: Container(
             margin: EdgeInsets.symmetric(horizontal: 24),
@@ -60,11 +62,14 @@ class UserPage extends StatelessWidget {
                       ),
                       SwitchListTile(
                         title: Text('Dark mode'),
-                        value:
-                            context.read<ChangeThemeBloc>().state.themeData ==
-                                    ThemeData.light()
-                                ? false
-                                : true,
+                        value: context
+                                    .read<ChangeThemeBloc>()
+                                    .state
+                                    .themeData
+                                    .brightness ==
+                                Brightness.light
+                            ? false
+                            : true,
                         onChanged: (bool value) {
                           if (value) {
                             context.read<ChangeThemeBloc>().onDarkThemeChange();
