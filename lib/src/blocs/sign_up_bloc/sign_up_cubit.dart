@@ -104,4 +104,8 @@ class SignUpCubit extends Cubit<SignUpState> {
       emit(state.copyWith(status: FormzStatus.submissionFailure));
     }
   }
+
+  Future<void> sendVerificationEmail() async {
+    _authenticationRepository.sendVerificationEmail();
+  }
 }
