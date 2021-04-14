@@ -1,16 +1,31 @@
+import 'package:firebase_auth/firebase_auth.dart';
+
 class ArticleModel {
   String _status;
   int _totalResults;
-  List<_Article> _articles = [];
+  List<Article> _articles = [];
+
+  ArticleModel.fromDatabase(List<Map<String, dynamic>> response) {
+    response.forEach((res) {
+      articles.add(Article.create(
+          res["author"],
+          res["title"],
+          res["description"],
+          res["url"],
+          res["urlToImage"],
+          res["publishedAt"],
+          res["content"]));
+    });
+  }
 
   ArticleModel.fromJson(Map<String, dynamic> parsedJson) {
     _status = parsedJson['status'];
     _totalResults = parsedJson['totalResults'];
-    List<_Article> temp = [];
+    List<Article> temp = [];
     int _listLength = parsedJson['articles'].length;
-    
+
     for (int i = 0; i < _listLength; i++) {
-      _Article article = _Article(parsedJson['articles'][i]);
+      Article article = Article(parsedJson['articles'][i]);
 
       temp.add(article);
     }
@@ -21,10 +36,10 @@ class ArticleModel {
 
   int get totalarticles => _totalResults;
 
-  List<_Article> get articles => _articles;
+  List<Article> get articles => _articles;
 }
 
-class _Article {
+class Article {
   String _author;
   String _title;
   String _description;
@@ -33,7 +48,10 @@ class _Article {
   String _publishedAt;
   String _content;
 
-  _Article(article) {
+  Article.create(this._author, this._title, this._description, this._url,
+      this._urlToImage, this._publishedAt, this._content);
+
+  Article(article) {
     _author = article['author'];
     _title = article['title'];
     _description = article['description'];
@@ -56,4 +74,18 @@ class _Article {
   String get publishedAt => _publishedAt;
 
   String get content => _content;
+
+  toMap() {
+    var map = Map<String, dynamic>();
+    map['author'] = this.author;
+    map['title'] = this.title;
+    map['description'] = this.description;
+    map['url'] = this.url;
+    map['urlToImage'] = this.urlToImage;
+    map['publishedAt'] = this.publishedAt;
+    map['content'] = this.content;
+    map['uid'] = FirebaseAuth.instance.currentUser?.uid ??
+        "wOJ3BsX5EnNgFAZYvPeGdK3TCVf2"; //adamrumunce@gmail.com uid added for testing purposes
+    return map;
+  }
 }

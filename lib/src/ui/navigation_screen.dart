@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:news/src/constants/ColorConstants.dart';
 import 'package:news/src/extensions/Color.dart';
+import 'package:news/src/ui/favorite_news_screen.dart';
 import 'global_news_screen.dart';
 
 class NavigationScreen extends StatefulWidget {
@@ -19,7 +20,7 @@ class _NavigationScreenState extends State<NavigationScreen> {
   final List<Widget> _pageOptions = [
     Container(child: GlobalNews()),
     Container(child: Text("Recommended news")),
-    Container(child: Text("Favorite news")),
+    FavoriteNewsScreen(),
     Container(child: Text("Profile")),
   ];
 
