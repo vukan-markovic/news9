@@ -5,6 +5,7 @@ import 'package:news/src/ui/login/login_page.dart';
 import 'package:news/src/ui/navigation_screen.dart';
 import 'package:news/src/ui/splash_page.dart';
 import 'blocs/authentication_bloc/authentication_bloc.dart';
+import 'blocs/change_theme_bloc/bloc/change_theme_bloc.dart';
 import 'ui/login/login_page.dart';
 
 class App extends StatelessWidget {

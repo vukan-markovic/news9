@@ -7,7 +7,7 @@ import '../models/article/article_model.dart';
 
 class NewsApiProvider {
   Client client = Client();
-  static final String _apiKey = 'a7d73c371f074012846400e5bfff3492';
+  static final String _apiKey = '673cc11d621c4210bbb48f5caec5f673';
 
   // use current day or given date period from the settings
   static final String _formattedDate =

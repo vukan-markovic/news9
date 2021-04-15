@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:news/src/constants/ColorConstants.dart';
 import 'package:news/src/extensions/Color.dart';
 import 'package:news/src/ui/favorite_news_screen.dart';
+import 'package:news/src/ui/user_page.dart';
 import 'global_news_screen.dart';
 
 class NavigationScreen extends StatefulWidget {
@@ -18,10 +19,10 @@ class _NavigationScreenState extends State<NavigationScreen> {
 
   //Todo Replace the Containers with the screens when created
   final List<Widget> _pageOptions = [
-    Container(child: GlobalNews()),
+    GlobalNews(),
     Container(child: Text("Recommended news")),
     FavoriteNewsScreen(),
-    Container(child: Text("Profile")),
+    UserPage(),
   ];
 
   @override

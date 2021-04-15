@@ -1,12 +1,15 @@
 import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:hive/hive.dart';
 import 'package:meta/meta.dart';
-import 'package:news/src/models/user.dart';
+import 'package:news/src/models/user/user.dart';
 
 class LogInWithEmailAndPasswordFailure implements Exception {}
 
 class SignUpFailure implements Exception {}
+
+class LogOutFailure implements Exception {}
 
 class AuthenticationRepository {
   AuthenticationRepository({firebase_auth.FirebaseAuth firebaseAuth})
@@ -15,12 +18,23 @@ class AuthenticationRepository {
   final firebase_auth.FirebaseAuth _firebaseAuth;
 
   Stream<AppUser> get user {
-    return _firebaseAuth.authStateChanges().map((firebaseUser) {
+    return _firebaseAuth.idTokenChanges().map((firebaseUser) {
       return firebaseUser == null ? AppUser.empty : toUser(firebaseUser);
     });
   }
 
-  bool isEmailVerified() => _firebaseAuth.currentUser != null
+  Future<void> sendVerificationEmail() async {
+    if (!_firebaseAuth.currentUser.emailVerified) {
+      await _firebaseAuth.currentUser.sendEmailVerification();
+    }
+  }
+
+  Future<bool> isEmailVerified() async {
+    await _firebaseAuth.currentUser.reload();
+    return _firebaseAuth.currentUser.emailVerified;
+  }
+
+  bool checkEmailVerification() => _firebaseAuth.currentUser != null
       ? _firebaseAuth.currentUser.emailVerified
       : false;
 
@@ -38,6 +52,10 @@ class AuthenticationRepository {
     }
   }
 
+  Future<void> resetPassword({String email}) async {
+    await _firebaseAuth.sendPasswordResetEmail(email: email);
+  }
+
   Future<void> signUp({
     @required String email,
     @required String password,
@@ -51,8 +69,27 @@ class AuthenticationRepository {
         email: email,
         password: password,
       );
+
+      Box<AppUser> box = Hive.box<AppUser>('user');
+
+      box.put(
+          email,
+          AppUser(
+              firstName: firstName,
+              lastName: lastName,
+              dateOfBirth: dateOfBirth,
+              email: email,
+              gender: gender));
     } on Exception {
       throw SignUpFailure();
+    }
+  }
+
+  Future<void> logOut() async {
+    try {
+      await _firebaseAuth.signOut();
+    } on Exception {
+      throw LogOutFailure();
     }
   }
 
@@ -60,7 +97,6 @@ class AuthenticationRepository {
     return AppUser(
       id: firebaseUser.uid,
       email: firebaseUser.email,
-      emailVerified: firebaseUser.emailVerified,
       firstName: '',
       lastName: '',
       dateOfBirth: '',

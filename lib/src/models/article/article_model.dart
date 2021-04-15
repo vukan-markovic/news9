@@ -71,6 +71,7 @@ class Article {
     _url = article['url'];
     _urlToImage = article['urlToImage'];
     _publishedAt = article['publishedAt'];
+    _source = Source.fromJson(article['source']);
   }
 
   String get author => _author;
@@ -88,13 +89,17 @@ class Article {
   Source get source => _source;
 }
 
-class Source {
+class Source{
   String id;
   String name;
 
   Source({this.id, this.name});
 
-  factory Source.fromJson(Map<String, dynamic> parsedJson) {
-    return Source(id: parsedJson['id'], name: parsedJson['name']);
+  factory Source.fromJson(Map<String, dynamic> parsedJson){
+    return Source(
+      id: parsedJson['id'],
+      name : parsedJson['name'],
+    );
   }
+
 }
