@@ -48,6 +48,8 @@ dependencies:
   font_awesome_flutter: ^9.0.0
   path_provider: ^2.0.1
   flutter_launcher_icons: ^0.9.0
+  social_share: ^2.1.1
+  flutter_social_content_share: ^0.0.4
   shared_preferences: ^2.0.5
   hive: ^2.0.3
   hive_flutter: ^1.0.0
