@@ -2,13 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:news/src/blocs/news_bloc/news_bloc.dart';
 import 'package:news/src/models/article/article_model.dart';
+import 'package:news/src/ui/favorite_news_screen.dart';
 
 class ArticleTile extends StatefulWidget {
   _ArticleTileState createState() => _ArticleTileState();
 
   final Article article;
+  var parent;
 
-  ArticleTile({this.article});
+  ArticleTile({this.article, this.parent});
 }
 
 class _ArticleTileState extends State<ArticleTile> {
@@ -30,11 +32,14 @@ class _ArticleTileState extends State<ArticleTile> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onLongPress: () {
-        setState(() {
-          //Add animation to the card so that it moves and shows buttons for add to favorites and share article
-          print("Puštaj");
-          newsBloc.insertNews("favorite_news", article);
-        });
+        //Add animation to the card so that it moves and shows buttons for add to favorites and share article
+        print("Puštaj");
+        print(article.uuid);
+        if (article.uuid == null) {
+          newsBloc.insertNewsByUid("favorite_news", article);
+        } else {
+          newsBloc.deleteNewsByUuid(article.uuid);
+        }
       },
       child: AnimatedContainer(
         alignment: Alignment.topCenter,

@@ -23,12 +23,14 @@ Future<void> main() async {
     Hive
       ..init(appDocumentDirectory.path)
       ..registerAdapter(CategoryAdapter())
-      ..registerAdapter(ArticleAdapter());
+      ..registerAdapter(ArticleAdapter())
+      ..registerAdapter(SourceAdapter());
   } else {
     Hive
       ..initFlutter()
       ..registerAdapter(CategoryAdapter())
-      ..registerAdapter(ArticleAdapter());
+      ..registerAdapter(ArticleAdapter())
+      ..registerAdapter(SourceAdapter());
   }
 
   runApp(App());

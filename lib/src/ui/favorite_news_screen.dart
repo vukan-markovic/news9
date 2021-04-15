@@ -7,6 +7,7 @@ import 'article_tile.dart';
 
 class FavoriteNewsScreen extends StatefulWidget {
   _FavoriteNewsScreenState createState() => _FavoriteNewsScreenState();
+
 }
 
 class _FavoriteNewsScreenState extends State<FavoriteNewsScreen> {
@@ -42,7 +43,7 @@ class _FavoriteNewsScreenState extends State<FavoriteNewsScreen> {
           shrinkWrap: true,
           physics: ClampingScrollPhysics(),
           itemBuilder: (context, index) {
-            return ArticleTile(article: snapshot.data.articles[index]);
+            return ArticleTile(article: snapshot.data.articles[index], parent: this);
           }),
     );
   }

@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:hive/hive.dart';
+import 'package:uuid/uuid.dart';
 
 part 'article_model.g.dart';
 
@@ -62,7 +63,7 @@ class Article {
   Article();
 
   Article.create(this._author, this._title, this._description, this._url,
-      this._urlToImage, this._publishedAt, this._source);
+      this._urlToImage, this._publishedAt, this._source, this.uuid);
 
   Article.fromJson(article) {
     _author = article['author'];
@@ -88,8 +89,12 @@ class Article {
   Source get source => _source;
 }
 
+@HiveType(typeId: 2)
 class Source {
+  @HiveField(0)
   String id;
+
+  @HiveField(1)
   String name;
 
   Source({this.id, this.name});

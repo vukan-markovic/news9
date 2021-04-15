@@ -22,7 +22,7 @@ class NewsRepository {
 
   insertNewsByUuid(boxName, data, uuid) async {
     var box = await Hive.openBox(boxName);
-    box.put('uuid', data);
+    box.put(data.uuid, data);
   }
 
   //function should call box.clear() but doesn't work
@@ -33,7 +33,7 @@ class NewsRepository {
     }
   }
 
-  deleteNewsByUid(boxName, uuid) async {
+  deleteNewsByUuid(boxName, uuid) async {
     var box = await Hive.openBox(boxName);
     box.delete(uuid);
   }

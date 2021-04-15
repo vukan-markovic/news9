@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:rxdart/rxdart.dart';
+import 'package:uuid/uuid.dart';
 import '../../resources/news_repository.dart';
 import '../../models/article/article_model.dart';
 
@@ -29,9 +30,9 @@ class NewsBloc {
           i.url as String,
           i.urlToImage as String,
           i.publishedAt as String,
-          Source(id: i.source?.id as String, name: i.source?.name as String)));
+          Source(id: i.source?.id as String, name: i.source?.name as String),
+          i.uuid as String));
     });
-    print(articles.articles);
     _newsFetcher.sink.add(articles);
   }
 
@@ -40,7 +41,7 @@ class NewsBloc {
     _newsFetcher.sink.add(news);
   }
 
-  insertNewsList(ArticleModel articlesModel) async {
+  insertNewsList(ArticleModel articlesModel) {
     int counter = 0;
     articlesModel.articles.forEach((element) {
       if (counter > 30) return;
@@ -49,7 +50,13 @@ class NewsBloc {
     });
   }
 
-  insertNews(boxName, Article article) async {
+  insertNewsByUid(boxName, article) {
+      Uuid uuid = Uuid();
+      article.uuid = uuid.v4();
+    _repository.insertNewsByUuid(boxName, article, uuid);
+  }
+
+  insertNews(boxName, Article article) {
     _repository.insertNews(boxName, article);
   }
 
@@ -57,8 +64,8 @@ class NewsBloc {
     _repository.deleteNewsBox(boxName);
   }
 
-  deleteNewsByUid(String uid) async {
-    _repository.deleteNewsByUid('favorite_news', uid);
+  deleteNewsByUuid(String uuid) {
+    _repository.deleteNewsByUuid('favorite_news', uuid);
   }
 
   dispose() {
