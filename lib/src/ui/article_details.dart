@@ -56,6 +56,10 @@ class ArticleDetails extends StatelessWidget {
     );
   }
 
+  _copyToClipboard(context, String url) async {
+    SocialShare.copyToClipboard("Check out this news article: \n $url");
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -127,6 +131,10 @@ class ArticleDetails extends StatelessWidget {
                       IconButton(
                         icon: Icon(FontAwesomeIcons.envelope),
                         onPressed: () => _shareEmail(_article.url),
+                      ),
+                      IconButton(
+                        icon: Icon(FontAwesomeIcons.clipboard),
+                        onPressed: () => _copyToClipboard(context, _article.url),
                       ),
                     ],
                   ),
