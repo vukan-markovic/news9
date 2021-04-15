@@ -8,8 +8,7 @@ import 'package:news/src/App.dart';
 import 'package:news/src/models/article/article_model.dart';
 import 'package:news/src/models/category/category.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:flutter/foundation.dart' show kIsWeb;
-import 'package:path_provider/path_provider.dart' as path_provider;
+import 'package:news/src/models/user.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -17,19 +16,13 @@ Future<void> main() async {
   EquatableConfig.stringify = kDebugMode;
   Bloc.observer = BlocObserver();
 
-  if (!kIsWeb) {
-    final appDocumentDirectory =
-        await path_provider.getApplicationDocumentsDirectory();
-    Hive
-      ..init(appDocumentDirectory.path)
-      ..registerAdapter(CategoryAdapter())
-      ..registerAdapter(ArticleAdapter());
-  } else {
-    Hive
-      ..initFlutter()
-      ..registerAdapter(CategoryAdapter())
-      ..registerAdapter(ArticleAdapter());
-  }
+  await Hive.initFlutter();
+  Hive..registerAdapter(AppUserAdapter())
+    ..registerAdapter(CategoryAdapter())
+    ..registerAdapter(ArticleAdapter());
+  await Hive.openBox<AppUser>('user');
+  EquatableConfig.stringify = kDebugMode;
+  Bloc.observer = BlocObserver();
 
   runApp(App());
 }
