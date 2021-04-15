@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:news/src/blocs/news_bloc/news_bloc.dart';
-import 'package:news/src/models/article_model.dart';
+import 'package:news/src/models/article/article_model.dart';
 
 class ArticleTile extends StatefulWidget {
   _ArticleTileState createState() => _ArticleTileState();
@@ -33,7 +33,7 @@ class _ArticleTileState extends State<ArticleTile> {
         setState(() {
           //Add animation to the card so that it moves and shows buttons for add to favorites and share article
           print("Puštaj");
-          newsBloc.insertFavoriteNews(article);
+          newsBloc.insertNews("favorite_news", article);
         });
       },
       child: AnimatedContainer(

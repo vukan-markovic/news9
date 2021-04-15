@@ -1,37 +1,22 @@
-import 'package:news/src/resources/database_connection.dart';
-import 'package:sqflite/sqflite.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:hive/hive.dart';
 
 class CategoryRepository {
-  DatabaseConnection _databaseConnection;
+  final String uid =
+      FirebaseAuth.instance.currentUser?.uid ?? "wOJ3BsX5EnNgFAZYvPeGdK3TCVf2";
 
-  CategoryRepository() {
-    _databaseConnection = DatabaseConnection();
+  insertCategory(data) async {
+    var box = await Hive.openBox('category');
+    box.put(uid, data);
   }
 
-  static Database _database;
-
-  Future<Database> get database async {
-    if (_database != null)
-      return _database;
-    else {
-      _database = await _databaseConnection.setDatabase();
-      return database;
-    }
+  deleteCategoriesByUid() async {
+    var box = await Hive.openBox('category');
+    box.delete(uid);
   }
 
-  insertCategory(table, data) async {
-    var connection = await database;
-    return await connection.insert(table, data);
-  }
-
-  deleteCategoriesByUid(uid) async {
-    var connection = await database;
-    return await connection
-        .rawDelete("DELETE FROM selected_category WHERE uid =?", [uid]);
-  }
-
-  getAllCategories(table) async {
-    var connection = await database;
-    return await connection.query(table);
+  getAllCategories() async {
+    var box = await Hive.openBox('category');
+    return box.get(uid);
   }
 }

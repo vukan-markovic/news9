@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:jiffy/jiffy.dart';
 import 'package:http/http.dart' show Client;
 
-import '../models/article_model.dart';
+import '../models/article/article_model.dart';
 
 class NewsApiProvider {
   Client client = Client();

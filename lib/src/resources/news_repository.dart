@@ -1,41 +1,40 @@
 import 'dart:async';
 
-import 'package:news/src/resources/database_connection.dart';
-import 'package:sqflite/sqflite.dart';
+import 'package:hive/hive.dart';
 
 import 'news_api_provider.dart';
-import '../models/article_model.dart';
+import '../models/article/article_model.dart';
 
 class NewsRepository {
   final newsApiProvider = NewsApiProvider();
-  final _databaseConnection = DatabaseConnection();
-
-  static Database _database;
-
-  Future<Database> get database async {
-    if (_database != null)
-      return _database;
-    else {
-      _database = await _databaseConnection.setDatabase();
-      return database;
-    }
-  }
 
   Future<ArticleModel> fetchAllNews() => newsApiProvider.fetchNewsList();
 
-  Future<ArticleModel> fetchNews(table) async {
-    var connection = await database;
-    return ArticleModel.fromDatabase(await connection.query(table));
+  fetchNews(String boxName) async {
+    var box = await Hive.openBox(boxName);
+    return box.values;
   }
 
-  insertNews(table, data) async {
-    var connection = await database;
-    return await connection.insert(table, data);
+  insertNews(boxName, data) async {
+    var box = await Hive.openBox(boxName);
+    box.add(data);
   }
 
-  deleteNewsByUid(String uid) async {
-    var connection = await database;
-    return await connection
-        .rawDelete("DELETE FROM offline_news WHERE uid =?", [uid]);
+  insertNewsByUuid(boxName, data, uuid) async {
+    var box = await Hive.openBox(boxName);
+    box.put('uuid', data);
+  }
+
+  //function should call box.clear() but doesn't work
+  deleteNewsBox(boxName) async {
+    var box = await Hive.openBox(boxName);
+    for (int i = 0; i < box.length; i++) {
+      box.deleteAt(i);
+    }
+  }
+
+  deleteNewsByUid(boxName, uuid) async {
+    var box = await Hive.openBox(boxName);
+    box.delete(uuid);
   }
 }

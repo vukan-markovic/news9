@@ -1,22 +1,16 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:hive/hive.dart';
+
+part 'article_model.g.dart';
 
 class ArticleModel {
   String _status;
   int _totalResults;
   List<Article> _articles = [];
 
-  ArticleModel.fromDatabase(List<Map<String, dynamic>> response) {
-    response.forEach((res) {
-      articles.add(Article.create(
-          res["author"],
-          res["title"],
-          res["description"],
-          res["url"],
-          res["urlToImage"],
-          res["publishedAt"],
-          res["content"]));
-    });
-  }
+  ArticleModel();
+
+  ArticleModel.fromDatabase(this._articles);
 
   ArticleModel.fromJson(Map<String, dynamic> parsedJson) {
     _status = parsedJson['status'];
@@ -25,7 +19,7 @@ class ArticleModel {
     int _listLength = parsedJson['articles'].length;
 
     for (int i = 0; i < _listLength; i++) {
-      Article article = Article(parsedJson['articles'][i]);
+      Article article = Article.fromJson(parsedJson['articles'][i]);
 
       temp.add(article);
     }
@@ -39,26 +33,44 @@ class ArticleModel {
   List<Article> get articles => _articles;
 }
 
+@HiveType(typeId: 1)
 class Article {
+  @HiveField(0)
   String _author;
+
+  @HiveField(1)
   String _title;
+
+  @HiveField(2)
   String _description;
+
+  @HiveField(3)
   String _url;
+
+  @HiveField(4)
   String _urlToImage;
+
+  @HiveField(5)
   String _publishedAt;
-  String _content;
+
+  @HiveField(6)
+  Source _source;
+
+  @HiveField(7)
+  String uuid;
+
+  Article();
 
   Article.create(this._author, this._title, this._description, this._url,
-      this._urlToImage, this._publishedAt, this._content);
+      this._urlToImage, this._publishedAt, this._source);
 
-  Article(article) {
+  Article.fromJson(article) {
     _author = article['author'];
     _title = article['title'];
     _description = article['description'];
     _url = article['url'];
     _urlToImage = article['urlToImage'];
     _publishedAt = article['publishedAt'];
-    _content = article['content'];
   }
 
   String get author => _author;
@@ -73,19 +85,16 @@ class Article {
 
   String get publishedAt => _publishedAt;
 
-  String get content => _content;
+  Source get source => _source;
+}
 
-  toMap() {
-    var map = Map<String, dynamic>();
-    map['author'] = this.author;
-    map['title'] = this.title;
-    map['description'] = this.description;
-    map['url'] = this.url;
-    map['urlToImage'] = this.urlToImage;
-    map['publishedAt'] = this.publishedAt;
-    map['content'] = this.content;
-    map['uid'] = FirebaseAuth.instance.currentUser?.uid ??
-        "wOJ3BsX5EnNgFAZYvPeGdK3TCVf2"; //adamrumunce@gmail.com uid added for testing purposes
-    return map;
+class Source {
+  String id;
+  String name;
+
+  Source({this.id, this.name});
+
+  factory Source.fromJson(Map<String, dynamic> parsedJson) {
+    return Source(id: parsedJson['id'], name: parsedJson['name']);
   }
 }
