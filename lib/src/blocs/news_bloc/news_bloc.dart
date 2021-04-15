@@ -1,5 +1,4 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:news/src/models/category.dart';
 import 'package:rxdart/rxdart.dart';
 import '../../resources/news_repository.dart';
 import '../../models/article_model.dart';
