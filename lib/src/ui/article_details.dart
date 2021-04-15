@@ -4,7 +4,6 @@ import 'dart:async';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:jiffy/jiffy.dart';
 
-
 class ArticleDetails extends StatelessWidget {
   final Article _article;
   final String _placeholderImageUrl =

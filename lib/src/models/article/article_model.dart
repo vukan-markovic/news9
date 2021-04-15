@@ -89,17 +89,20 @@ class Article {
   Source get source => _source;
 }
 
-class Source{
+@HiveType(typeId: 2)
+class Source {
+  @HiveField(0)
   String id;
+
+  @HiveField(1)
   String name;
 
   Source({this.id, this.name});
 
-  factory Source.fromJson(Map<String, dynamic> parsedJson){
+  factory Source.fromJson(Map<String, dynamic> parsedJson) {
     return Source(
       id: parsedJson['id'],
-      name : parsedJson['name'],
+      name: parsedJson['name'],
     );
   }
-
 }
