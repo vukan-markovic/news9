@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:news/src/blocs/news_bloc/news_bloc.dart';
-import 'package:news/src/models/article_model.dart';
+import 'package:news/src/models/article/article_model.dart';
 import 'article_details.dart';
 
 class ArticleTile extends StatefulWidget {
@@ -14,7 +14,8 @@ class ArticleTile extends StatefulWidget {
 
 class _ArticleTileState extends State<ArticleTile> {
   Article article;
-  String _placeholderImageUrl = 'https://iitpkd.ac.in/sites/default/files/default_images/default-news-image_0.png';
+  String _placeholderImageUrl =
+      'https://iitpkd.ac.in/sites/default/files/default_images/default-news-image_0.png';
 
   @override
   void initState() {
@@ -27,7 +28,8 @@ class _ArticleTileState extends State<ArticleTile> {
   }
 
   void _openArticleDetails(BuildContext context, Article article) {
-    Navigator.of(context).push(MaterialPageRoute(builder: (context) => ArticleDetails(article)));
+    Navigator.of(context)
+        .push(MaterialPageRoute(builder: (context) => ArticleDetails(article)));
   }
 
   @override
@@ -38,7 +40,7 @@ class _ArticleTileState extends State<ArticleTile> {
         setState(() {
           //Add animation to the card so that it moves and shows buttons for add to favorites and share article
           print("Puštaj");
-          newsBloc.insertFavoriteNews(article);
+          newsBloc.insertNews("favorite_news", article);
         });
       },
       child: AnimatedContainer(

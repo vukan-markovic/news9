@@ -1,11 +1,18 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:hive/hive.dart';
 
+  part 'category.g.dart';
+
+@HiveType(typeId: 0)
 class Category {
   int id;
-  final String title;
+
+  @HiveField(0)
+  String title;
+
   String uid;
 
-  Category(this.title);
+  Category({this.title});
 
   map() {
     var map = Map<String, dynamic>();

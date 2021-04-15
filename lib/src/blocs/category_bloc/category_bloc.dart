@@ -1,4 +1,4 @@
-import 'package:news/src/models/category.dart';
+import 'package:flutter/foundation.dart';
 import 'package:news/src/resources/category_repository.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -9,28 +9,19 @@ class CategoryBloc {
   Stream<List<String>> get selectedCategories => _categoryFetches.stream;
 
   insetCategoryList(List<String> data) {
-    data.forEach((element) {
-      insertCategory(Category(element));
-    });
+    _categoryRepository.insertCategory(data);
   }
 
   insertCategory(Category category) async {
-    _categoryRepository.insertCategory('selected_category', category.map());
+    _categoryRepository.insertCategory(category);
   }
 
   deleteCategoriesByUid(String uid) async {
-    _categoryRepository.deleteCategoriesByUid(uid);
+    _categoryRepository.deleteCategoriesByUid();
   }
 
   getAllCategories() async {
-    List<String> categories = [];
-    var response =
-        await _categoryRepository.getAllCategories('selected_category');
-    response.forEach((category) {
-      categories.add(category['title']);
-    });
-    return categories;
-    // _categoryFetches.sink.add(categories);
+    return await _categoryRepository.getAllCategories();
   }
 
   dispose() {
