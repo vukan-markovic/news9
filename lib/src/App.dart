@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news/src/resources/user_repository.dart';
+import 'package:news/src/ui/login/login_page.dart';
 import 'package:news/src/ui/navigation_screen.dart';
 import 'package:news/src/ui/splash_page.dart';
 
@@ -52,7 +53,7 @@ class _AppViewState extends State<AppView> {
                 break;
               case AuthenticationStatus.unauthenticated:
                 _navigator.pushAndRemoveUntil<void>(
-                  NavigationScreen.route(),
+                  LoginPage.route(),
                   (route) => false,
                 );
                 break;
