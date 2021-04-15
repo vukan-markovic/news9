@@ -12,7 +12,7 @@ class UserPage extends StatelessWidget {
     final textTheme = Theme.of(context).textTheme;
     return ValueListenableBuilder(
       valueListenable: Hive.box<AppUser>('user').listenable(),
-      builder: (context, box, widget) {
+      builder: (context, Box<AppUser> box, widget) {
         AppUser user =
             box.get(context.read<AuthenticationBloc>().state.user.email);
         return Center(
@@ -28,13 +28,15 @@ class UserPage extends StatelessWidget {
                     child: Icon(Icons.person_outline, size: 48),
                   ),
                   SizedBox(height: 8.0),
-                  Text(
-                    '${user.firstName} ${user.lastName}, ${user.dateOfBirth}, ${user.gender}',
-                    style: textTheme.headline6,
-                  ),
-                  SizedBox(height: 8.0),
-                  Text(user.email, style: textTheme.headline5),
-                  SizedBox(height: 8.0),
+                  if (box.isNotEmpty && box.values.isNotEmpty) ...[
+                    Text(
+                      '${user.firstName} ${user.lastName}, ${user.dateOfBirth}, ${user.gender}',
+                      style: textTheme.headline6,
+                    ),
+                    SizedBox(height: 8.0),
+                    Text(user.email, style: textTheme.headline5),
+                    SizedBox(height: 8.0),
+                  ],
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
@@ -94,7 +96,9 @@ class UserPage extends StatelessWidget {
                       ListTile(
                         leading: Icon(Icons.logout),
                         title: Text('Log out'),
-                        onTap: () {},
+                        onTap: () => context
+                            .read<AuthenticationBloc>()
+                            .add(AuthenticationLogoutRequested()),
                       ),
                     ],
                   ),
