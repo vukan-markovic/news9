@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:rxdart/rxdart.dart';
 import '../../resources/news_repository.dart';
-import '../../models/article_model.dart';
+import '../../models/article/article_model.dart';
 
 class NewsBloc {
   final _repository = NewsRepository();
@@ -13,15 +13,26 @@ class NewsBloc {
 
   fetchAllNews() async {
     ArticleModel news = await _repository.fetchAllNews();
-    deleteNewsByUid(FirebaseAuth.instance.currentUser?.uid ??
-        "wOJ3BsX5EnNgFAZYvPeGdK3TCVf2");
+    deleteNewsBox("offline_news");
     insertNewsList(news);
     _newsFetcher.sink.add(news);
   }
 
   fetchFavoriteNewsFromDatabase() async {
-    ArticleModel news = await _repository.fetchNews("favorite_news");
-    _newsFetcher.sink.add(news);
+    var news = await _repository.fetchNews("favorite_news");
+    ArticleModel articles = ArticleModel();
+    news.forEach((i) {
+      articles.articles.add(Article.create(
+          i.author as String,
+          i.title as String,
+          i.description as String,
+          i.url as String,
+          i.urlToImage as String,
+          i.publishedAt as String,
+          Source(id: i.source?.id as String, name: i.source?.name as String)));
+    });
+    print(articles.articles);
+    _newsFetcher.sink.add(articles);
   }
 
   fetchNewsFromDatabase() async {
@@ -38,16 +49,16 @@ class NewsBloc {
     });
   }
 
-  insertFavoriteNews(Article article) async {
-    insertNews("favorite_news", article);
+  insertNews(boxName, Article article) async {
+    _repository.insertNews(boxName, article);
   }
 
-  insertNews(table, Article article) async {
-    _repository.insertNews(table, article.toMap());
+  deleteNewsBox(boxName) {
+    _repository.deleteNewsBox(boxName);
   }
 
   deleteNewsByUid(String uid) async {
-    _repository.deleteNewsByUid(uid);
+    _repository.deleteNewsByUid('favorite_news', uid);
   }
 
   dispose() {
