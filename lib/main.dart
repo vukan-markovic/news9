@@ -6,15 +6,28 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive/hive.dart';
 import 'package:news/src/App.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:news/src/models/user/user.dart';
+import 'package:path_provider/path_provider.dart' as path_provider;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  await Hive.initFlutter();
-  Hive.registerAdapter(AppUserAdapter());
-  await Hive.openBox<AppUser>('user');
   EquatableConfig.stringify = kDebugMode;
   Bloc.observer = BlocObserver();
+
+  if (!kIsWeb) {
+    final appDocumentDirectory =
+        await path_provider.getApplicationDocumentsDirectory();
+    Hive
+      ..init(appDocumentDirectory.path)
+      ..registerAdapter(AppUserAdapter());
+  } else {
+    Hive
+      ..initFlutter()
+      ..registerAdapter(AppUserAdapter());
+  }
+
+  await Hive.openBox<AppUser>('user');
   runApp(App());
 }
