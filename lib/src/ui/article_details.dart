@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'dart:async';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:jiffy/jiffy.dart';
 
 import 'package:news/src/models/article_model.dart';
@@ -14,6 +16,19 @@ class ArticleDetails extends StatelessWidget {
     return Jiffy(date).fromNow();
   }
 
+  Future<void> _launchInWebViewWithJavaScript(String url) async {
+    if (await canLaunch(url)) {
+      await launch(
+        url,
+        forceSafariVC: true,
+        forceWebView: true,
+        enableJavaScript: true,
+      );
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,9 +36,11 @@ class ArticleDetails extends StatelessWidget {
         child: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(10.0),
-            child: Center(
+            child: Container(
+              color: Colors.grey.shade200,
               child: Column(
                 children: [
+                  SizedBox(height: 10),
                   Text.rich(
                     TextSpan(children: [
                       TextSpan(
@@ -80,6 +97,7 @@ class ArticleDetails extends StatelessWidget {
                           icon: Icon(Icons.share_outlined), onPressed: () {}),
                     ],
                   ),
+                  SizedBox(height: 10),
                   Image.network(
                     _article.urlToImage ?? _placeholderImageUrl,
                     height: 200,
@@ -91,9 +109,13 @@ class ArticleDetails extends StatelessWidget {
                     },
                   ),
                   SizedBox(height: 10),
-                  Text(
-                    'Link to open in webview',
-                    style: Theme.of(context).textTheme.subtitle2,
+                  OutlinedButton(
+                    onPressed: () =>
+                        _launchInWebViewWithJavaScript(_article.url),
+                    child: Text(
+                      'Open the whole article',
+                      style: Theme.of(context).textTheme.subtitle2,
+                    ),
                   ),
                   SizedBox(height: 10),
                 ],
