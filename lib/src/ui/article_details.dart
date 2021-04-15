@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:jiffy/jiffy.dart';
+import 'package:flutter_social_content_share/flutter_social_content_share.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:social_share/social_share.dart';
 
 import 'package:news/src/models/article_model.dart';
 
@@ -12,6 +15,45 @@ class ArticleDetails extends StatelessWidget {
 
   formatDate(String date) {
     return Jiffy(date).fromNow();
+  }
+
+  _shareFacebook(String url) async {
+    FlutterSocialContentShare.share(
+      type: ShareType.facebookWithoutImage,
+      url: url,
+      quote: "Check out this news article",
+    );
+  }
+
+  _shareTwitter(String url) async {
+    SocialShare.shareTwitter(
+      "Check out this news article",
+      url: _article.url,
+      hashtags: ["levi9", "flutter", "internship", "news9"],
+    );
+  }
+
+  _shareWhatsapp(String url) async {
+    SocialShare.shareWhatsapp(
+      "Check out this news article: \n $url",
+    );
+  }
+
+  _shareEmail(String url) async {
+    FlutterSocialContentShare.shareOnEmail(
+      recipients: [],
+      subject: "Check out this news article",
+      body: url,
+      isHTML: true,
+    );
+  }
+
+  _shareSms(String url) async {
+    SocialShare.shareSms(
+      "Check out this news article: \n",
+      url: url,
+      trailingText: '',
+    );
   }
 
   @override
@@ -67,17 +109,25 @@ class ArticleDetails extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       IconButton(
-                          icon: Icon(Icons.share_outlined), onPressed: () {}),
+                        icon: Icon(FontAwesomeIcons.facebook),
+                        onPressed: () => _shareFacebook(_article.url),
+                      ),
                       IconButton(
-                          icon: Icon(Icons.share_outlined), onPressed: () {}),
+                        icon: Icon(FontAwesomeIcons.twitter),
+                        onPressed: () => _shareTwitter(_article.url),
+                      ),
                       IconButton(
-                          icon: Icon(Icons.share_outlined), onPressed: () {}),
+                        icon: Icon(FontAwesomeIcons.whatsapp),
+                        onPressed: () => _shareWhatsapp(_article.url),
+                      ),
                       IconButton(
-                          icon: Icon(Icons.share_outlined), onPressed: () {}),
+                        icon: Icon(FontAwesomeIcons.sms),
+                        onPressed: () => _shareSms(_article.url),
+                      ),
                       IconButton(
-                          icon: Icon(Icons.share_outlined), onPressed: () {}),
-                      IconButton(
-                          icon: Icon(Icons.share_outlined), onPressed: () {}),
+                        icon: Icon(FontAwesomeIcons.envelope),
+                        onPressed: () => _shareEmail(_article.url),
+                      ),
                     ],
                   ),
                   Image.network(
