@@ -1,37 +1,28 @@
-part of 'sign_up_cubit.dart';
+part of 'user_page_cubit.dart';
 
-class SignUpState extends Equatable {
-  const SignUpState({
-    this.email = const Email.pure(),
-    this.password = const Password.pure(),
+class UserPageState extends Equatable {
+  const UserPageState({
     this.firstName = const FirstName.pure(),
     this.lastName = const LastName.pure(),
     this.dateOfBirth = const DateOfBirth.pure(),
     this.status = FormzStatus.pure,
   });
 
-  final Email email;
-  final Password password;
   final FirstName firstName;
   final LastName lastName;
   final DateOfBirth dateOfBirth;
   final FormzStatus status;
 
   @override
-  List<Object> get props =>
-      [email, password, firstName, lastName, dateOfBirth, status];
+  List<Object> get props => [firstName, lastName, dateOfBirth, status];
 
-  SignUpState copyWith({
-    Email email,
-    Password password,
+  UserPageState copyWith({
     FirstName firstName,
     LastName lastName,
     DateOfBirth dateOfBirth,
     FormzStatus status,
   }) {
-    return SignUpState(
-      email: email ?? this.email,
-      password: password ?? this.password,
+    return UserPageState(
       firstName: firstName ?? this.firstName,
       lastName: lastName ?? this.lastName,
       dateOfBirth: dateOfBirth ?? this.dateOfBirth,
