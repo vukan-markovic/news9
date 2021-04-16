@@ -7,7 +7,6 @@ import 'package:flutter_social_content_share/flutter_social_content_share.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:social_share/social_share.dart';
 
-
 class ArticleDetails extends StatelessWidget {
   final Article _article;
   final String _placeholderImageUrl =
