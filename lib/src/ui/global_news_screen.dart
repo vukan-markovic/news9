@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../blocs/news_bloc/news_bloc.dart';
-import '../models/article_model.dart';
+import '../models/article/article_model.dart';
 import 'article_tile.dart';
 
 class GlobalNews extends StatefulWidget {

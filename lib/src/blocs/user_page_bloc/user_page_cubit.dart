@@ -50,16 +50,18 @@ class UserPageCubit extends Cubit<UserPageState> {
     ));
   }
 
-  Future<void> updateUser(String email, String gender) async {
+  Future<void> updateUser(String email, String gender, String imagePath) async {
     if (!state.status.isValidated) return;
     emit(state.copyWith(status: FormzStatus.submissionInProgress));
     try {
       _authenticationRepository.updateUser(
-          firstName: state.firstName.value,
-          lastName: state.lastName.value,
-          dateOfBirth: state.dateOfBirth.value,
-          email: email,
-          gender: gender);
+        firstName: state.firstName.value,
+        lastName: state.lastName.value,
+        dateOfBirth: state.dateOfBirth.value,
+        email: email,
+        gender: gender,
+        imagePath: imagePath,
+      );
       emit(state.copyWith(status: FormzStatus.submissionSuccess));
     } on Exception {
       emit(state.copyWith(status: FormzStatus.submissionFailure));

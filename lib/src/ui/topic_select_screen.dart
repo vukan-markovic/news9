@@ -3,7 +3,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:news/src/blocs/category_bloc/category_bloc.dart';
 import 'package:news/src/constants/Strings.dart';
-import 'package:news/src/models/category.dart';
 
 import '../constants/ColorConstants.dart';
 import '../extensions/Color.dart';

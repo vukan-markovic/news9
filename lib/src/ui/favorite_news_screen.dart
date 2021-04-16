@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:news/src/blocs/news_bloc/news_bloc.dart';
-import 'package:news/src/models/article_model.dart';
+import 'package:news/src/models/article/article_model.dart';
 
 import 'article_tile.dart';
 

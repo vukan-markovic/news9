@@ -1,5 +1,7 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:news/src/blocs/authentication_bloc/authentication_bloc.dart';
 import 'package:news/src/blocs/change_theme_bloc/bloc/change_theme_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -8,6 +10,7 @@ import 'package:news/src/constants/enums.dart';
 import 'package:news/src/models/user/user.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:formz/formz.dart';
+import 'package:flutter/foundation.dart';
 
 class UserPage extends StatefulWidget {
   @override
@@ -17,9 +20,30 @@ class UserPage extends StatefulWidget {
 Gender _gender = Gender.male;
 TextEditingController _firstNamecontroller;
 TextEditingController _lastNamecontroller;
+String _imagePath;
 
 class _UserPageState extends State<UserPage> {
   String editText = 'Edit';
+  final picker = ImagePicker();
+  ImageProvider profileImage;
+
+  Future getImage(String email, String gender) async {
+    final pickedFile = await picker.getImage(source: ImageSource.gallery);
+
+    setState(() {
+      if (pickedFile != null) {
+        _imagePath = pickedFile.path;
+
+        if (kIsWeb) {
+          // context.read<UserPageCubit>().updateUser(email, gender, _imagePath);
+          profileImage = Image.network(pickedFile.path).image;
+        } else {
+          // context.read<UserPageCubit>().updateUser(email, gender, _imagePath);
+          profileImage = Image.file(File(_imagePath)).image;
+        }
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,11 +54,29 @@ class _UserPageState extends State<UserPage> {
         AppUser user =
             box.get(context.read<AuthenticationBloc>().state.user.email);
         if (user != null) {
-          _gender = user.gender == 'Male' ? Gender.male : Gender.female;
-          _firstNamecontroller =
-              new TextEditingController(text: user.firstName);
-          _lastNamecontroller = new TextEditingController(text: user.lastName);
-          context.read<UserPageCubit>().setInitialValues(user);
+          if (editText == 'Edit') {
+            _gender = user.gender == 'Male' ? Gender.male : Gender.female;
+            _firstNamecontroller =
+                new TextEditingController(text: user.firstName);
+            _lastNamecontroller =
+                new TextEditingController(text: user.lastName);
+            context.read<UserPageCubit>().setInitialValues(user);
+          }
+          if (profileImage == null) {
+            if (user.imagePath != null) {
+              if (kIsWeb) {
+                profileImage = Image.network(
+                  user.imagePath,
+                ).image;
+              } else {
+                profileImage = Image.file(
+                  File(user.imagePath),
+                ).image;
+              }
+            } else {
+              profileImage = Image.asset('assets/splash.jpg').image;
+            }
+          }
         }
         return Center(
           child: Container(
@@ -45,10 +87,15 @@ class _UserPageState extends State<UserPage> {
                 children: <Widget>[
                   Container(
                     margin: EdgeInsets.only(top: 8),
-                    child: CircleAvatar(
-                      radius: 48,
-                      backgroundImage: null,
-                      child: Icon(Icons.person_outline, size: 48),
+                    child: GestureDetector(
+                      onTap: () => editText == 'Edit'
+                          ? null
+                          : getImage(user.email, user.gender),
+                      child: CircleAvatar(
+                        radius: 48,
+                        backgroundImage: profileImage,
+                        backgroundColor: Colors.transparent,
+                      ),
                     ),
                   ),
                   SizedBox(height: 8.0),
@@ -126,18 +173,23 @@ class _UserPageState extends State<UserPage> {
                               ),
                               onPressed: state.status.isValidated
                                   ? () async {
+                                      if (editText == 'Save') {
+                                        String gender = _gender == Gender.male
+                                            ? 'Male'
+                                            : 'Female';
+                                        await context
+                                            .read<UserPageCubit>()
+                                            .updateUser(
+                                                user.email, gender, _imagePath);
+                                      }
+
                                       setState(() {
                                         if (editText == 'Edit')
                                           editText = 'Save';
-                                        else
+                                        else {
                                           editText = 'Edit';
+                                        }
                                       });
-                                      String gender = _gender == Gender.male
-                                          ? 'Male'
-                                          : 'Female';
-                                      await context
-                                          .read<UserPageCubit>()
-                                          .updateUser(user.email, gender);
                                     }
                                   : null,
                             );

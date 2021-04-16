@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive/hive.dart';
 import 'package:news/src/App.dart';
+import 'package:news/src/models/article/article_model.dart';
+import 'package:news/src/models/category/category.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:news/src/models/user/user.dart';
@@ -21,10 +23,14 @@ Future<void> main() async {
         await path_provider.getApplicationDocumentsDirectory();
     Hive
       ..init(appDocumentDirectory.path)
+      ..registerAdapter(CategoryAdapter())
+      ..registerAdapter(ArticleAdapter())
       ..registerAdapter(AppUserAdapter());
   } else {
     Hive
       ..initFlutter()
+      ..registerAdapter(CategoryAdapter())
+      ..registerAdapter(ArticleAdapter())
       ..registerAdapter(AppUserAdapter());
   }
 

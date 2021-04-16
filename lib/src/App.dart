@@ -10,7 +10,7 @@ import 'ui/login/login_page.dart';
 
 class App extends StatelessWidget {
   final AuthenticationRepository authenticationRepository =
-      AuthenticationRepository();
+  AuthenticationRepository();
 
   @override
   Widget build(BuildContext context) {
@@ -52,13 +52,13 @@ class _AppViewState extends State<AppView> {
                     case AuthenticationStatus.authenticated:
                       _navigator.pushAndRemoveUntil<void>(
                         NavigationScreen.route(),
-                        (route) => false,
+                            (route) => false,
                       );
                       break;
                     case AuthenticationStatus.unauthenticated:
                       _navigator.pushAndRemoveUntil<void>(
                         LoginPage.route(),
-                        (route) => false,
+                            (route) => false,
                       );
                       break;
                     default:
