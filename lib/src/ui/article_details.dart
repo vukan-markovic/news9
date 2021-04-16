@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:news/src/models/article/article_model.dart';
+import 'package:news/src/utils/app_localizations.dart';
 import 'dart:async';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:jiffy/jiffy.dart';
@@ -100,13 +101,15 @@ class ArticleDetails extends StatelessWidget {
                 ),
                 SizedBox(height: 10),
                 Text(
-                  _article.title ?? 'No title',
+                  _article.title ??
+                      AppLocalizations.of(context).translate('no_title'),
                   style: Theme.of(context).textTheme.headline4,
                   textAlign: TextAlign.center,
                 ),
                 SizedBox(height: 10),
                 Text(
-                  _article.description ?? 'No description',
+                  _article.description ??
+                      AppLocalizations.of(context).translate('no_description'),
                   style: Theme.of(context).textTheme.subtitle1,
                   textAlign: TextAlign.center,
                 ),
@@ -165,10 +168,9 @@ class ArticleDetails extends StatelessWidget {
                 ),
                 SizedBox(height: 10),
                 OutlinedButton(
-                  onPressed: () =>
-                      _launchInWebViewWithJavaScript(_article.url),
+                  onPressed: () => _launchInWebViewWithJavaScript(_article.url),
                   child: Text(
-                    'Open the whole article',
+                    AppLocalizations.of(context).translate('whole_article'),
                     style: Theme.of(context).textTheme.subtitle2,
                   ),
                 ),

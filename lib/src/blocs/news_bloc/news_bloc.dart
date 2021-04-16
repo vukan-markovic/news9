@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:rxdart/rxdart.dart';
 import '../../resources/news_repository.dart';
 import '../../models/article/article_model.dart';
@@ -11,8 +10,8 @@ class NewsBloc {
 
   Stream<ArticleModel> get favoriteNews => _newsFetcher.stream;
 
-  fetchAllNews() async {
-    ArticleModel news = await _repository.fetchAllNews();
+  fetchAllNews(String languageCode) async {
+    ArticleModel news = await _repository.fetchAllNews(languageCode);
     deleteNewsBox("offline_news");
     insertNewsList(news);
     _newsFetcher.sink.add(news);

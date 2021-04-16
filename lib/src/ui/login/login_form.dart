@@ -4,6 +4,7 @@ import 'package:formz/formz.dart';
 import 'package:news/src/blocs/login_bloc/login_cubit.dart';
 import 'package:news/src/ui/reset-password/reset_password_page.dart';
 import 'package:news/src/ui/sign_up/sign_up_page.dart';
+import 'package:news/src/utils/app_localizations.dart';
 
 import '../dialog.dart';
 
@@ -38,7 +39,7 @@ class LoginForm extends StatelessWidget {
                 Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    'Login',
+                    AppLocalizations.of(context).translate('login'),
                     textAlign: TextAlign.left,
                     style: TextStyle(
                       fontSize: 36,
@@ -56,13 +57,16 @@ class LoginForm extends StatelessWidget {
                 TextButton(
                   onPressed: () => Navigator.of(context)
                       .pushReplacement(ResetPasswordPage.route()),
-                  child: Text('Reset password'),
+                  child: Text(
+                    AppLocalizations.of(context).translate('reset_password'),
+                  ),
                 ),
                 SizedBox(height: 24.0),
                 TextButton(
                   onPressed: () =>
                       Navigator.of(context).pushReplacement(SignUpPage.route()),
-                  child: Text('Sign up'),
+                  child:
+                      Text(AppLocalizations.of(context).translate('sign_up')),
                 ),
               ],
             ),
@@ -139,7 +143,7 @@ class _LoginButton extends StatelessWidget {
                     primary: Colors.blue,
                   ),
                   child: Text(
-                    'LOG IN',
+                    AppLocalizations.of(context).translate('log_in'),
                     style: TextStyle(fontSize: 24),
                   ),
                   onPressed: state.status.isValidated

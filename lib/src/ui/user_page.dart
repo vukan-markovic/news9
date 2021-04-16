@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:news/src/blocs/authentication_bloc/authentication_bloc.dart';
-import 'package:news/src/blocs/change_theme_bloc/bloc/change_theme_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:news/src/blocs/change_theme_bloc/change_theme_bloc.dart';
 import 'package:news/src/models/user/user.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:news/src/utils/app_localizations.dart';
 
 class UserPage extends StatelessWidget {
   @override
@@ -45,7 +46,7 @@ class UserPage extends StatelessWidget {
                       primary: Colors.blue,
                     ),
                     child: Text(
-                      'Edit',
+                      AppLocalizations.of(context).translate('edit'),
                       style: TextStyle(fontSize: 16),
                     ),
                     onPressed: () {},
@@ -58,12 +59,14 @@ class UserPage extends StatelessWidget {
                     children: <Widget>[
                       ListTile(
                         leading: Icon(Icons.language),
-                        title: Text('Language'),
+                        title: Text(
+                            AppLocalizations.of(context).translate('language')),
                         trailing: Text('EN'),
                         onTap: () {},
                       ),
                       SwitchListTile(
-                        title: Text('Dark mode'),
+                        title: Text(AppLocalizations.of(context)
+                            .translate('dark_mode')),
                         value: context
                                     .read<ChangeThemeBloc>()
                                     .state
@@ -85,17 +88,20 @@ class UserPage extends StatelessWidget {
                       ),
                       ListTile(
                         leading: Icon(Icons.category),
-                        title: Text('Your topics'),
+                        title: Text(AppLocalizations.of(context)
+                            .translate('your_topics')),
                         onTap: () {},
                       ),
                       ListTile(
                         leading: Icon(Icons.settings),
-                        title: Text('Advanced search'),
+                        title: Text(AppLocalizations.of(context)
+                            .translate('advanced_search')),
                         onTap: () {},
                       ),
                       ListTile(
                         leading: Icon(Icons.logout),
-                        title: Text('Log out'),
+                        title: Text(
+                            AppLocalizations.of(context).translate('log_out')),
                         onTap: () => context
                             .read<AuthenticationBloc>()
                             .add(AuthenticationLogoutRequested()),

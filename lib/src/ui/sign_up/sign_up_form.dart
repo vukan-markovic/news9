@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
 import 'package:news/src/blocs/sign_up_bloc/sign_up_cubit.dart';
 import 'package:news/src/ui/login/login_page.dart';
+import 'package:news/src/utils/app_localizations.dart';
 
 import '../dialog.dart';
 
@@ -36,7 +37,7 @@ class SignUpForm extends StatelessWidget {
                 Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    'Sign up',
+                    AppLocalizations.of(context).translate('sign_up'),
                     textAlign: TextAlign.left,
                     style: TextStyle(
                       fontSize: 36,
@@ -62,7 +63,7 @@ class SignUpForm extends StatelessWidget {
                 TextButton(
                   onPressed: () =>
                       Navigator.of(context).pushReplacement(LoginPage.route()),
-                  child: Text('Log in'),
+                  child: Text(AppLocalizations.of(context).translate('log_in')),
                 ),
               ],
             ),
@@ -232,13 +233,13 @@ class __GenderInputState extends State<_GenderInput> {
       children: [
         Flexible(child: Icon(Icons.person)),
         SizedBox(width: 8.0),
-        Flexible(child: Text('Gender')),
+        Flexible(child: Text(AppLocalizations.of(context).translate('gender'))),
         Expanded(
           flex: 2,
           child: Column(
             children: <Widget>[
               ListTile(
-                title: Text('Male'),
+                title: Text(AppLocalizations.of(context).translate('male')),
                 leading: Radio<Gender>(
                   value: Gender.male,
                   groupValue: _gender,
@@ -250,7 +251,7 @@ class __GenderInputState extends State<_GenderInput> {
                 ),
               ),
               ListTile(
-                title: Text('Female'),
+                title: Text(AppLocalizations.of(context).translate('female')),
                 leading: Radio<Gender>(
                   value: Gender.female,
                   groupValue: _gender,
@@ -279,7 +280,9 @@ class _SignUpButton extends StatelessWidget {
             ? CircularProgressIndicator()
             : ElevatedButton(
                 key: const Key('signUpForm_continue_raisedButton'),
-                child: Text('Create account'),
+                child: Text(
+                  AppLocalizations.of(context).translate('create_account'),
+                ),
                 style: ElevatedButton.styleFrom(
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(5),

@@ -4,6 +4,7 @@ import 'package:formz/formz.dart';
 import 'package:news/src/blocs/reset_password_bloc/reset_password_cubit.dart';
 import 'package:news/src/blocs/reset_password_bloc/reset_password_state.dart';
 import 'package:news/src/ui/login/login_page.dart';
+import 'package:news/src/utils/app_localizations.dart';
 
 import '../dialog.dart';
 
@@ -37,7 +38,7 @@ class ResetPasswordForm extends StatelessWidget {
                 Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    'Reset password',
+                    AppLocalizations.of(context).translate('reset_password'),
                     textAlign: TextAlign.left,
                     style: TextStyle(
                       fontSize: 36,
@@ -53,7 +54,9 @@ class ResetPasswordForm extends StatelessWidget {
                 TextButton(
                   onPressed: () =>
                       Navigator.of(context).pushReplacement(LoginPage.route()),
-                  child: Text('Sign in'),
+                  child: Text(
+                    AppLocalizations.of(context).translate('sign_in'),
+                  ),
                 ),
               ],
             ),
@@ -106,7 +109,7 @@ class _ResetPasswordButton extends StatelessWidget {
                     primary: Colors.blue,
                   ),
                   child: Text(
-                    'Reset password',
+                    AppLocalizations.of(context).translate('reset_password'),
                     style: TextStyle(fontSize: 24),
                   ),
                   onPressed: state.status.isValidated
