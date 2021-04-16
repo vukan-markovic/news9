@@ -86,7 +86,7 @@ class Article {
 
   String get publishedAt => _publishedAt;
 
-  String get source => _source.name;
+  Source get source => _source;
 }
 
 @HiveType(typeId: 2)
