@@ -4,7 +4,7 @@ import 'package:meta/meta.dart';
 
 part 'user.g.dart';
 
-@HiveType(typeId: 2)
+@HiveType(typeId: 3)
 class AppUser extends Equatable {
   const AppUser({
     @required this.email,

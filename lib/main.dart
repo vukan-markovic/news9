@@ -23,17 +23,20 @@ Future<void> main() async {
         await path_provider.getApplicationDocumentsDirectory();
     Hive
       ..init(appDocumentDirectory.path)
-      ..registerAdapter(CategoryAdapter())
+      ..registerAdapter(AppUserAdapter())
       ..registerAdapter(ArticleAdapter())
-      ..registerAdapter(AppUserAdapter());
+      ..registerAdapter(SourceAdapter())
+      ..registerAdapter(CategoryAdapter());
   } else {
     Hive
       ..initFlutter()
-      ..registerAdapter(CategoryAdapter())
+      ..registerAdapter(AppUserAdapter())
       ..registerAdapter(ArticleAdapter())
-      ..registerAdapter(AppUserAdapter());
+      ..registerAdapter(SourceAdapter())
+      ..registerAdapter(CategoryAdapter());
   }
 
   await Hive.openBox<AppUser>('user');
+
   runApp(App());
 }
