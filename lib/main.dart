@@ -9,6 +9,7 @@ import 'package:news/src/blocs/language_bloc/language_bloc.dart';
 import 'package:news/src/models/article/article_model.dart';
 import 'package:news/src/models/category/category.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:news/src/models/user/user.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
 

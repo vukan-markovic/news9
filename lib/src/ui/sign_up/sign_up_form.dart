@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
 import 'package:news/src/blocs/sign_up_bloc/sign_up_cubit.dart';
+import 'package:news/src/constants/enums.dart';
 import 'package:news/src/ui/login/login_page.dart';
 import 'package:news/src/utils/app_localizations.dart';
 
@@ -216,8 +217,6 @@ class _PasswordInput extends StatelessWidget {
     );
   }
 }
-
-enum Gender { male, female }
 
 Gender _gender = Gender.male;
 

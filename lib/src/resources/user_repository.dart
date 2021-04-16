@@ -85,6 +85,27 @@ class AuthenticationRepository {
     }
   }
 
+  void updateUser({
+    String firstName,
+    String lastName,
+    String dateOfBirth,
+    String email,
+    String gender,
+    String imagePath,
+  }) {
+    Box<AppUser> box = Hive.box<AppUser>('user');
+    box.put(
+        email,
+        AppUser(
+          email: email,
+          firstName: firstName,
+          lastName: lastName,
+          dateOfBirth: dateOfBirth,
+          gender: gender,
+          imagePath: imagePath,
+        ));
+  }
+
   Future<void> logOut() async {
     try {
       await _firebaseAuth.signOut();

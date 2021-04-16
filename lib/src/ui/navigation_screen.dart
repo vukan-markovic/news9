@@ -6,8 +6,7 @@ import 'package:news/src/constants/ColorConstants.dart';
 import 'package:news/src/constants/enums.dart';
 import 'package:news/src/extensions/Color.dart';
 import 'package:news/src/ui/favorite_news_screen.dart';
-import 'package:news/src/ui/user_page.dart';
-import 'package:news/src/utils/app_localizations.dart';
+import 'package:news/src/ui/profile/profile.dart';
 import 'global_news_screen.dart';
 
 class NavigationScreen extends StatefulWidget {
@@ -22,18 +21,15 @@ class _NavigationScreenState extends State<NavigationScreen> {
   int _currentIndex = 0;
 
   //Todo Replace the Containers with the screens when created
+  final List<Widget> _pageOptions = [
+    GlobalNews(),
+    Container(child: Text("Recommended news")),
+    FavoriteNewsScreen(),
+    ProfilePage(),
+  ];
 
   @override
   Widget build(BuildContext context) {
-    final List<Widget> _pageOptions = [
-      GlobalNews(),
-      Container(
-          child:
-              Text(AppLocalizations.of(context).translate('recommended_news'))),
-      FavoriteNewsScreen(),
-      UserPage(),
-    ];
-
     return Scaffold(
       appBar: AppBar(
         title: Text("Flutter News9"),
