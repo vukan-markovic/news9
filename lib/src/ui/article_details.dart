@@ -87,7 +87,7 @@ class ArticleDetails extends StatelessWidget {
                 Text.rich(
                   TextSpan(children: [
                     TextSpan(
-                      text: _article.source ?? 'Source not stated',
+                      text: _article.source.name ?? 'Source not stated',
                       style: Theme.of(context).textTheme.subtitle2,
                     ),
                     TextSpan(text: ' | '),
