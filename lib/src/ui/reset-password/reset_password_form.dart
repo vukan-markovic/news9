@@ -16,15 +16,16 @@ class ResetPasswordForm extends StatelessWidget {
         if (state.status.isSubmissionFailure) {
           AppDialog.showAppDialog(
             context: context,
-            title: 'Incorrect email!',
-            body: 'The email you entered are incorrect. Please try again.',
+            title: AppLocalizations.of(context).translate('invalid_email'),
+            body: AppLocalizations.of(context).translate('invalid_email_body'),
           );
         } else if (state.status.isSubmissionSuccess) {
           Navigator.of(context).pushReplacement(LoginPage.route());
           AppDialog.showAppDialog(
             context: context,
-            title: 'Reset password email sent!',
-            body: 'Please check your inbox and follow the instructions.',
+            title:
+                AppLocalizations.of(context).translate('reset_password_title'),
+            body: AppLocalizations.of(context).translate('reset_password_body'),
           );
         }
       },
@@ -41,7 +42,7 @@ class ResetPasswordForm extends StatelessWidget {
                     AppLocalizations.of(context).translate('reset_password'),
                     textAlign: TextAlign.left,
                     style: TextStyle(
-                      fontSize: 36,
+                      fontSize: 24,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -80,9 +81,11 @@ class _EmailInput extends StatelessWidget {
           keyboardType: TextInputType.emailAddress,
           decoration: InputDecoration(
             prefixIcon: Icon(Icons.person),
-            labelText: 'Email',
+            labelText: AppLocalizations.of(context).translate('email'),
             helperText: '',
-            errorText: state.email.invalid ? 'Invalid email' : null,
+            errorText: state.email.invalid
+                ? AppLocalizations.of(context).translate('invalid_email')
+                : null,
           ),
         );
       },
@@ -98,28 +101,25 @@ class _ResetPasswordButton extends StatelessWidget {
       builder: (context, state) {
         return state.status.isSubmissionInProgress
             ? const CircularProgressIndicator()
-            : Container(
-                width: 200,
-                child: ElevatedButton(
-                  key: const Key('resetPasswordForm_continue_raisedButton'),
-                  style: ElevatedButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(5.0),
-                    ),
-                    primary: Colors.blue,
+            : ElevatedButton(
+                key: const Key('resetPasswordForm_continue_raisedButton'),
+                style: ElevatedButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(5.0),
                   ),
-                  child: Text(
-                    AppLocalizations.of(context).translate('reset_password'),
-                    style: TextStyle(fontSize: 24),
-                  ),
-                  onPressed: state.status.isValidated
-                      ? () async {
-                          await context
-                              .read<ResetPasswordCubit>()
-                              .resetPassword();
-                        }
-                      : null,
+                  primary: Colors.blue,
                 ),
+                child: Text(
+                  AppLocalizations.of(context).translate('reset_password'),
+                  style: TextStyle(fontSize: 16),
+                ),
+                onPressed: state.status.isValidated
+                    ? () async {
+                        await context
+                            .read<ResetPasswordCubit>()
+                            .resetPassword();
+                      }
+                    : null,
               );
       },
     );

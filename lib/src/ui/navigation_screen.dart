@@ -1,12 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:news/src/blocs/language_bloc/language_bloc.dart';
 import 'package:news/src/constants/ColorConstants.dart';
-import 'package:news/src/constants/enums.dart';
 import 'package:news/src/extensions/Color.dart';
 import 'package:news/src/ui/favorite_news_screen.dart';
 import 'package:news/src/ui/profile/profile.dart';
+import 'package:news/src/utils/app_localizations.dart';
 import 'global_news_screen.dart';
 
 class NavigationScreen extends StatefulWidget {
@@ -34,23 +32,6 @@ class _NavigationScreenState extends State<NavigationScreen> {
       appBar: AppBar(
         title: Text("Flutter News9"),
         backgroundColor: HexColor.fromHex(ColorConstants.primaryColor),
-        actions: [
-          ElevatedButton(
-            child: Text('AR'),
-            onPressed: () => BlocProvider.of<LanguageBloc>(context).add(
-              LanguageSelected(Language.AR),
-            ),
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          ElevatedButton(
-            child: Text('EN'),
-            onPressed: () => BlocProvider.of<LanguageBloc>(context).add(
-              LanguageSelected(Language.EN),
-            ),
-          ),
-        ],
       ),
       body: _pageOptions[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
@@ -63,27 +44,27 @@ class _NavigationScreenState extends State<NavigationScreen> {
               icon: _currentIndex == 0
                   ? Icon(Icons.home_rounded)
                   : Icon(Icons.home_outlined),
-              label: 'Global',
+              label: AppLocalizations.of(context).translate('global'),
               backgroundColor: HexColor.fromHex(ColorConstants.primaryColor)),
           BottomNavigationBarItem(
             icon: _currentIndex == 1
                 ? Icon(Icons.star_rounded)
                 : Icon(Icons.star_border_rounded),
-            label: 'Recommended',
+            label: AppLocalizations.of(context).translate('recommended'),
             backgroundColor: HexColor.fromHex(ColorConstants.primaryColor),
           ),
           BottomNavigationBarItem(
             icon: _currentIndex == 2
                 ? Icon(Icons.bookmark_rounded)
                 : Icon(Icons.bookmark_border_rounded),
-            label: 'Favorite',
+            label: AppLocalizations.of(context).translate('favorites'),
             backgroundColor: HexColor.fromHex(ColorConstants.primaryColor),
           ),
           BottomNavigationBarItem(
             icon: _currentIndex == 3
                 ? Icon(Icons.person_rounded)
                 : Icon(Icons.person_outline_rounded),
-            label: 'Profile',
+            label: AppLocalizations.of(context).translate('profile'),
             backgroundColor: HexColor.fromHex(ColorConstants.primaryColor),
           ),
         ],

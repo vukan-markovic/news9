@@ -39,9 +39,7 @@ class LanguageBloc extends Bloc<LanguageEvent, LanguageState> {
     final sharedPrefService = await SharedPreferencesService.instance;
     final defaultLanguageCode = sharedPrefService.languageCode;
 
-    if (selectedLanguage == Language.AR && defaultLanguageCode != 'ar') {
-      yield* _loadLanguage(sharedPrefService, 'ar', 'AR');
-    } else if (selectedLanguage == Language.EN && defaultLanguageCode != 'en') {
+    if (selectedLanguage == Language.EN && defaultLanguageCode != 'en') {
       yield* _loadLanguage(sharedPrefService, 'en', 'US');
     } else if (selectedLanguage == Language.DE && defaultLanguageCode != 'de') {
       yield* _loadLanguage(sharedPrefService, 'de', 'DE');
@@ -49,8 +47,6 @@ class LanguageBloc extends Bloc<LanguageEvent, LanguageState> {
       yield* _loadLanguage(sharedPrefService, 'es', 'ES');
     } else if (selectedLanguage == Language.FR && defaultLanguageCode != 'fr') {
       yield* _loadLanguage(sharedPrefService, 'fr', 'FR');
-    } else if (selectedLanguage == Language.HE && defaultLanguageCode != 'he') {
-      yield* _loadLanguage(sharedPrefService, 'he', 'HE');
     } else if (selectedLanguage == Language.IT && defaultLanguageCode != 'it') {
       yield* _loadLanguage(sharedPrefService, 'it', 'IT');
     } else if (selectedLanguage == Language.NL && defaultLanguageCode != 'nl') {
@@ -62,7 +58,7 @@ class LanguageBloc extends Bloc<LanguageEvent, LanguageState> {
     } else if (selectedLanguage == Language.RU && defaultLanguageCode != 'ru') {
       yield* _loadLanguage(sharedPrefService, 'ru', 'RU');
     } else if (selectedLanguage == Language.ZH && defaultLanguageCode != 'zh') {
-      yield* _loadLanguage(sharedPrefService, 'zh', 'ZH');
+      yield* _loadLanguage(sharedPrefService, 'zh', 'CN');
     }
   }
 

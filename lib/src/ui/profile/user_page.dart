@@ -11,6 +11,8 @@ import 'package:news/src/models/user/user.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:formz/formz.dart';
 import 'package:flutter/foundation.dart';
+import 'package:news/src/ui/profile/language_input.dart';
+import 'package:news/src/utils/app_localizations.dart';
 
 class UserPage extends StatefulWidget {
   @override
@@ -35,10 +37,8 @@ class _UserPageState extends State<UserPage> {
         _imagePath = pickedFile.path;
 
         if (kIsWeb) {
-          // context.read<UserPageCubit>().updateUser(email, gender, _imagePath);
           profileImage = Image.network(pickedFile.path).image;
         } else {
-          // context.read<UserPageCubit>().updateUser(email, gender, _imagePath);
           profileImage = Image.file(File(_imagePath)).image;
         }
       }
@@ -113,10 +113,12 @@ class _UserPageState extends State<UserPage> {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Flexible(
-                          child: Text('First name:'),
+                          child: Text(AppLocalizations.of(context)
+                                  .translate('first_name') +
+                              ':'),
                         ),
                         SizedBox(
-                          width: 4,
+                          width: 8,
                         ),
                         _FirstNameInput()
                       ],
@@ -125,10 +127,12 @@ class _UserPageState extends State<UserPage> {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Flexible(
-                          child: Text('Last name:'),
+                          child: Text(AppLocalizations.of(context)
+                                  .translate('last_name') +
+                              ':'),
                         ),
                         SizedBox(
-                          width: 4,
+                          width: 8,
                         ),
                         _LastNameInput()
                       ],
@@ -137,10 +141,12 @@ class _UserPageState extends State<UserPage> {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Flexible(
-                          child: Text('Date of birth:'),
+                          child: Text(AppLocalizations.of(context)
+                                  .translate('date_of_birth') +
+                              ':'),
                         ),
                         SizedBox(
-                          width: 4,
+                          width: 8,
                         ),
                         Flexible(
                           child: _DateOfBirthInput(
@@ -162,7 +168,8 @@ class _UserPageState extends State<UserPage> {
                               key:
                                   const Key('signUpForm_continue_raisedButton'),
                               child: Text(
-                                editText,
+                                AppLocalizations.of(context)
+                                    .translate(editText),
                                 style: TextStyle(fontSize: 16),
                               ),
                               style: ElevatedButton.styleFrom(
@@ -202,14 +209,11 @@ class _UserPageState extends State<UserPage> {
                     shrinkWrap: true,
                     scrollDirection: Axis.vertical,
                     children: <Widget>[
-                      ListTile(
-                        leading: Icon(Icons.language),
-                        title: Text('Language'),
-                        trailing: Text('EN'),
-                        onTap: () {},
-                      ),
+                      LanguageInput(),
                       SwitchListTile(
-                        title: Text('Dark mode'),
+                        title: Text(
+                          AppLocalizations.of(context).translate('dark_mode'),
+                        ),
                         value: context
                                     .read<ChangeThemeBloc>()
                                     .state
@@ -232,19 +236,26 @@ class _UserPageState extends State<UserPage> {
                       Divider(),
                       ListTile(
                         leading: Icon(Icons.category),
-                        title: Text('Your topics'),
+                        title: Text(
+                          AppLocalizations.of(context).translate('your_topics'),
+                        ),
                         onTap: () {},
                       ),
                       Divider(),
                       ListTile(
                         leading: Icon(Icons.settings),
-                        title: Text('Advanced search'),
+                        title: Text(
+                          AppLocalizations.of(context)
+                              .translate('advanced_search'),
+                        ),
                         onTap: () {},
                       ),
                       Divider(),
                       ListTile(
                         leading: Icon(Icons.logout),
-                        title: Text('Log out'),
+                        title: Text(
+                          AppLocalizations.of(context).translate('log_out'),
+                        ),
                         onTap: () => context
                             .read<AuthenticationBloc>()
                             .add(AuthenticationLogoutRequested()),
@@ -274,7 +285,7 @@ class _FirstNameInput extends StatelessWidget {
             controller: _firstNamecontroller,
             decoration: InputDecoration(
               errorText: state.firstName.invalid
-                  ? 'First name must not be empty'
+                  ? AppLocalizations.of(context).translate('first_name_error')
                   : null,
             ),
           ),
@@ -296,8 +307,9 @@ class _LastNameInput extends StatelessWidget {
                 context.read<UserPageCubit>().lastNameChanged(lastName),
             controller: _lastNamecontroller,
             decoration: InputDecoration(
-              errorText:
-                  state.lastName.invalid ? 'Last name must not be empty' : null,
+              errorText: state.lastName.invalid
+                  ? AppLocalizations.of(context).translate('last_name_error')
+                  : null,
             ),
           ),
         );
@@ -355,7 +367,7 @@ class __DateOfBirthInputState extends State<_DateOfBirthInput> {
           decoration: InputDecoration(
             labelText: labelText,
             errorText: state.dateOfBirth.invalid
-                ? 'Date of birth must be selected'
+                ? AppLocalizations.of(context).translate('date_of_birth_error')
                 : null,
           ),
         );
@@ -373,16 +385,16 @@ class __GenderInputState extends State<_GenderInput> {
   @override
   Widget build(BuildContext context) {
     return Row(
+      mainAxisSize: MainAxisSize.min,
       children: [
         Flexible(
-          child: Text('Gender:'),
+          child: Text(AppLocalizations.of(context).translate('gender') + ':'),
         ),
-        Expanded(
-          flex: 2,
+        Flexible(
           child: Column(
             children: <Widget>[
               ListTile(
-                title: Text('Male'),
+                title: Text(AppLocalizations.of(context).translate('male')),
                 leading: Radio<Gender>(
                   value: Gender.male,
                   groupValue: _gender,
@@ -394,7 +406,7 @@ class __GenderInputState extends State<_GenderInput> {
                 ),
               ),
               ListTile(
-                title: Text('Female'),
+                title: Text(AppLocalizations.of(context).translate('female')),
                 leading: Radio<Gender>(
                   value: Gender.female,
                   groupValue: _gender,

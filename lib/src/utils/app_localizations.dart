@@ -41,11 +41,9 @@ class _AppLocalizationsDelegate
   bool isSupported(Locale locale) {
     return [
       'en',
-      'ar',
       'de',
       'es',
       'fr',
-      'he',
       'it',
       'nl',
       'no',

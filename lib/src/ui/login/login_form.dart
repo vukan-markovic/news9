@@ -16,16 +16,18 @@ class LoginForm extends StatelessWidget {
         if (state.status.isSubmissionFailure) {
           AppDialog.showAppDialog(
             context: context,
-            title: 'Incorrect password/email!',
-            body:
-                'The email and/or password you entered are incorrect. Please try again.',
+            title: AppLocalizations.of(context)
+                .translate('incorrect_credentials_title'),
+            body: AppLocalizations.of(context)
+                .translate('incorrect_credentials_body'),
           );
         } else if (state.status.isSubmissionSuccess && !state.emailVerified) {
           AppDialog.showAppDialog(
             context: context,
-            title: 'Email not verified',
-            body:
-                'Your email is not verified. Please verify your email address.',
+            title: AppLocalizations.of(context)
+                .translate('email_not_verified_title'),
+            body: AppLocalizations.of(context)
+                .translate('email_not_verified_body'),
           );
         }
       },
@@ -89,9 +91,11 @@ class _EmailInput extends StatelessWidget {
           keyboardType: TextInputType.emailAddress,
           decoration: InputDecoration(
             prefixIcon: Icon(Icons.person),
-            labelText: 'Email',
+            labelText: AppLocalizations.of(context).translate('email'),
             helperText: '',
-            errorText: state.email.invalid ? 'Invalid email' : null,
+            errorText: state.email.invalid
+                ? AppLocalizations.of(context).translate('invalid_email')
+                : null,
           ),
         );
       },
@@ -114,9 +118,11 @@ class _PasswordInput extends StatelessWidget {
           autocorrect: false,
           decoration: InputDecoration(
             prefixIcon: Icon(Icons.vpn_key),
-            labelText: 'Password',
+            labelText: AppLocalizations.of(context).translate('password'),
             helperText: '',
-            errorText: state.password.invalid ? 'Invalid password' : null,
+            errorText: state.password.invalid
+                ? AppLocalizations.of(context).translate('invalid_password')
+                : null,
           ),
         );
       },
