@@ -8,6 +8,7 @@ import 'package:news/src/App.dart';
 import 'package:news/src/models/article/article_model.dart';
 import 'package:news/src/models/category/category.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:news/src/models/user/user.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
 
@@ -19,7 +20,7 @@ Future<void> main() async {
 
   if (!kIsWeb) {
     final appDocumentDirectory =
-    await path_provider.getApplicationDocumentsDirectory();
+        await path_provider.getApplicationDocumentsDirectory();
     Hive
       ..init(appDocumentDirectory.path)
       ..registerAdapter(AppUserAdapter())

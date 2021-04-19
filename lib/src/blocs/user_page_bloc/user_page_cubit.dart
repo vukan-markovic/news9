@@ -2,54 +2,23 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:formz/formz.dart';
 import 'package:news/src/models/forms/date_of_birth.dart';
-import 'package:news/src/models/forms/email.dart';
 import 'package:news/src/models/forms/first_name.dart';
 import 'package:news/src/models/forms/last_name.dart';
-import 'package:news/src/models/forms/password.dart';
+import 'package:news/src/models/user/user.dart';
 import 'package:news/src/resources/user_repository.dart';
 
-part 'sign_up_state.dart';
+part 'user_page_state.dart';
 
-class SignUpCubit extends Cubit<SignUpState> {
-  SignUpCubit(this._authenticationRepository) : super(const SignUpState());
+class UserPageCubit extends Cubit<UserPageState> {
+  UserPageCubit(this._authenticationRepository) : super(const UserPageState());
 
   final AuthenticationRepository _authenticationRepository;
-
-  void emailChanged(String value) {
-    final email = Email.dirty(value);
-    emit(state.copyWith(
-      email: email,
-      status: Formz.validate([
-        email,
-        state.password,
-        state.firstName,
-        state.lastName,
-        state.dateOfBirth,
-      ]),
-    ));
-  }
-
-  void passwordChanged(String value) {
-    final password = Password.dirty(value);
-    emit(state.copyWith(
-      password: password,
-      status: Formz.validate([
-        state.email,
-        password,
-        state.firstName,
-        state.lastName,
-        state.dateOfBirth,
-      ]),
-    ));
-  }
 
   void firstNameChanged(String value) {
     final firstName = FirstName.dirty(value);
     emit(state.copyWith(
       firstName: firstName,
       status: Formz.validate([
-        state.email,
-        state.password,
         firstName,
         state.lastName,
         state.dateOfBirth,
@@ -62,8 +31,6 @@ class SignUpCubit extends Cubit<SignUpState> {
     emit(state.copyWith(
       lastName: lastName,
       status: Formz.validate([
-        state.email,
-        state.password,
         state.firstName,
         lastName,
         state.dateOfBirth,
@@ -76,8 +43,6 @@ class SignUpCubit extends Cubit<SignUpState> {
     emit(state.copyWith(
       dateOfBirth: dateOfBirth,
       status: Formz.validate([
-        state.email,
-        state.password,
         state.firstName,
         state.lastName,
         dateOfBirth,
@@ -85,17 +50,17 @@ class SignUpCubit extends Cubit<SignUpState> {
     ));
   }
 
-  Future<void> signUpFormSubmitted(String gender) async {
+  Future<void> updateUser(String email, String gender, String imagePath) async {
     if (!state.status.isValidated) return;
     emit(state.copyWith(status: FormzStatus.submissionInProgress));
     try {
-      await _authenticationRepository.signUp(
-        email: state.email.value,
-        password: state.password.value,
+      _authenticationRepository.updateUser(
         firstName: state.firstName.value,
         lastName: state.lastName.value,
         dateOfBirth: state.dateOfBirth.value,
+        email: email,
         gender: gender,
+        imagePath: imagePath,
       );
       emit(state.copyWith(status: FormzStatus.submissionSuccess));
     } on Exception {
@@ -103,7 +68,20 @@ class SignUpCubit extends Cubit<SignUpState> {
     }
   }
 
-  Future<void> sendVerificationEmail() async {
-    _authenticationRepository.sendVerificationEmail();
+  void setInitialValues(AppUser user) {
+    final firstName = FirstName.dirty(user.firstName);
+    final lastName = LastName.dirty(user.lastName);
+    final dateOfBirth = DateOfBirth.dirty(user.dateOfBirth);
+
+    emit(state.copyWith(
+      firstName: firstName,
+      lastName: lastName,
+      dateOfBirth: dateOfBirth,
+      status: Formz.validate([
+        firstName,
+        lastName,
+        dateOfBirth,
+      ]),
+    ));
   }
 }

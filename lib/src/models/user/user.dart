@@ -9,10 +9,11 @@ class AppUser extends Equatable {
   const AppUser({
     @required this.email,
     this.id,
-    @required this.firstName,
-    @required this.lastName,
-    @required this.dateOfBirth,
-    @required this.gender,
+    this.firstName,
+    this.lastName,
+    this.dateOfBirth,
+    this.gender,
+    this.imagePath,
   });
 
   @HiveField(0)
@@ -32,6 +33,9 @@ class AppUser extends Equatable {
   @HiveField(4)
   final String gender;
 
+  @HiveField(5)
+  final String imagePath;
+
   static const empty = AppUser(
     email: '',
     id: '',
@@ -39,9 +43,10 @@ class AppUser extends Equatable {
     lastName: '',
     dateOfBirth: '',
     gender: '',
+    imagePath: '',
   );
 
   @override
   List<Object> get props =>
-      [email, id, firstName, lastName, dateOfBirth, gender];
+      [email, id, firstName, lastName, dateOfBirth, gender, imagePath];
 }
