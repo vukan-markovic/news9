@@ -10,5 +10,6 @@ var languages = {
   'no': Language.NO,
   'pt': Language.PT,
   'ru': Language.RU,
-  'zh': Language.ZH
+  'zh': Language.ZH,
+  'sr': Language.SR,
 };

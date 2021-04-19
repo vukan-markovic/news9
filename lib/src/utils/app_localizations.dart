@@ -50,6 +50,7 @@ class _AppLocalizationsDelegate
       'pt',
       'ru',
       'zh',
+      'sr',
     ].contains(locale.languageCode);
   }
 

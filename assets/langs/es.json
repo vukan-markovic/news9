@@ -34,7 +34,7 @@
   "by": "Por",
   "author_not_stated": "Autor no declarado",
   "incorrect_credentials_title": "Contraseña/correo electrónico incorrecto!",
-  "incorrect_credentials_body": "'El correo electrónico y/o la contraseña que has introducido son incorrectos. Por favor, inténtalo de nuevo\".",
+  "incorrect_credentials_body": "El correo electrónico y/o la contraseña que has introducido son incorrectos. Por favor, inténtalo de nuevo.",
   "email_not_verified_title": "Correo electrónico no verificado",
   "email_not_verified_body": "Su correo electrónico no está verificado. Por favor, verifique su dirección de correo electrónico.",
   "email": "Correo electrónico",

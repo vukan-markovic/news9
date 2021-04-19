@@ -16,13 +16,23 @@ class NewsApiProvider {
   static String _searchQuery = '';
 
   Future<ArticleModel> fetchNewsList(String languageCode) async {
-    final _testUrl = Uri.https('newsapi.org', '/v2/top-headlines', {
-      // 'country': _country,
-      'language': languageCode,
-      'from': _formattedDate,
-      'q': _searchQuery,
-      'apiKey': _apiKey,
-    });
+    Uri _testUrl;
+
+    if (languageCode == 'sr') {
+      _testUrl = Uri.https('newsapi.org', '/v2/top-headlines', {
+        'country': 'rs',
+        'from': _formattedDate,
+        'q': _searchQuery,
+        'apiKey': _apiKey,
+      });
+    } else {
+      _testUrl = Uri.https('newsapi.org', '/v2/top-headlines', {
+        'language': languageCode,
+        'from': _formattedDate,
+        'q': _searchQuery,
+        'apiKey': _apiKey,
+      });
+    }
 
     final response = await client.get(_testUrl);
     if (response.statusCode == 200) {

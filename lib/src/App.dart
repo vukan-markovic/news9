@@ -65,6 +65,7 @@ class _AppViewState extends State<AppView> {
                   Locale('pt', 'PT'),
                   Locale('ru', 'RU'),
                   Locale('zh', 'CN'),
+                  Locale('sr', 'SR'),
                 ],
                 theme: themeState.themeData,
                 navigatorKey: _navigatorKey,

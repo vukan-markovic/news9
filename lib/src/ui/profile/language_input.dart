@@ -8,6 +8,7 @@ import 'package:news/src/utils/app_localizations.dart';
 class LanguageInput extends StatelessWidget {
   final List<String> supportedLanguages = [
     'EN',
+    'SR',
     'DE',
     'ES',
     'FR',
@@ -16,7 +17,7 @@ class LanguageInput extends StatelessWidget {
     'NO',
     'PT',
     'RU',
-    'ZH'
+    'ZH',
   ];
 
   @override

@@ -59,6 +59,8 @@ class LanguageBloc extends Bloc<LanguageEvent, LanguageState> {
       yield* _loadLanguage(sharedPrefService, 'ru', 'RU');
     } else if (selectedLanguage == Language.ZH && defaultLanguageCode != 'zh') {
       yield* _loadLanguage(sharedPrefService, 'zh', 'CN');
+    } else if (selectedLanguage == Language.SR && defaultLanguageCode != 'sr') {
+      yield* _loadLanguage(sharedPrefService, 'sr', 'SR');
     }
   }
 

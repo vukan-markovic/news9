@@ -34,7 +34,7 @@
     "by": "By",
     "author_not_stated": "Author not stated",
     "incorrect_credentials_title": "Incorrect password/email!",
-    "incorrect_credentials_body": "'The email and/or password you entered are incorrect. Please try again.'",
+    "incorrect_credentials_body": "The email and/or password you entered are incorrect. Please try again.",
     "email_not_verified_title": "Email not verified",
     "email_not_verified_body": "Your email is not verified. Please verify your email address.",
     "email": "Email",
