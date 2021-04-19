@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:news/src/utils/app_localizations.dart';
 
 class AppDialog {
   static Future<void> showAppDialog({context, title, body}) async {
@@ -17,7 +18,7 @@ class AppDialog {
           ),
           actions: <Widget>[
             TextButton(
-              child: Text('OK'),
+              child: Text(AppLocalizations.of(context).translate('ok')),
               onPressed: () {
                 Navigator.of(context).pop();
               },

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:news/src/models/article/article_model.dart';
+import 'package:news/src/utils/app_localizations.dart';
 import 'dart:async';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:jiffy/jiffy.dart';
@@ -18,47 +19,49 @@ class ArticleDetails extends StatelessWidget {
     return Jiffy(date).fromNow();
   }
 
-  _shareFacebook(String url) async {
+  _shareFacebook(context, String url) async {
     FlutterSocialContentShare.share(
       type: ShareType.facebookWithoutImage,
       url: url,
-      quote: "Check out this news article",
+      quote: AppLocalizations.of(context).translate('checkout_article'),
     );
   }
 
-  _shareTwitter(String url) async {
+  _shareTwitter(context, String url) async {
     SocialShare.shareTwitter(
-      "Check out this news article",
+      AppLocalizations.of(context).translate('checkout_article'),
       url: _article.url,
       hashtags: ["levi9", "flutter", "internship", "news9"],
     );
   }
 
-  _shareWhatsapp(String url) async {
+  _shareWhatsapp(context, String url) async {
     SocialShare.shareWhatsapp(
-      "Check out this news article: \n $url",
+      AppLocalizations.of(context).translate('checkout_article') + ": \n $url",
     );
   }
 
-  _shareEmail(String url) async {
+  _shareEmail(context, String url) async {
     FlutterSocialContentShare.shareOnEmail(
       recipients: [],
-      subject: "Check out this news article",
+      subject: AppLocalizations.of(context).translate('checkout_article'),
       body: url,
       isHTML: true,
     );
   }
 
-  _shareSms(String url) async {
+  _shareSms(context, String url) async {
     SocialShare.shareSms(
-      "Check out this news article: \n",
+      AppLocalizations.of(context).translate('checkout_article') + ": \n",
       url: url,
       trailingText: '',
     );
   }
 
   _copyToClipboard(context, String url) async {
-    SocialShare.copyToClipboard("Check out this news article: \n $url");
+    SocialShare.copyToClipboard(
+        AppLocalizations.of(context).translate('checkout_article') +
+            ": \n $url");
   }
 
   Future<void> _launchInWebViewWithJavaScript(String url) async {
@@ -87,12 +90,16 @@ class ArticleDetails extends StatelessWidget {
                 Text.rich(
                   TextSpan(children: [
                     TextSpan(
-                      text: _article.source.name ?? 'Source not stated',
+                      text: _article.source.name ??
+                          AppLocalizations.of(context)
+                              .translate('source_not_stated'),
                       style: Theme.of(context).textTheme.subtitle2,
                     ),
                     TextSpan(text: ' | '),
                     TextSpan(
-                      text: 'Published ',
+                      text:
+                          AppLocalizations.of(context).translate('published') +
+                              ' ',
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                     TextSpan(text: formatDate(_article.publishedAt))
@@ -100,13 +107,15 @@ class ArticleDetails extends StatelessWidget {
                 ),
                 SizedBox(height: 10),
                 Text(
-                  _article.title ?? 'No title',
+                  _article.title ??
+                      AppLocalizations.of(context).translate('no_title'),
                   style: Theme.of(context).textTheme.headline4,
                   textAlign: TextAlign.center,
                 ),
                 SizedBox(height: 10),
                 Text(
-                  _article.description ?? 'No description',
+                  _article.description ??
+                      AppLocalizations.of(context).translate('no_description'),
                   style: Theme.of(context).textTheme.subtitle1,
                   textAlign: TextAlign.center,
                 ),
@@ -117,7 +126,9 @@ class ArticleDetails extends StatelessWidget {
                       text: 'By ',
                     ),
                     TextSpan(
-                      text: _article.author ?? 'Author not stated',
+                      text: _article.author ??
+                          AppLocalizations.of(context)
+                              .translate('author_not_stated'),
                       style: Theme.of(context).textTheme.subtitle2,
                     ),
                   ]),
@@ -128,23 +139,23 @@ class ArticleDetails extends StatelessWidget {
                   children: [
                     IconButton(
                       icon: Icon(FontAwesomeIcons.facebook),
-                      onPressed: () => _shareFacebook(_article.url),
+                      onPressed: () => _shareFacebook(context, _article.url),
                     ),
                     IconButton(
                       icon: Icon(FontAwesomeIcons.twitter),
-                      onPressed: () => _shareTwitter(_article.url),
+                      onPressed: () => _shareTwitter(context, _article.url),
                     ),
                     IconButton(
                       icon: Icon(FontAwesomeIcons.whatsapp),
-                      onPressed: () => _shareWhatsapp(_article.url),
+                      onPressed: () => _shareWhatsapp(context, _article.url),
                     ),
                     IconButton(
                       icon: Icon(FontAwesomeIcons.sms),
-                      onPressed: () => _shareSms(_article.url),
+                      onPressed: () => _shareSms(context, _article.url),
                     ),
                     IconButton(
                       icon: Icon(FontAwesomeIcons.envelope),
-                      onPressed: () => _shareEmail(_article.url),
+                      onPressed: () => _shareEmail(context, _article.url),
                     ),
                     IconButton(
                       icon: Icon(FontAwesomeIcons.clipboard),
@@ -165,10 +176,9 @@ class ArticleDetails extends StatelessWidget {
                 ),
                 SizedBox(height: 10),
                 OutlinedButton(
-                  onPressed: () =>
-                      _launchInWebViewWithJavaScript(_article.url),
+                  onPressed: () => _launchInWebViewWithJavaScript(_article.url),
                   child: Text(
-                    'Open the whole article',
+                    AppLocalizations.of(context).translate('whole_article'),
                     style: Theme.of(context).textTheme.subtitle2,
                   ),
                 ),
