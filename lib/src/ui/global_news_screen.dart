@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:news/src/blocs/language_bloc/language_bloc.dart';
 
 import '../blocs/news_bloc/news_bloc.dart';
 import '../models/article/article_model.dart';
@@ -12,7 +14,8 @@ class GlobalNews extends StatefulWidget {
 class _GlobalNewsState extends State<GlobalNews> {
   @override
   void initState() {
-    newsBloc.fetchAllNews();
+    newsBloc.fetchAllNews(
+        BlocProvider.of<LanguageBloc>(context).state.locale.languageCode);
     super.initState();
   }
 

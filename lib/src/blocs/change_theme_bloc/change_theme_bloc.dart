@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:flutter/material.dart';
-import 'package:news/src/utils/utils.dart';
+import 'package:news/src/utils/theme.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:async';
 part 'change_theme_event.dart';
@@ -48,7 +48,6 @@ class ChangeThemeBloc extends Bloc<ChangeThemeEvent, ChangeThemeState> {
   Future<void> _saveOptionValue(int optionValue) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     preferences.setInt('theme_option', optionValue);
-    print('Saving option value as $optionValue successfully');
   }
 
   Future<int> getOption() async {

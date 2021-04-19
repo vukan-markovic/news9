@@ -4,6 +4,7 @@ import 'package:formz/formz.dart';
 import 'package:news/src/blocs/sign_up_bloc/sign_up_cubit.dart';
 import 'package:news/src/constants/enums.dart';
 import 'package:news/src/ui/login/login_page.dart';
+import 'package:news/src/utils/app_localizations.dart';
 
 import '../dialog.dart';
 
@@ -15,15 +16,19 @@ class SignUpForm extends StatelessWidget {
         if (state.status.isSubmissionFailure) {
           AppDialog.showAppDialog(
             context: context,
-            title: 'Sign up failed!',
-            body: 'The sign up failed. Please try again.',
+            title:
+                AppLocalizations.of(context).translate('invalid_sign_up_title'),
+            body:
+                AppLocalizations.of(context).translate('invalid_sign_up_body'),
           );
         } else if (state.status.isSubmissionSuccess) {
           Navigator.of(context).pushReplacement(LoginPage.route());
           AppDialog.showAppDialog(
             context: context,
-            title: 'Verification email sent!',
-            body: 'Please check your inbox and follow the instructions.',
+            title: AppLocalizations.of(context)
+                .translate('verification_email_title'),
+            body: AppLocalizations.of(context)
+                .translate('verification_email_body'),
           );
         }
       },
@@ -37,7 +42,7 @@ class SignUpForm extends StatelessWidget {
                 Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    'Sign up',
+                    AppLocalizations.of(context).translate('sign_up'),
                     textAlign: TextAlign.left,
                     style: TextStyle(
                       fontSize: 36,
@@ -63,7 +68,7 @@ class SignUpForm extends StatelessWidget {
                 TextButton(
                   onPressed: () =>
                       Navigator.of(context).pushReplacement(LoginPage.route()),
-                  child: Text('Log in'),
+                  child: Text(AppLocalizations.of(context).translate('log_in')),
                 ),
               ],
             ),
@@ -87,10 +92,10 @@ class _FirstNameInput extends StatelessWidget {
           keyboardType: TextInputType.name,
           decoration: InputDecoration(
             prefixIcon: Icon(Icons.person),
-            labelText: 'First Name',
-            helperText: '',
-            errorText:
-                state.firstName.invalid ? 'First name must not be empty' : null,
+            labelText: AppLocalizations.of(context).translate('first_name'),
+            errorText: state.firstName.invalid
+                ? AppLocalizations.of(context).translate('first_name_error')
+                : null,
           ),
         );
       },
@@ -111,10 +116,10 @@ class _LastNameInput extends StatelessWidget {
           keyboardType: TextInputType.name,
           decoration: InputDecoration(
             prefixIcon: Icon(Icons.person),
-            labelText: 'Last Name',
-            helperText: '',
-            errorText:
-                state.lastName.invalid ? 'Last name must not be empty' : null,
+            labelText: AppLocalizations.of(context).translate('last_name'),
+            errorText: state.lastName.invalid
+                ? AppLocalizations.of(context).translate('last_name_error')
+                : null,
           ),
         );
       },
@@ -129,7 +134,7 @@ class _DateOfBirthInput extends StatefulWidget {
 
 class __DateOfBirthInputState extends State<_DateOfBirthInput> {
   DateTime selectedDate = DateTime.now();
-  String labelText = 'Date of birth';
+  String labelText;
 
   Future<void> _selectDate(BuildContext context) async {
     final DateTime picked = await showDatePicker(
@@ -159,10 +164,10 @@ class __DateOfBirthInputState extends State<_DateOfBirthInput> {
           keyboardType: TextInputType.datetime,
           decoration: InputDecoration(
             prefixIcon: Icon(Icons.person),
-            labelText: labelText,
-            helperText: '',
+            labelText: labelText ??
+                AppLocalizations.of(context).translate('date_of_birth'),
             errorText: state.dateOfBirth.invalid
-                ? 'Date of birth must be selected'
+                ? AppLocalizations.of(context).translate('date_of_birth_error')
                 : null,
           ),
         );
@@ -183,9 +188,10 @@ class _EmailInput extends StatelessWidget {
           keyboardType: TextInputType.emailAddress,
           decoration: InputDecoration(
             prefixIcon: Icon(Icons.email_outlined),
-            labelText: 'Email',
-            helperText: '',
-            errorText: state.email.invalid ? 'Invalid email' : null,
+            labelText: AppLocalizations.of(context).translate('email'),
+            errorText: state.email.invalid
+                ? AppLocalizations.of(context).translate('invalid_email')
+                : null,
           ),
         );
       },
@@ -206,10 +212,12 @@ class _PasswordInput extends StatelessWidget {
           obscureText: true,
           decoration: InputDecoration(
             prefixIcon: Icon(Icons.lock),
-            labelText: 'Password',
-            helperText:
-                '1 uppercase letter, 1 lowercase letter, 1 number, 1 special character and min length of 12 characters.',
-            errorText: state.password.invalid ? 'Invalid password' : null,
+            hintMaxLines: 2,
+            labelText: AppLocalizations.of(context).translate('password'),
+            helperText: AppLocalizations.of(context).translate('password_hint'),
+            errorText: state.password.invalid
+                ? AppLocalizations.of(context).translate('invalid_password')
+                : null,
           ),
         );
       },
@@ -231,13 +239,13 @@ class __GenderInputState extends State<_GenderInput> {
       children: [
         Flexible(child: Icon(Icons.person)),
         SizedBox(width: 8.0),
-        Flexible(child: Text('Gender')),
+        Flexible(child: Text(AppLocalizations.of(context).translate('gender'))),
         Expanded(
           flex: 2,
           child: Column(
             children: <Widget>[
               ListTile(
-                title: Text('Male'),
+                title: Text(AppLocalizations.of(context).translate('male')),
                 leading: Radio<Gender>(
                   value: Gender.male,
                   groupValue: _gender,
@@ -249,7 +257,7 @@ class __GenderInputState extends State<_GenderInput> {
                 ),
               ),
               ListTile(
-                title: Text('Female'),
+                title: Text(AppLocalizations.of(context).translate('female')),
                 leading: Radio<Gender>(
                   value: Gender.female,
                   groupValue: _gender,
@@ -278,7 +286,9 @@ class _SignUpButton extends StatelessWidget {
             ? CircularProgressIndicator()
             : ElevatedButton(
                 key: const Key('signUpForm_continue_raisedButton'),
-                child: Text('Create account'),
+                child: Text(
+                  AppLocalizations.of(context).translate('create_account'),
+                ),
                 style: ElevatedButton.styleFrom(
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(5),
