@@ -12,7 +12,10 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:formz/formz.dart';
 import 'package:flutter/foundation.dart';
 import 'package:news/src/ui/profile/language_input.dart';
+import 'package:news/src/ui/topic_select_screen.dart';
 import 'package:news/src/utils/app_localizations.dart';
+
+import 'advanced_search_input.dart';
 
 class UserPage extends StatefulWidget {
   @override
@@ -112,7 +115,7 @@ class _UserPageState extends State<UserPage> {
                     Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Flexible(
+                        Expanded(
                           child: Text(AppLocalizations.of(context)
                                   .translate('first_name') +
                               ':'),
@@ -126,7 +129,7 @@ class _UserPageState extends State<UserPage> {
                     Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Flexible(
+                        Expanded(
                           child: Text(AppLocalizations.of(context)
                                   .translate('last_name') +
                               ':'),
@@ -140,7 +143,7 @@ class _UserPageState extends State<UserPage> {
                     Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Flexible(
+                        Expanded(
                           child: Text(AppLocalizations.of(context)
                                   .translate('date_of_birth') +
                               ':'),
@@ -148,7 +151,8 @@ class _UserPageState extends State<UserPage> {
                         SizedBox(
                           width: 8,
                         ),
-                        Flexible(
+                        Expanded(
+                          flex: 3,
                           child: _DateOfBirthInput(
                             user.dateOfBirth,
                           ),
@@ -239,17 +243,14 @@ class _UserPageState extends State<UserPage> {
                         title: Text(
                           AppLocalizations.of(context).translate('your_topics'),
                         ),
-                        onTap: () {},
+                        onTap: () => Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => TopicSelectScreen(),
+                          ),
+                        ),
                       ),
                       Divider(),
-                      ListTile(
-                        leading: Icon(Icons.settings),
-                        title: Text(
-                          AppLocalizations.of(context)
-                              .translate('advanced_search'),
-                        ),
-                        onTap: () {},
-                      ),
+                      AdvancedSearchInput(),
                       Divider(),
                       ListTile(
                         leading: Icon(Icons.logout),
@@ -278,7 +279,8 @@ class _FirstNameInput extends StatelessWidget {
     return BlocBuilder<UserPageCubit, UserPageState>(
       buildWhen: (previous, current) => previous.firstName != current.firstName,
       builder: (context, state) {
-        return Flexible(
+        return Expanded(
+          flex: 3,
           child: TextField(
             onChanged: (firstName) =>
                 context.read<UserPageCubit>().firstNameChanged(firstName),
@@ -301,7 +303,8 @@ class _LastNameInput extends StatelessWidget {
     return BlocBuilder<UserPageCubit, UserPageState>(
       buildWhen: (previous, current) => previous.lastName != current.lastName,
       builder: (context, state) {
-        return Flexible(
+        return Expanded(
+          flex: 3,
           child: TextField(
             onChanged: (lastName) =>
                 context.read<UserPageCubit>().lastNameChanged(lastName),
@@ -385,39 +388,38 @@ class __GenderInputState extends State<_GenderInput> {
   @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisSize: MainAxisSize.min,
       children: [
-        Flexible(
+        Expanded(
           child: Text(AppLocalizations.of(context).translate('gender') + ':'),
         ),
-        Flexible(
-          child: Column(
-            children: <Widget>[
-              ListTile(
-                title: Text(AppLocalizations.of(context).translate('male')),
-                leading: Radio<Gender>(
-                  value: Gender.male,
-                  groupValue: _gender,
-                  onChanged: (Gender value) {
-                    setState(() {
-                      _gender = value;
-                    });
-                  },
-                ),
-              ),
-              ListTile(
-                title: Text(AppLocalizations.of(context).translate('female')),
-                leading: Radio<Gender>(
-                  value: Gender.female,
-                  groupValue: _gender,
-                  onChanged: (Gender value) {
-                    setState(() {
-                      _gender = value;
-                    });
-                  },
-                ),
-              )
-            ],
+        Expanded(
+          flex: 5,
+          child: ListTile(
+            title: Text(AppLocalizations.of(context).translate('male')),
+            leading: Radio<Gender>(
+              value: Gender.male,
+              groupValue: _gender,
+              onChanged: (Gender value) {
+                setState(() {
+                  _gender = value;
+                });
+              },
+            ),
+          ),
+        ),
+        Expanded(
+          flex: 5,
+          child: ListTile(
+            title: Text(AppLocalizations.of(context).translate('female')),
+            leading: Radio<Gender>(
+              value: Gender.female,
+              groupValue: _gender,
+              onChanged: (Gender value) {
+                setState(() {
+                  _gender = value;
+                });
+              },
+            ),
           ),
         ),
       ],
