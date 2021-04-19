@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:news/src/blocs/news_bloc/news_bloc.dart';
+import 'package:news/src/constants/ColorConstants.dart';
+import 'package:news/src/extensions/Color.dart';
 import 'package:news/src/models/article/article_model.dart';
 
 import 'article_tile.dart';
@@ -18,18 +20,24 @@ class _FavoriteNewsScreenState extends State<FavoriteNewsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: StreamBuilder(
-        stream: newsBloc.favoriteNews,
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            print("i have data");
-            return buildList(snapshot);
-          } else if (snapshot.hasError) {
-            return Text(snapshot.error.toString());
-          }
-          return Center(child: CircularProgressIndicator());
-        },
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Flutter News9"),
+        backgroundColor: HexColor.fromHex(ColorConstants.primaryColor),
+      ),
+      body: Container(
+        child: StreamBuilder(
+          stream: newsBloc.favoriteNews,
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              print("i have data");
+              return buildList(snapshot);
+            } else if (snapshot.hasError) {
+              return Text(snapshot.error.toString());
+            }
+            return Center(child: CircularProgressIndicator());
+          },
+        ),
       ),
     );
   }

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive/hive.dart';
 import 'package:news/src/App.dart';
+import 'package:news/src/blocs/language_bloc/language_bloc.dart';
 import 'package:news/src/models/article/article_model.dart';
 import 'package:news/src/models/category/category.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -38,5 +39,10 @@ Future<void> main() async {
 
   await Hive.openBox<AppUser>('user');
 
-  runApp(App());
+  runApp(
+    new BlocProvider(
+      create: (_) => LanguageBloc()..add(LanguageLoadStarted()),
+      child: App(),
+    ),
+  );
 }
