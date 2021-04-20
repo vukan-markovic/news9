@@ -8,8 +8,8 @@ import '../models/article/article_model.dart';
 class NewsRepository {
   final newsApiProvider = NewsApiProvider();
 
-  Future<ArticleModel> fetchAllNews(String languageCode) =>
-      newsApiProvider.fetchNewsList(languageCode);
+  Future<ArticleModel> fetchAllNews(String languageCode, [String query = ""]) =>
+      newsApiProvider.fetchNewsList(languageCode, query);
 
   fetchNews(String boxName) async {
     var box = await Hive.openBox(boxName);
