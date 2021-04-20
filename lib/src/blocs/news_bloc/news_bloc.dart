@@ -10,8 +10,8 @@ class NewsBloc {
 
   Stream<ArticleModel> get favoriteNews => _newsFetcher.stream;
 
-  fetchAllNews(String languageCode) async {
-    ArticleModel news = await _repository.fetchAllNews(languageCode);
+  fetchAllNews(String languageCode, [String query = ""]) async {
+    ArticleModel news = await _repository.fetchAllNews(languageCode, query);
     deleteNewsBox("offline_news");
     insertNewsList(news);
     _newsFetcher.sink.add(news);
