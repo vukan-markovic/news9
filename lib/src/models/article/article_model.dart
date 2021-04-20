@@ -1,4 +1,6 @@
 import 'package:hive/hive.dart';
+import 'package:news/src/blocs/news_bloc/news_bloc.dart';
+import 'package:uuid/uuid.dart';
 
 part 'article_model.g.dart';
 
@@ -56,12 +58,12 @@ class Article {
   Source _source;
 
   @HiveField(7)
-  String uuid;
+  bool _isFavorite;
 
   Article();
 
   Article.create(this._author, this._title, this._description, this._url,
-      this._urlToImage, this._publishedAt, this._source);
+      this._urlToImage, this._publishedAt, this._source, this._isFavorite);
 
   Article.fromJson(article) {
     _author = article['author'];
@@ -70,6 +72,9 @@ class Article {
     _url = article['url'];
     _urlToImage = article['urlToImage'];
     _publishedAt = article['publishedAt'];
+    newsBloc
+        .isArticleInFavorites(article['title'])
+        .then((value) => _isFavorite = value);
     _source = Source.fromJson(article['source']);
   }
 
@@ -86,6 +91,8 @@ class Article {
   String get publishedAt => _publishedAt;
 
   Source get source => _source;
+
+  bool get isFavorite => _isFavorite;
 }
 
 @HiveType(typeId: 2)
