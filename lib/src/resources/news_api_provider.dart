@@ -9,7 +9,7 @@ import '../models/article/article_model.dart';
 class NewsApiProvider {
   Client client = Client();
   String country;
-  static final String _apiKey = 'a041896ae3e446e583455e49070ec8b1';
+  static final String _apiKey = '0b90b08600594946b41a86a1a46affbf';
   Uri _testUrl;
 
   Future<ArticleModel> fetchNewsList({
@@ -23,7 +23,7 @@ class NewsApiProvider {
     String query = "",
   }) async {
     if (languageCode == 'sr') {
-      this.country = 'rs';
+      this.country = 'Serbia';
     } else {
       this.country = country;
     }
@@ -35,8 +35,8 @@ class NewsApiProvider {
         'q': query,
         'apiKey': _apiKey,
         'sources': source.toLowerCase() != 'all' ? source : '',
-        'country': country != 'All'
-            ? countries.keys.firstWhere((k) => countries[k] == country)
+        'country': this.country != 'All'
+            ? countries.keys.firstWhere((k) => countries[k] == this.country)
             : '',
       });
     } else {

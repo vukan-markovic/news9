@@ -294,7 +294,7 @@ class __DateInputState extends State<_DateInput> {
           onTap: () => _selectDate(context),
         ),
         SizedBox(width: 16),
-        Text('From: $labelTextFrom'),
+        Text('From: $labelTextFrom'), // TODO translate
         SizedBox(width: 16),
         Text('To: $labelTextTo'),
       ],
