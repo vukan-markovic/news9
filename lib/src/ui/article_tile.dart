@@ -24,10 +24,12 @@ class _ArticleTileState extends State<ArticleTile> {
   Article article;
   String _placeholderImageUrl =
       'https://iitpkd.ac.in/sites/default/files/default_images/default-news-image_0.png';
+  bool isArticleFavorite;
 
   @override
   void initState() {
     this.article = widget.article;
+    this.isArticleFavorite = article.isFavorite ?? false;
     super.initState();
   }
 
@@ -155,11 +157,17 @@ class _ArticleTileState extends State<ArticleTile> {
                               HexColor.fromHex(ColorConstants.secondaryWhite),
                         ),
                       ),
-                      Icon(
-                        Icons.bookmark_border,
-                        color:
-                            HexColor.fromHex(ColorConstants.secondaryWhite),
-                      )
+                      isArticleFavorite
+                          ? Icon(
+                              Icons.bookmark_rounded,
+                              color: HexColor.fromHex(
+                                  ColorConstants.secondaryWhite),
+                            )
+                          : Icon(
+                              Icons.bookmark_border_rounded,
+                              color: HexColor.fromHex(
+                                  ColorConstants.secondaryWhite),
+                            ),
                     ],
                   ),
                 ),
@@ -186,8 +194,7 @@ class _ArticleTileState extends State<ArticleTile> {
                       ),
                       Icon(
                         Icons.share_outlined,
-                        color:
-                            HexColor.fromHex(ColorConstants.secondaryWhite),
+                        color: HexColor.fromHex(ColorConstants.secondaryWhite),
                       ),
                     ],
                   ),
