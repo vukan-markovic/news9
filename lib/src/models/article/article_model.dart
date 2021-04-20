@@ -74,7 +74,7 @@ class Article {
     _publishedAt = article['publishedAt'];
     newsBloc
         .isArticleInFavorites(article['title'])
-        .then((value) => _isFavorite = value
+        .then((value) => _isFavorite = value);
     _source = Source.fromJson(article['source']);
   }
 
