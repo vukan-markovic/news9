@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news/src/blocs/advanced_search_bloc/advanced_search_bloc.dart';
 import 'package:news/src/blocs/language_bloc/language_bloc.dart';
+import 'package:news/src/constants/ColorConstants.dart';
+import 'package:news/src/extensions/Color.dart';
 import '../blocs/news_bloc/news_bloc.dart';
 import '../models/article/article_model.dart';
 import 'article_tile.dart';
@@ -38,30 +40,36 @@ class _GlobalNewsState extends State<GlobalNews> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AdvancedSearchBloc, AdvancedSearchState>(
-      builder: (context, state) {
-        return StreamBuilder(
-          stream: newsBloc.allNews,
-          builder: (context, AsyncSnapshot<ArticleModel> snapshot) {
-            print(snapshot);
-            if (snapshot.hasData) {
-              print("Global news has data");
-              if (snapshot.data.articles.length == 0) {
-                return Center(
-                  child: Text('No news for selected criteria!'),
-                );
-              } else {
-                return buildList(snapshot);
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Flutter News9"),
+        backgroundColor: HexColor.fromHex(ColorConstants.primaryColor),
+      ),
+      body: BlocBuilder<AdvancedSearchBloc, AdvancedSearchState>(
+        builder: (context, state) {
+          return StreamBuilder(
+            stream: newsBloc.allNews,
+            builder: (context, AsyncSnapshot<ArticleModel> snapshot) {
+              print(snapshot);
+              if (snapshot.hasData) {
+                print("Global news has data");
+                if (snapshot.data.articles.length == 0) {
+                  return Center(
+                    child: Text('No news for selected criteria!'),
+                  );
+                } else {
+                  return buildList(snapshot);
+                }
+              } else if (snapshot.hasError) {
+                print("Global news error");
+                return Text(snapshot.error.toString());
               }
-            } else if (snapshot.hasError) {
-              print("Global news error");
-              return Text(snapshot.error.toString());
-            }
 
-            return Center(child: CircularProgressIndicator());
-          },
-        );
-      },
+              return Center(child: CircularProgressIndicator());
+            },
+          );
+        },
+      ),
     );
   }
 

@@ -33,10 +33,6 @@ class _NavigationScreenState extends State<NavigationScreen> {
     return BlocProvider(
       create: (context) => AdvancedSearchBloc(),
       child: Scaffold(
-        appBar: AppBar(
-          title: Text("Flutter News9"),
-          backgroundColor: HexColor.fromHex(ColorConstants.primaryColor),
-        ),
         body: _pageOptions[_currentIndex],
         bottomNavigationBar: BottomNavigationBar(
           currentIndex: _currentIndex,
