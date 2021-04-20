@@ -56,7 +56,7 @@ class _ArticleTileState extends State<ArticleTile> {
   }
 
   _saveArticle() {
-    newsBloc.insertNews("favorite_news", article);
+    newsBloc.insertNewsByUid("favorite_news", article);
   }
 
   @override
