@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:jiffy/jiffy.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:share/share.dart';
+
 import 'package:news/src/blocs/news_bloc/news_bloc.dart';
 import 'package:news/src/models/article/article_model.dart';
+import 'package:news/src/constants/ColorConstants.dart';
+import 'package:news/src/extensions/Color.dart';
+import 'package:news/src/utils/app_localizations.dart';
 import 'article_details.dart';
 
 class ArticleTile extends StatefulWidget {
@@ -32,23 +38,28 @@ class _ArticleTileState extends State<ArticleTile> {
         .push(MaterialPageRoute(builder: (context) => ArticleDetails(article)));
   }
 
+  _shareArticle() {
+    Share.share(
+        "${AppLocalizations.of(context).translate('checkout_article')} \n ${article.url}");
+  }
+
+  _saveArticle() {
+    newsBloc.insertNews("favorite_news", article);
+  }
+
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () => _openArticleDetails(context, article),
-      onLongPress: () {
-        setState(() {
-          //Add animation to the card so that it moves and shows buttons for add to favorites and share article
-          print("Puštaj");
-          newsBloc.insertNews("favorite_news", article);
-        });
-      },
-      child: AnimatedContainer(
-        alignment: Alignment.topCenter,
-        duration: Duration(milliseconds: 800),
-        curve: Curves.easeIn,
-        child: Stack(children: [
-          Card(
+    return Slidable(
+      actionPane: SlidableDrawerActionPane(),
+      actionExtentRatio: 0.33,
+      child: GestureDetector(
+        onTap: () => _openArticleDetails(context, article),
+        child: AnimatedContainer(
+          alignment: Alignment.topCenter,
+          duration: Duration(milliseconds: 800),
+          curve: Curves.easeIn,
+          child: Stack(children: [
+            Card(
               elevation: 3,
               child: Padding(
                 padding: const EdgeInsets.only(top: 8.0),
@@ -69,7 +80,7 @@ class _ArticleTileState extends State<ArticleTile> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text('Category placeholder'),
+                            Text(article.source.name),
                             Text(
                               formatDate(article.publishedAt),
                               style: TextStyle(
@@ -108,9 +119,73 @@ class _ArticleTileState extends State<ArticleTile> {
                     ),
                   ),
                 ),
-              )),
-        ]),
+              ),
+            ),
+          ]),
+        ),
       ),
+      secondaryActions: <Widget>[
+        Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SlideAction(
+              child: Container(
+                height: 60,
+                child: Card(
+                  color: HexColor.fromHex(ColorConstants.primaryColor),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        AppLocalizations.of(context).translate('Save') + " ",
+                        style: TextStyle(
+                          color:
+                              HexColor.fromHex(ColorConstants.secondaryWhite),
+                        ),
+                      ),
+                      Icon(
+                        Icons.bookmark_border,
+                        color:
+                            HexColor.fromHex(ColorConstants.secondaryWhite),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+              onTap: () => _saveArticle(),
+            ),
+            SizedBox(
+              height: 15,
+            ),
+            SlideAction(
+              child: Container(
+                height: 60,
+                child: Card(
+                  color: HexColor.fromHex(ColorConstants.primaryColor),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        AppLocalizations.of(context).translate('Share') + " ",
+                        style: TextStyle(
+                          color:
+                              HexColor.fromHex(ColorConstants.secondaryWhite),
+                        ),
+                      ),
+                      Icon(
+                        Icons.share_outlined,
+                        color:
+                            HexColor.fromHex(ColorConstants.secondaryWhite),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              onTap: () => _shareArticle(),
+            ),
+          ],
+        ),
+      ],
     );
   }
 }
