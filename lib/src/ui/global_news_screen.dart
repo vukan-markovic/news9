@@ -14,6 +14,10 @@ class GlobalNews extends StatefulWidget {
 }
 
 class _GlobalNewsState extends State<GlobalNews> {
+  final TextEditingController _filter = new TextEditingController();
+  Icon _searchIcon = new Icon(Icons.search);
+  Widget _appBarTitle = new Text('Flutter News9');
+
   @override
   void initState() {
     newsBloc.fetchAllNews(
@@ -28,17 +32,79 @@ class _GlobalNewsState extends State<GlobalNews> {
     super.dispose();
   }
 
+  searchNews() {
+    newsBloc.fetchAllNews(
+        BlocProvider.of<LanguageBloc>(context).state.locale.languageCode,
+        _filter.text);
+    _closeInputField();
+  }
+
+  void _searchPressed() {
+    if (this._searchIcon.icon == Icons.search) {
+      setState(() {
+        this._searchIcon = new Icon(Icons.close);
+        this._appBarTitle = _createInputField();
+      });
+    } else {
+      _closeInputField();
+    }
+  }
+
+  Widget _createInputField() {
+    return new TextField(
+      controller: _filter,
+      autofocus: true,
+      style: TextStyle(
+        color: HexColor.fromHex(ColorConstants.secondaryWhite),
+      ),
+      cursorColor: HexColor.fromHex(ColorConstants.secondaryWhite),
+      decoration: new InputDecoration(
+        prefixIcon: new Icon(
+          Icons.search,
+          color: HexColor.fromHex(ColorConstants.secondaryWhite),
+        ),
+        hintText: 'Search...',
+        hintStyle:
+            TextStyle(color: HexColor.fromHex(ColorConstants.silverGray)),
+        focusedBorder: UnderlineInputBorder(
+          borderSide: BorderSide(
+            color: HexColor.fromHex(ColorConstants.secondaryWhite),
+          ),
+        ),
+        enabledBorder: UnderlineInputBorder(
+          borderSide: BorderSide(
+            color: HexColor.fromHex(ColorConstants.secondaryWhite),
+          ),
+        ),
+      ),
+      onSubmitted: (_) => searchNews(),
+    );
+  }
+
+  void _closeInputField() {
+    setState(() {
+      this._searchIcon = new Icon(Icons.search);
+      this._appBarTitle = new Text('Flutter News9');
+      _filter.clear();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Flutter News9"),
+        title: _appBarTitle,
         backgroundColor: HexColor.fromHex(ColorConstants.primaryColor),
+        actions: <Widget>[
+          IconButton(
+            icon: _searchIcon,
+            onPressed: () => _searchPressed(),
+          )
+        ],
       ),
       body: StreamBuilder(
         stream: newsBloc.allNews,
         builder: (context, AsyncSnapshot<ArticleModel> snapshot) {
-          print(snapshot);
           if (snapshot.hasData) {
             print("Global news has data");
             return buildList(snapshot);
