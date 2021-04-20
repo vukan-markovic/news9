@@ -8,14 +8,16 @@ import 'package:news/src/models/article/article_model.dart';
 import 'package:news/src/constants/ColorConstants.dart';
 import 'package:news/src/extensions/Color.dart';
 import 'package:news/src/utils/app_localizations.dart';
+import 'package:news/src/ui/favorite_news_screen.dart';
 import 'article_details.dart';
 
 class ArticleTile extends StatefulWidget {
   _ArticleTileState createState() => _ArticleTileState();
 
   final Article article;
+  FavoriteNewsScreenState parent;
 
-  ArticleTile({this.article});
+  ArticleTile({this.article, this.parent});
 }
 
 class _ArticleTileState extends State<ArticleTile> {

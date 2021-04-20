@@ -24,7 +24,7 @@ class ArticleAdapter extends TypeAdapter<Article> {
       .._urlToImage = fields[4] as String
       .._publishedAt = fields[5] as String
       .._source = fields[6] as Source
-      ..uuid = fields[7] as String;
+      .._isFavorite = fields[7] as bool;
   }
 
   @override
@@ -46,7 +46,7 @@ class ArticleAdapter extends TypeAdapter<Article> {
       ..writeByte(6)
       ..write(obj._source)
       ..writeByte(7)
-      ..write(obj.uuid);
+      ..write(obj._isFavorite);
   }
 
   @override
