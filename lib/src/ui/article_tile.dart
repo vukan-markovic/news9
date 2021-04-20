@@ -23,6 +23,16 @@ class _ArticleTileState extends State<ArticleTile> {
     super.initState();
   }
 
+  @override
+  void didUpdateWidget(ArticleTile oldWidget) {
+    if (article != widget.article) {
+      setState(() {
+        article = widget.article;
+      });
+    }
+    super.didUpdateWidget(oldWidget);
+  }
+
   formatDate(String date) {
     return Jiffy(date).fromNow();
   }
