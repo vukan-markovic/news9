@@ -22,7 +22,7 @@ class NewsRepository {
 
   insertNewsByUuid(boxName, data, uuid) async {
     var box = await Hive.openBox(boxName);
-    box.put(data.uuid, data);
+    box.put(data.title, data);
   }
 
   //function should call box.clear() but doesn't work

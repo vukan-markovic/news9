@@ -26,8 +26,8 @@ class _ArticleTileState extends State<ArticleTile> {
 
   @override
   void didUpdateWidget(ArticleTile oldWidget) {
-    if(article != widget.article) {
-      setState((){
+    if (article != widget.article) {
+      setState(() {
         article = widget.article;
       });
     }
@@ -42,14 +42,7 @@ class _ArticleTileState extends State<ArticleTile> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onLongPress: () {
-        //Add animation to the card so that it moves and shows buttons for add to favorites and share article
-        print("Puštaj");
-        if (article.uuid == null) {
-          newsBloc.insertNewsByUid("favorite_news", article);
-        } else {
-          newsBloc.deleteNewsByUuid(article.uuid);
-          newsBloc.fetchFavoriteNewsFromDatabase();
-        }
+        newsBloc.insertNewsByUid("favorite_news", article);
       },
       child: AnimatedContainer(
         alignment: Alignment.topCenter,
