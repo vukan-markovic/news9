@@ -74,17 +74,15 @@ class __CountryInputState extends State<_CountryInput> {
             onChanged: (String newValue) {
               setState(() {
                 country = newValue;
-                if (country != 'All') {
-                  source = Source(name: 'All', id: 'all');
+                source = Source(name: 'All', id: 'all');
 
-                  BlocProvider.of<AdvancedSearchBloc>(context).add(
-                    AdvancedSearchSelected(
-                        source: source.id,
-                        dateFrom: '',
-                        dateTo: '',
-                        country: country),
-                  );
-                }
+                BlocProvider.of<AdvancedSearchBloc>(context).add(
+                  AdvancedSearchSelected(
+                      source: source.id,
+                      dateFrom: '',
+                      dateTo: '',
+                      country: country),
+                );
               });
             },
             items:
@@ -134,17 +132,15 @@ class __SourceInputState extends State<_SourceInput> {
                     onChanged: (Source newValue) {
                       setState(() {
                         source = newValue;
-                        if (source.name != 'All') {
-                          country = 'All';
+                        country = 'All';
 
-                          BlocProvider.of<AdvancedSearchBloc>(context).add(
-                            AdvancedSearchSelected(
-                                source: source.id,
-                                dateFrom: '',
-                                dateTo: '',
-                                country: country),
-                          );
-                        }
+                        BlocProvider.of<AdvancedSearchBloc>(context).add(
+                          AdvancedSearchSelected(
+                              source: source.id,
+                              dateFrom: '',
+                              dateTo: '',
+                              country: country),
+                        );
                       });
                     },
                     items: snapshot.data.sources

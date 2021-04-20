@@ -34,10 +34,10 @@ class NewsApiProvider {
         'pageSize': paging,
         'q': query,
         'apiKey': _apiKey,
-        if (source.toLowerCase() != 'all') 'sources': source,
-        if (country != 'All')
-          'country': countries.keys
-              .firstWhere((k) => countries[k] == country, orElse: () => ''),
+        'sources': source.toLowerCase() != 'all' ? source : '',
+        'country': country != 'All'
+            ? countries.keys.firstWhere((k) => countries[k] == country)
+            : '',
       });
     } else {
       _testUrl = Uri.https('newsapi.org', '/v2/everything', {
