@@ -41,5 +41,28 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Need to upload image</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Need to upload image</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Need to upload image</string>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+	<string>facebook</string>
+	<string>twitter</string>
+	<string>whatsapp</string>
+	</array>
+	<key>FacebookAppID</key>
+	<string>503907637685958</string>
+	<key>CFBundleURLTypes</key>
+    <array>
+        <dict>
+            <key>CFBundleURLSchemes</key>
+            <array>
+                <string>503907637685958</string>
+            </array>
+        </dict>
+    </array>
 </dict>
 </plist>

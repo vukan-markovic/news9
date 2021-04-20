@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:news/src/blocs/category_bloc/category_bloc.dart';
-import 'package:news/src/constants/Strings.dart';
+import 'package:news/src/utils/app_localizations.dart';
 
 import '../constants/ColorConstants.dart';
 import '../extensions/Color.dart';
@@ -16,15 +16,23 @@ class TopicSelectScreen extends StatefulWidget {
 }
 
 class _TopicSelectScreenState extends State<TopicSelectScreen> {
-
-
   List<String> _selectedCategories = [];
+  List<String> _categories = [];
 
   @override
   void initState() {
     super.initState();
     getFromFuture();
     _selectedCategories = _selectedCategories ?? [];
+    _categories = [
+      AppLocalizations.of(context).translate('category_business'),
+      AppLocalizations.of(context).translate('category_entertainment'),
+      AppLocalizations.of(context).translate('category_general'),
+      AppLocalizations.of(context).translate('category_health'),
+      AppLocalizations.of(context).translate('category_science'),
+      AppLocalizations.of(context).translate('category_sports'),
+      AppLocalizations.of(context).translate('category_technology'),
+    ];
   }
 
   getFromFuture() async {
@@ -42,7 +50,7 @@ class _TopicSelectScreenState extends State<TopicSelectScreen> {
                 alignment: Alignment.centerLeft,
                 padding: EdgeInsets.only(top: 38, left: 8),
                 child: Text(
-                  Strings.topicTitle,
+                  AppLocalizations.of(context).translate('topic_title'),
                   style: TextStyle(
                       fontSize: 28,
                       fontWeight: FontWeight.bold,
@@ -51,7 +59,8 @@ class _TopicSelectScreenState extends State<TopicSelectScreen> {
             Container(
               alignment: Alignment.centerLeft,
               padding: EdgeInsets.only(top: 8, left: 8),
-              child: Text(Strings.topicSubtitle,
+              child: Text(
+                  AppLocalizations.of(context).translate('topic_subtitle'),
                   style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w600,
@@ -80,7 +89,7 @@ class _TopicSelectScreenState extends State<TopicSelectScreen> {
                           }
                         : null,
                     child: Text(
-                      Strings.finish,
+                      AppLocalizations.of(context).translate('finish'),
                       style: TextStyle(
                           color:
                               HexColor.fromHex(ColorConstants.secondaryWhite)),
@@ -104,23 +113,23 @@ class _TopicSelectScreenState extends State<TopicSelectScreen> {
             childAspectRatio: 5 / 2.5,
             crossAxisSpacing: 12,
             mainAxisSpacing: 12),
-        itemCount: Strings.categories.length,
+        itemCount: _categories.length,
         itemBuilder: (context, index) {
           return GestureDetector(
             onTap: () {
               setTileState(index);
             },
             child: Card(
-              color: _selectedCategories.contains(Strings.categories[index])
+              color: _selectedCategories.contains(_categories[index])
                   ? HexColor.fromHex(ColorConstants.primaryColor)
                   : Colors.white,
               child: Center(
                 child: Text(
-                  Strings.categories[index],
+                  _categories[index],
                   style: TextStyle(
                       fontWeight: FontWeight.w600,
                       fontSize: 16,
-                      color: _selectedCategories.contains(Strings.categories[index])
+                      color: _selectedCategories.contains(_categories[index])
                           ? HexColor.fromHex(ColorConstants.secondaryWhite)
                           : HexColor.fromHex(ColorConstants.lightBlack)),
                 ),
@@ -132,9 +141,9 @@ class _TopicSelectScreenState extends State<TopicSelectScreen> {
 
   void setTileState(int index) {
     setState(() {
-      _selectedCategories.contains(Strings.categories[index])
-          ? _selectedCategories.remove(Strings.categories[index])
-          : _selectedCategories.add(Strings.categories[index]);
+      _selectedCategories.contains(_categories[index])
+          ? _selectedCategories.remove(_categories[index])
+          : _selectedCategories.add(_categories[index]);
       print(_selectedCategories);
     });
   }

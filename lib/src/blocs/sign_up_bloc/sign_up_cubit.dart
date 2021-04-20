@@ -11,9 +11,7 @@ import 'package:news/src/resources/user_repository.dart';
 part 'sign_up_state.dart';
 
 class SignUpCubit extends Cubit<SignUpState> {
-  SignUpCubit(this._authenticationRepository)
-      : assert(_authenticationRepository != null),
-        super(const SignUpState());
+  SignUpCubit(this._authenticationRepository) : super(const SignUpState());
 
   final AuthenticationRepository _authenticationRepository;
 
@@ -103,5 +101,9 @@ class SignUpCubit extends Cubit<SignUpState> {
     } on Exception {
       emit(state.copyWith(status: FormzStatus.submissionFailure));
     }
+  }
+
+  Future<void> sendVerificationEmail() async {
+    _authenticationRepository.sendVerificationEmail();
   }
 }

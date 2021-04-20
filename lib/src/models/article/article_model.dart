@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:hive/hive.dart';
 import 'package:news/src/blocs/news_bloc/news_bloc.dart';
 import 'package:uuid/uuid.dart';
@@ -75,8 +74,8 @@ class Article {
     _publishedAt = article['publishedAt'];
     newsBloc
         .isArticleInFavorites(article['title'])
-        .then((value) => _isFavorite = value);
-    print("$_isFavorite $title");
+        .then((value) => _isFavorite = value
+    _source = Source.fromJson(article['source']);
   }
 
   String get author => _author;
@@ -107,6 +106,9 @@ class Source {
   Source({this.id, this.name});
 
   factory Source.fromJson(Map<String, dynamic> parsedJson) {
-    return Source(id: parsedJson['id'], name: parsedJson['name']);
+    return Source(
+      id: parsedJson['id'],
+      name: parsedJson['name'],
+    );
   }
 }
