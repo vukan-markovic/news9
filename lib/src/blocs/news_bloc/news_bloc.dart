@@ -7,10 +7,11 @@ import '../../models/article/article_model.dart';
 class NewsBloc {
   final _repository = NewsRepository();
   final _newsFetcher = PublishSubject<ArticleModel>();
+  final _favoriteNewsFetcher = PublishSubject<ArticleModel>();
 
   Stream<ArticleModel> get allNews => _newsFetcher.stream;
 
-  Stream<ArticleModel> get favoriteNews => _newsFetcher.stream;
+  Stream<ArticleModel> get favoriteNews => _favoriteNewsFetcher.stream;
 
   fetchAllNews() async {
     ArticleModel news = await _repository.fetchAllNews();
@@ -33,12 +34,12 @@ class NewsBloc {
           Source(id: i.source?.id as String, name: i.source?.name as String),
           i.uuid as String));
     });
-    _newsFetcher.sink.add(articles);
+    _favoriteNewsFetcher.sink.add(articles);
   }
 
   fetchNewsFromDatabase() async {
     ArticleModel news = await _repository.fetchNews("offline_news");
-    _newsFetcher.sink.add(news);
+    _favoriteNewsFetcher.sink.add(news);
   }
 
   insertNewsList(ArticleModel articlesModel) {
@@ -51,8 +52,8 @@ class NewsBloc {
   }
 
   insertNewsByUid(boxName, article) {
-      Uuid uuid = Uuid();
-      article.uuid = uuid.v4();
+    Uuid uuid = Uuid();
+    article.uuid = uuid.v4();
     _repository.insertNewsByUuid(boxName, article, uuid);
   }
 
@@ -70,6 +71,7 @@ class NewsBloc {
 
   dispose() {
     _newsFetcher.close();
+    _favoriteNewsFetcher.close();
   }
 }
 

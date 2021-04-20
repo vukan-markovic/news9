@@ -8,7 +8,7 @@ class ArticleTile extends StatefulWidget {
   _ArticleTileState createState() => _ArticleTileState();
 
   final Article article;
-  var parent;
+  FavoriteNewsScreenState parent;
 
   ArticleTile({this.article, this.parent});
 }
@@ -24,6 +24,16 @@ class _ArticleTileState extends State<ArticleTile> {
     super.initState();
   }
 
+  @override
+  void didUpdateWidget(ArticleTile oldWidget) {
+    if(article != widget.article) {
+      setState((){
+        article = widget.article;
+      });
+    }
+    super.didUpdateWidget(oldWidget);
+  }
+
   formatDate(String date) {
     return Jiffy(date).fromNow();
   }
@@ -34,11 +44,11 @@ class _ArticleTileState extends State<ArticleTile> {
       onLongPress: () {
         //Add animation to the card so that it moves and shows buttons for add to favorites and share article
         print("Puštaj");
-        print(article.uuid);
         if (article.uuid == null) {
           newsBloc.insertNewsByUid("favorite_news", article);
         } else {
           newsBloc.deleteNewsByUuid(article.uuid);
+          newsBloc.fetchFavoriteNewsFromDatabase();
         }
       },
       child: AnimatedContainer(

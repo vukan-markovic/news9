@@ -6,11 +6,10 @@ import 'package:news/src/models/article/article_model.dart';
 import 'article_tile.dart';
 
 class FavoriteNewsScreen extends StatefulWidget {
-  _FavoriteNewsScreenState createState() => _FavoriteNewsScreenState();
-
+  FavoriteNewsScreenState createState() => FavoriteNewsScreenState();
 }
 
-class _FavoriteNewsScreenState extends State<FavoriteNewsScreen> {
+class FavoriteNewsScreenState extends State<FavoriteNewsScreen> {
   @override
   void initState() {
     newsBloc.fetchFavoriteNewsFromDatabase();
@@ -36,6 +35,10 @@ class _FavoriteNewsScreenState extends State<FavoriteNewsScreen> {
   }
 
   Widget buildList(AsyncSnapshot<ArticleModel> snapshot) {
+    snapshot.data.articles.forEach((element) {
+      print(element.title);
+    });
+    print(snapshot.data.articles.length);
     return Container(
       margin: EdgeInsets.only(top: 16),
       child: ListView.builder(
@@ -43,7 +46,8 @@ class _FavoriteNewsScreenState extends State<FavoriteNewsScreen> {
           shrinkWrap: true,
           physics: ClampingScrollPhysics(),
           itemBuilder: (context, index) {
-            return ArticleTile(article: snapshot.data.articles[index], parent: this);
+            return ArticleTile(
+                article: snapshot.data.articles[index], parent: this);
           }),
     );
   }
