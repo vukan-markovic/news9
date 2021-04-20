@@ -104,4 +104,10 @@ class Source {
       name: parsedJson['name'],
     );
   }
+
+  bool operator ==(dynamic other) =>
+      other != null && other is Source && this.name == other.name;
+
+  @override
+  int get hashCode => super.hashCode;
 }

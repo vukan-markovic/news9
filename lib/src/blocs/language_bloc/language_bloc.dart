@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:news/src/constants/enums.dart';
-import 'package:news/src/utils/shared_preferences_service.dart';
+import 'package:news/src/utils/shared_preferences_language_service.dart';
 import 'package:flutter/material.dart';
 part 'language_event.dart';
 part 'language_state.dart';
@@ -19,7 +19,7 @@ class LanguageBloc extends Bloc<LanguageEvent, LanguageState> {
   }
 
   Stream<LanguageState> _mapLanguageLoadStartedToState() async* {
-    final sharedPrefService = await SharedPreferencesService.instance;
+    final sharedPrefService = await SharedPreferencesLanguageService.instance;
 
     final defaultLanguageCode = sharedPrefService.languageCode;
     Locale locale;
@@ -36,7 +36,7 @@ class LanguageBloc extends Bloc<LanguageEvent, LanguageState> {
 
   Stream<LanguageState> _mapLanguageSelectedToState(
       Language selectedLanguage) async* {
-    final sharedPrefService = await SharedPreferencesService.instance;
+    final sharedPrefService = await SharedPreferencesLanguageService.instance;
     final defaultLanguageCode = sharedPrefService.languageCode;
 
     if (selectedLanguage == Language.EN && defaultLanguageCode != 'en') {
@@ -65,7 +65,7 @@ class LanguageBloc extends Bloc<LanguageEvent, LanguageState> {
   }
 
   Stream<LanguageState> _loadLanguage(
-      SharedPreferencesService sharedPreferencesService,
+      SharedPreferencesLanguageService sharedPreferencesService,
       String languageCode,
       String countryCode) async* {
     final locale = Locale(languageCode, countryCode);

@@ -77,7 +77,7 @@ class _UserPageState extends State<UserPage> {
                 ).image;
               }
             } else {
-              profileImage = Image.asset('assets/splash.jpg').image;
+              profileImage = Image.asset('assets/user_placeholder.png').image;
             }
           }
         }

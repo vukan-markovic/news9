@@ -1,3 +1,4 @@
+import 'package:news/src/models/source_model.dart';
 import 'package:rxdart/rxdart.dart';
 import '../../resources/news_repository.dart';
 import '../../models/article/article_model.dart';
@@ -5,16 +6,40 @@ import '../../models/article/article_model.dart';
 class NewsBloc {
   final _repository = NewsRepository();
   final _newsFetcher = PublishSubject<ArticleModel>();
+  final _sourcesFetcher = PublishSubject<SourceModel>();
 
   Stream<ArticleModel> get allNews => _newsFetcher.stream;
 
   Stream<ArticleModel> get favoriteNews => _newsFetcher.stream;
 
-  fetchAllNews(String languageCode) async {
-    ArticleModel news = await _repository.fetchAllNews(languageCode);
+  Stream<SourceModel> get allSources => _sourcesFetcher.stream;
+
+  fetchAllNews({
+    String languageCode,
+    String dateFrom,
+    String dateTo,
+    String country,
+    String source,
+    String paging,
+    String sorting,
+  }) async {
+    ArticleModel news = await _repository.fetchAllNews(
+      languageCode: languageCode,
+      dateFrom: dateFrom,
+      dateTo: dateTo,
+      country: country,
+      sorting: sorting,
+      source: source,
+      paging: paging,
+    );
     deleteNewsBox("offline_news");
     insertNewsList(news);
     _newsFetcher.sink.add(news);
+  }
+
+  fetchAllSources() async {
+    SourceModel sources = await _repository.fetchAllSources();
+    _sourcesFetcher.sink.add(sources);
   }
 
   fetchFavoriteNewsFromDatabase() async {
@@ -30,7 +55,7 @@ class NewsBloc {
           i.publishedAt as String,
           Source(id: i.source?.id as String, name: i.source?.name as String)));
     });
-    print(articles.articles);
+
     _newsFetcher.sink.add(articles);
   }
 
@@ -62,6 +87,7 @@ class NewsBloc {
 
   dispose() {
     _newsFetcher.close();
+    _sourcesFetcher.close();
   }
 }
 

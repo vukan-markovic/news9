@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:news/src/blocs/advanced_search_bloc/advanced_search_bloc.dart';
 import 'package:news/src/constants/ColorConstants.dart';
 import 'package:news/src/extensions/Color.dart';
 import 'package:news/src/ui/favorite_news_screen.dart';
@@ -28,47 +30,50 @@ class _NavigationScreenState extends State<NavigationScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Flutter News9"),
-        backgroundColor: HexColor.fromHex(ColorConstants.primaryColor),
-      ),
-      body: _pageOptions[_currentIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _currentIndex,
-        showSelectedLabels: false,
-        showUnselectedLabels: false,
-        iconSize: 30,
-        items: [
-          BottomNavigationBarItem(
-              icon: _currentIndex == 0
-                  ? Icon(Icons.home_rounded)
-                  : Icon(Icons.home_outlined),
-              label: AppLocalizations.of(context).translate('global'),
-              backgroundColor: HexColor.fromHex(ColorConstants.primaryColor)),
-          BottomNavigationBarItem(
-            icon: _currentIndex == 1
-                ? Icon(Icons.star_rounded)
-                : Icon(Icons.star_border_rounded),
-            label: AppLocalizations.of(context).translate('recommended'),
-            backgroundColor: HexColor.fromHex(ColorConstants.primaryColor),
-          ),
-          BottomNavigationBarItem(
-            icon: _currentIndex == 2
-                ? Icon(Icons.bookmark_rounded)
-                : Icon(Icons.bookmark_border_rounded),
-            label: AppLocalizations.of(context).translate('favorites'),
-            backgroundColor: HexColor.fromHex(ColorConstants.primaryColor),
-          ),
-          BottomNavigationBarItem(
-            icon: _currentIndex == 3
-                ? Icon(Icons.person_rounded)
-                : Icon(Icons.person_outline_rounded),
-            label: AppLocalizations.of(context).translate('profile'),
-            backgroundColor: HexColor.fromHex(ColorConstants.primaryColor),
-          ),
-        ],
-        onTap: setCurrentIndex,
+    return BlocProvider(
+      create: (context) => AdvancedSearchBloc(),
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text("Flutter News9"),
+          backgroundColor: HexColor.fromHex(ColorConstants.primaryColor),
+        ),
+        body: _pageOptions[_currentIndex],
+        bottomNavigationBar: BottomNavigationBar(
+          currentIndex: _currentIndex,
+          showSelectedLabels: false,
+          showUnselectedLabels: false,
+          iconSize: 30,
+          items: [
+            BottomNavigationBarItem(
+                icon: _currentIndex == 0
+                    ? Icon(Icons.home_rounded)
+                    : Icon(Icons.home_outlined),
+                label: AppLocalizations.of(context).translate('global'),
+                backgroundColor: HexColor.fromHex(ColorConstants.primaryColor)),
+            BottomNavigationBarItem(
+              icon: _currentIndex == 1
+                  ? Icon(Icons.star_rounded)
+                  : Icon(Icons.star_border_rounded),
+              label: AppLocalizations.of(context).translate('recommended'),
+              backgroundColor: HexColor.fromHex(ColorConstants.primaryColor),
+            ),
+            BottomNavigationBarItem(
+              icon: _currentIndex == 2
+                  ? Icon(Icons.bookmark_rounded)
+                  : Icon(Icons.bookmark_border_rounded),
+              label: AppLocalizations.of(context).translate('favorites'),
+              backgroundColor: HexColor.fromHex(ColorConstants.primaryColor),
+            ),
+            BottomNavigationBarItem(
+              icon: _currentIndex == 3
+                  ? Icon(Icons.person_rounded)
+                  : Icon(Icons.person_outline_rounded),
+              label: AppLocalizations.of(context).translate('profile'),
+              backgroundColor: HexColor.fromHex(ColorConstants.primaryColor),
+            ),
+          ],
+          onTap: setCurrentIndex,
+        ),
       ),
     );
   }

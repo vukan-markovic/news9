@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:news/src/blocs/advanced_search_bloc/advanced_search_bloc.dart';
 import 'package:news/src/blocs/language_bloc/language_bloc.dart';
-
 import '../blocs/news_bloc/news_bloc.dart';
 import '../models/article/article_model.dart';
 import 'article_tile.dart';
@@ -14,8 +14,18 @@ class GlobalNews extends StatefulWidget {
 class _GlobalNewsState extends State<GlobalNews> {
   @override
   void initState() {
+    AdvancedSearchState state =
+        BlocProvider.of<AdvancedSearchBloc>(context).state;
+
     newsBloc.fetchAllNews(
-        BlocProvider.of<LanguageBloc>(context).state.locale.languageCode);
+        languageCode:
+            BlocProvider.of<LanguageBloc>(context).state.locale.languageCode,
+        country: state.country,
+        paging: state.paging,
+        dateFrom: state.dateFrom,
+        dateTo: state.dateTo,
+        source: state.source);
+
     super.initState();
   }
 
@@ -28,18 +38,29 @@ class _GlobalNewsState extends State<GlobalNews> {
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder(
-      stream: newsBloc.allNews,
-      builder: (context, AsyncSnapshot<ArticleModel> snapshot) {
-        print(snapshot);
-        if (snapshot.hasData) {
-          print("Global news has data");
-          return buildList(snapshot);
-        } else if (snapshot.hasError) {
-          print("Global news error");
-          return Text(snapshot.error.toString());
-        }
-        return Center(child: CircularProgressIndicator());
+    return BlocBuilder<AdvancedSearchBloc, AdvancedSearchState>(
+      builder: (context, state) {
+        return StreamBuilder(
+          stream: newsBloc.allNews,
+          builder: (context, AsyncSnapshot<ArticleModel> snapshot) {
+            print(snapshot);
+            if (snapshot.hasData) {
+              print("Global news has data");
+              if (snapshot.data.articles.length == 0) {
+                return Center(
+                  child: Text('No news for selected criteria!'),
+                );
+              } else {
+                return buildList(snapshot);
+              }
+            } else if (snapshot.hasError) {
+              print("Global news error");
+              return Text(snapshot.error.toString());
+            }
+
+            return Center(child: CircularProgressIndicator());
+          },
+        );
       },
     );
   }

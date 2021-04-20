@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:hive/hive.dart';
+import 'package:news/src/models/source_model.dart';
 
 import 'news_api_provider.dart';
 import '../models/article/article_model.dart';
@@ -8,8 +9,26 @@ import '../models/article/article_model.dart';
 class NewsRepository {
   final newsApiProvider = NewsApiProvider();
 
-  Future<ArticleModel> fetchAllNews(String languageCode) =>
-      newsApiProvider.fetchNewsList(languageCode);
+  Future<ArticleModel> fetchAllNews({
+    String languageCode,
+    String dateFrom,
+    String dateTo,
+    String country,
+    String source,
+    String paging,
+    String sorting,
+  }) =>
+      newsApiProvider.fetchNewsList(
+        languageCode: languageCode,
+        dateFrom: dateFrom,
+        dateTo: dateTo,
+        country: country,
+        sorting: sorting,
+        source: source,
+        paging: paging,
+      );
+
+  Future<SourceModel> fetchAllSources() => newsApiProvider.fetchSourcesList();
 
   fetchNews(String boxName) async {
     var box = await Hive.openBox(boxName);
