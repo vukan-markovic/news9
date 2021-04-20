@@ -62,7 +62,7 @@ class __CountryInputState extends State<_CountryInput> {
     return Row(
       children: [
         Expanded(
-          child: Text('Country:'),
+          child: Text(AppLocalizations.of(context).translate('country') + ':'),
         ),
         Expanded(
           flex: 3,
@@ -89,7 +89,11 @@ class __CountryInputState extends State<_CountryInput> {
                 countries.values.map<DropdownMenuItem<String>>((String value) {
               return DropdownMenuItem<String>(
                 value: value,
-                child: Text(value),
+                child: value == 'All'
+                    ? Text(
+                        AppLocalizations.of(context).translate('all'),
+                      )
+                    : Text(value),
               );
             }).toList(),
           ),
@@ -120,7 +124,8 @@ class __SourceInputState extends State<_SourceInput> {
             return Row(
               children: [
                 Expanded(
-                  child: Text('Source:'),
+                  child: Text(
+                      AppLocalizations.of(context).translate('source') + ':'),
                 ),
                 Expanded(
                   flex: 3,
@@ -147,7 +152,11 @@ class __SourceInputState extends State<_SourceInput> {
                         .map<DropdownMenuItem<Source>>((Source value) {
                       return DropdownMenuItem<Source>(
                         value: value,
-                        child: Text(value.name),
+                        child: value.name == 'All'
+                            ? Text(
+                                AppLocalizations.of(context).translate('all'),
+                              )
+                            : Text(value.name),
                       );
                     }).toList(),
                   ),
@@ -182,7 +191,7 @@ class __PagingInputState extends State<_PagingInput> {
     return Row(
       children: [
         Expanded(
-          child: Text('News per page:'),
+          child: Text(AppLocalizations.of(context).translate('paging') + ':'),
         ),
         SizedBox(width: 8),
         Expanded(

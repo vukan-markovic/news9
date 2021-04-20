@@ -7,10 +7,11 @@ class NewsBloc {
   final _repository = NewsRepository();
   final _newsFetcher = PublishSubject<ArticleModel>();
   final _sourcesFetcher = PublishSubject<SourceModel>();
+  final _favoriteNewsFetcher = PublishSubject<ArticleModel>();
 
   Stream<ArticleModel> get allNews => _newsFetcher.stream;
 
-  Stream<ArticleModel> get favoriteNews => _newsFetcher.stream;
+  Stream<ArticleModel> get favoriteNews => _favoriteNewsFetcher.stream;
 
   Stream<SourceModel> get allSources => _sourcesFetcher.stream;
 
@@ -48,25 +49,26 @@ class NewsBloc {
     var news = await _repository.fetchNews("favorite_news");
     ArticleModel articles = ArticleModel();
     news.forEach((i) {
-      articles.articles.add(Article.create(
-          i.author as String,
-          i.title as String,
-          i.description as String,
-          i.url as String,
-          i.urlToImage as String,
-          i.publishedAt as String,
-          Source(id: i.source?.id as String, name: i.source?.name as String)));
+      articles.articles.add(mapArticle(i));
     });
+    _favoriteNewsFetcher.sink.add(articles);
+  }
 
-    _newsFetcher.sink.add(articles);
+  Future<List<String>> fetchFavoriteTitles() async {
+    var news = await _repository.fetchNews("favorite_news");
+    List<String> favoriteTitles = [];
+    news.forEach((i) {
+      favoriteTitles.add(i.title);
+    });
+    return favoriteTitles;
   }
 
   fetchNewsFromDatabase() async {
     ArticleModel news = await _repository.fetchNews("offline_news");
-    _newsFetcher.sink.add(news);
+    _favoriteNewsFetcher.sink.add(news);
   }
 
-  insertNewsList(ArticleModel articlesModel) async {
+  insertNewsList(ArticleModel articlesModel) {
     int counter = 0;
     articlesModel.articles.forEach((element) {
       if (counter > 30) return;
@@ -75,7 +77,18 @@ class NewsBloc {
     });
   }
 
-  insertNews(boxName, Article article) async {
+  insertNewsByUid(boxName, article) async {
+    if (!article.isFavorite) {
+      print("added to favorites");
+      _repository.insertNewsByUuid(boxName, article, article.title);
+    } else {
+      _repository.deleteNewsByUuid(boxName, article.title);
+      print("deleted from favorites");
+    }
+    fetchFavoriteNewsFromDatabase();
+  }
+
+  insertNews(boxName, Article article) {
     _repository.insertNews(boxName, article);
   }
 
@@ -83,13 +96,34 @@ class NewsBloc {
     _repository.deleteNewsBox(boxName);
   }
 
-  deleteNewsByUid(String uid) async {
-    _repository.deleteNewsByUid('favorite_news', uid);
+  deleteNewsByUuid(String uuid) {
+    _repository.deleteNewsByUuid('favorite_news', uuid);
+  }
+
+  mapArticle(Article article) {
+    return Article.create(
+        article.author,
+        article.title,
+        article.description,
+        article.url,
+        article.urlToImage,
+        article.publishedAt,
+        Source(id: article.source?.id, name: article.source?.name),
+        true);
+  }
+
+  Future<bool> isArticleInFavorites(String articleTitle) async {
+    List<String> favoriteTitles = await fetchFavoriteTitles();
+    if (favoriteTitles.contains(articleTitle)) {
+      return true;
+    } else
+      return false;
   }
 
   dispose() {
     _newsFetcher.close();
     _sourcesFetcher.close();
+    _favoriteNewsFetcher.close();
   }
 }
 

@@ -61,5 +61,10 @@
   "recommended": "建议",
   "profile": "简介",
   "Save": "保存",
-  "Edit": "编辑"
+  "Edit": "编辑", 
+  "no_news": "没有选定标准的新闻",
+  "country": "国家",
+  "source": "资料来源",
+  "paging": "每页新闻",
+  "all": "全部"
 }

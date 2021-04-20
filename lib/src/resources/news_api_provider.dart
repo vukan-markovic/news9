@@ -27,7 +27,7 @@ class NewsApiProvider {
     } else {
       this.country = country;
     }
-    print('AAAAAAAAAAAAA' + query);
+
     if (dateFrom.isEmpty && dateTo.isEmpty) {
       _testUrl = Uri.https('newsapi.org', '/v2/top-headlines', {
         if (languageCode != 'sr') 'language': languageCode,

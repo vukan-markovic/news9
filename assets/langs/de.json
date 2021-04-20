@@ -61,5 +61,10 @@
   "recommended": "Empfohlen",
   "profile": "Profil",
   "Save": "speichern",
-  "Edit": "Bearbeiten"
+  "Edit": "Bearbeiten", 
+  "no_news": "Keine Nachrichten für ausgewählte Kriterien!",
+  "country": "Land",
+  "source": "Quelle",
+  "paging": "Nachrichten pro Seite",
+  "all": "Alle"
 }

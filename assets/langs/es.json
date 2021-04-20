@@ -61,5 +61,10 @@
   "recommended": "Recomendado",
   "profile": "Perfil",
   "Save": "Guardar",
-  "Edit": "Editar"
+  "Edit": "Editar",
+  "no_news": "No hay noticias para los criterios seleccionados!",
+  "country": "País",
+  "source": "Fuente",
+  "paging": "Noticias por página",
+  "all": "Todo"
 }

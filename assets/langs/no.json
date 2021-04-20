@@ -61,5 +61,10 @@
   "recommended": "Anbefalt",
   "profile": "Profil",
   "Save": "Lagre",
-  "Edit": "Redigere"
+  "Edit": "Redigere", 
+  "no_news": "Ingen nyheter for utvalgte kriterier!",
+  "country": " Land",
+  "source": " Kilde",
+  "paging": " Nyheter per side",
+  "all": " Alle"
 }

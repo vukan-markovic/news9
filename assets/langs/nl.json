@@ -61,5 +61,10 @@
   "recommended": "Aanbevolen",
   "profile": "Profiel",
   "Save": "Bewaar",
-  "Edit": "Wijzig"
+  "Edit": "Wijzig", 
+  "no_news": "Geen nieuws voor geselecteerde criteria!",
+  "country": "Land",
+  "source": "Bron",
+  "paging": "Nieuws per pagina",
+  "all": "Alle"
 }
