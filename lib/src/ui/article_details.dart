@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:news/src/constants/ColorConstants.dart';
+import 'package:news/src/extensions/Color.dart';
 import 'package:news/src/models/article/article_model.dart';
 import 'package:news/src/utils/app_localizations.dart';
 import 'dart:async';
@@ -80,6 +82,10 @@ class ArticleDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text('Flutter News9 - ' + _article.source.name),
+        backgroundColor: HexColor.fromHex(ColorConstants.primaryColor),
+      ),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
