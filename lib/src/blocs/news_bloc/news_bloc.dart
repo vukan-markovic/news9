@@ -22,16 +22,18 @@ class NewsBloc {
     String source,
     String paging,
     String sorting,
+    String query = "",
   }) async {
     ArticleModel news = await _repository.fetchAllNews(
-      languageCode: languageCode,
-      dateFrom: dateFrom,
-      dateTo: dateTo,
-      country: country,
-      sorting: sorting,
-      source: source,
-      paging: paging,
-    );
+        languageCode: languageCode,
+        dateFrom: dateFrom,
+        dateTo: dateTo,
+        country: country,
+        sorting: sorting,
+        source: source,
+        paging: paging,
+        query: query);
+
     deleteNewsBox("offline_news");
     insertNewsList(news);
     _newsFetcher.sink.add(news);

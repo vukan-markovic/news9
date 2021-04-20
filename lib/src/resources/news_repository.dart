@@ -9,15 +9,15 @@ import '../models/article/article_model.dart';
 class NewsRepository {
   final newsApiProvider = NewsApiProvider();
 
-  Future<ArticleModel> fetchAllNews({
-    String languageCode,
-    String dateFrom,
-    String dateTo,
-    String country,
-    String source,
-    String paging,
-    String sorting,
-  }) =>
+  Future<ArticleModel> fetchAllNews(
+          {String languageCode,
+          String dateFrom,
+          String dateTo,
+          String country,
+          String source,
+          String paging,
+          String sorting,
+          String query = ""}) =>
       newsApiProvider.fetchNewsList(
         languageCode: languageCode,
         dateFrom: dateFrom,
@@ -26,6 +26,7 @@ class NewsRepository {
         sorting: sorting,
         source: source,
         paging: paging,
+        query: query,
       );
 
   Future<SourceModel> fetchAllSources() => newsApiProvider.fetchSourcesList();

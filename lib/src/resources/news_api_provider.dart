@@ -8,9 +8,9 @@ import '../models/article/article_model.dart';
 
 class NewsApiProvider {
   Client client = Client();
-  static final String _apiKey = 'a041896ae3e446e583455e49070ec8b1';
-  static String _searchQuery = '';
   String country;
+  static final String _apiKey = 'a041896ae3e446e583455e49070ec8b1';
+  Uri _testUrl;
 
   Future<ArticleModel> fetchNewsList({
     String languageCode,
@@ -20,20 +20,19 @@ class NewsApiProvider {
     String source,
     String paging,
     String sorting,
+    String query = "",
   }) async {
-    Uri _testUrl;
-
     if (languageCode == 'sr') {
       this.country = 'rs';
     } else {
       this.country = country;
     }
-
+    print('AAAAAAAAAAAAA' + query);
     if (dateFrom.isEmpty && dateTo.isEmpty) {
       _testUrl = Uri.https('newsapi.org', '/v2/top-headlines', {
         if (languageCode != 'sr') 'language': languageCode,
         'pageSize': paging,
-        'q': _searchQuery,
+        'q': query,
         'apiKey': _apiKey,
         if (source.toLowerCase() != 'all') 'sources': source,
         if (country != 'All')
@@ -46,7 +45,8 @@ class NewsApiProvider {
         'from': Jiffy(DateTime.parse(dateFrom)).format('yyyy-MM-dd'),
         'to': Jiffy(DateTime.parse(dateTo)).format('yyyy-MM-dd'),
         'pageSize': paging,
-        'q': _searchQuery,
+        'q': query,
+        'language': languageCode,
         'apiKey': _apiKey,
         'sources': 'bbc-news', //TODO Add new default sources
       });
