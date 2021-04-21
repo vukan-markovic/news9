@@ -1,22 +1,48 @@
+import 'package:news/src/models/source_model.dart';
 import 'package:rxdart/rxdart.dart';
-import 'package:uuid/uuid.dart';
 import '../../resources/news_repository.dart';
 import '../../models/article/article_model.dart';
 
 class NewsBloc {
   final _repository = NewsRepository();
   final _newsFetcher = PublishSubject<ArticleModel>();
+  final _sourcesFetcher = PublishSubject<SourceModel>();
   final _favoriteNewsFetcher = PublishSubject<ArticleModel>();
 
   Stream<ArticleModel> get allNews => _newsFetcher.stream;
 
   Stream<ArticleModel> get favoriteNews => _favoriteNewsFetcher.stream;
 
-  fetchAllNews(String languageCode, [String query = ""]) async {
-    ArticleModel news = await _repository.fetchAllNews(languageCode, query);
+  Stream<SourceModel> get allSources => _sourcesFetcher.stream;
+
+  fetchAllNews({
+    String languageCode,
+    String dateFrom,
+    String dateTo,
+    String country,
+    String source,
+    String paging,
+    String sorting,
+    String query = "",
+  }) async {
+    ArticleModel news = await _repository.fetchAllNews(
+        languageCode: languageCode,
+        dateFrom: dateFrom,
+        dateTo: dateTo,
+        country: country,
+        sorting: sorting,
+        source: source,
+        paging: paging,
+        query: query);
+
     deleteNewsBox("offline_news");
     insertNewsList(news);
     _newsFetcher.sink.add(news);
+  }
+
+  fetchAllSources() async {
+    SourceModel sources = await _repository.fetchAllSources();
+    _sourcesFetcher.sink.add(sources);
   }
 
   fetchFavoriteNewsFromDatabase() async {
@@ -96,6 +122,7 @@ class NewsBloc {
 
   dispose() {
     _newsFetcher.close();
+    _sourcesFetcher.close();
     _favoriteNewsFetcher.close();
   }
 }

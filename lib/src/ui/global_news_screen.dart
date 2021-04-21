@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:news/src/blocs/advanced_search_bloc/advanced_search_bloc.dart';
 import 'package:news/src/blocs/language_bloc/language_bloc.dart';
 import 'package:news/src/constants/ColorConstants.dart';
 import 'package:news/src/extensions/Color.dart';
-
+import 'package:news/src/utils/app_localizations.dart';
 import '../blocs/news_bloc/news_bloc.dart';
 import '../models/article/article_model.dart';
 import 'article_tile.dart';
@@ -17,11 +18,21 @@ class _GlobalNewsState extends State<GlobalNews> {
   final TextEditingController _filter = new TextEditingController();
   Icon _searchIcon = new Icon(Icons.search);
   Widget _appBarTitle = new Text('Flutter News9');
+  AdvancedSearchState state;
 
   @override
   void initState() {
+    state = BlocProvider.of<AdvancedSearchBloc>(context).state;
+
     newsBloc.fetchAllNews(
-        BlocProvider.of<LanguageBloc>(context).state.locale.languageCode);
+        languageCode:
+            BlocProvider.of<LanguageBloc>(context).state.locale.languageCode,
+        country: state.country,
+        paging: state.paging,
+        dateFrom: state.dateFrom,
+        dateTo: state.dateTo,
+        source: state.source);
+
     super.initState();
   }
 
@@ -34,8 +45,14 @@ class _GlobalNewsState extends State<GlobalNews> {
 
   searchNews() {
     newsBloc.fetchAllNews(
-        BlocProvider.of<LanguageBloc>(context).state.locale.languageCode,
-        _filter.text);
+        languageCode:
+            BlocProvider.of<LanguageBloc>(context).state.locale.languageCode,
+        country: state.country,
+        paging: state.paging,
+        dateFrom: state.dateFrom,
+        dateTo: state.dateTo,
+        source: state.source,
+        query: _filter.text);
     _closeInputField();
   }
 
@@ -102,17 +119,31 @@ class _GlobalNewsState extends State<GlobalNews> {
           )
         ],
       ),
-      body: StreamBuilder(
-        stream: newsBloc.allNews,
-        builder: (context, AsyncSnapshot<ArticleModel> snapshot) {
-          if (snapshot.hasData) {
-            print("Global news has data");
-            return buildList(snapshot);
-          } else if (snapshot.hasError) {
-            print("Global news error");
-            return Text(snapshot.error.toString());
-          }
-          return Center(child: CircularProgressIndicator());
+      body: BlocBuilder<AdvancedSearchBloc, AdvancedSearchState>(
+        builder: (context, state) {
+          return StreamBuilder(
+            stream: newsBloc.allNews,
+            builder: (context, AsyncSnapshot<ArticleModel> snapshot) {
+              print(snapshot);
+              if (snapshot.hasData) {
+                print("Global news has data");
+                if (snapshot.data.articles.length == 0) {
+                  return Center(
+                    child: Text(
+                      AppLocalizations.of(context).translate('no_news'),
+                    ),
+                  );
+                } else {
+                  return buildList(snapshot);
+                }
+              } else if (snapshot.hasError) {
+                print("Global news error");
+                return Text(snapshot.error.toString());
+              }
+
+              return Center(child: CircularProgressIndicator());
+            },
+          );
         },
       ),
     );
