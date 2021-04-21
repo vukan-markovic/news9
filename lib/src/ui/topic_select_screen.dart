@@ -32,7 +32,10 @@ class _TopicSelectScreenState extends State<TopicSelectScreen> {
 
   getFromFuture() async {
     _selectedCategories = await categoryBloc.getAllCategories();
-    _selectedCategories = _selectedCategories ?? [];
+
+    setState(() {
+      _selectedCategories = _selectedCategories ?? [];
+    });
   }
 
   @override
@@ -131,13 +134,18 @@ class _TopicSelectScreenState extends State<TopicSelectScreen> {
                                       await SharedPreferencesTopicSelectService
                                           .instance;
 
-                                  sharedPrefService.setValue();
+                                  if (sharedPrefService.isFirstTime()) {
+                                    sharedPrefService.setValue();
 
-                                  Navigator.of(context)
-                                      .pushAndRemoveUntil<void>(
-                                    NavigationScreen.route(),
-                                    (route) => false,
-                                  );
+                                    Navigator.of(context)
+                                        .pushAndRemoveUntil<void>(
+                                      NavigationScreen.route(),
+                                      (route) => false,
+                                    );
+                                  } else {
+                                    Navigator.of(context)
+                                        .pop(); //TODO Go to Recommendation screen when implemented.
+                                  }
                                 }
                               : null,
                           child: Text(

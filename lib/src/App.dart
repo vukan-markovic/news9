@@ -80,17 +80,15 @@ class _AppViewState extends State<AppView> {
                               await SharedPreferencesTopicSelectService
                                   .instance;
 
-                          sharedPrefService.isFirstTime().then((isFirstTime) {
-                            isFirstTime
-                                ? _navigator.pushAndRemoveUntil<void>(
-                                    TopicSelectScreen.route(),
-                                    (route) => false,
-                                  )
-                                : _navigator.pushAndRemoveUntil<void>(
-                                    NavigationScreen.route(),
-                                    (route) => false,
-                                  );
-                          });
+                          sharedPrefService.isFirstTime()
+                              ? _navigator.pushAndRemoveUntil<void>(
+                                  TopicSelectScreen.route(),
+                                  (route) => false,
+                                )
+                              : _navigator.pushAndRemoveUntil<void>(
+                                  NavigationScreen.route(),
+                                  (route) => false,
+                                );
                           break;
                         case AuthenticationStatus.unauthenticated:
                           _navigator.pushAndRemoveUntil<void>(

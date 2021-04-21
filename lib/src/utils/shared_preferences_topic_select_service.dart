@@ -18,7 +18,7 @@ class SharedPreferencesTopicSelectService {
     return _instance;
   }
 
-  Future<bool> isFirstTime() async {
+  bool isFirstTime() {
     var isFirstTime = _preferences.getBool('first_time');
 
     if (isFirstTime != null && !isFirstTime) {
@@ -28,7 +28,7 @@ class SharedPreferencesTopicSelectService {
     }
   }
 
-  void setValue() {
-    _preferences.setBool('first_time', false);
+  Future<void> setValue() async {
+    await _preferences.setBool('first_time', false);
   }
 }
