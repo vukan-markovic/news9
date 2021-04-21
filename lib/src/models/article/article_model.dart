@@ -1,6 +1,5 @@
 import 'package:hive/hive.dart';
 import 'package:news/src/blocs/news_bloc/news_bloc.dart';
-import 'package:uuid/uuid.dart';
 
 part 'article_model.g.dart';
 
@@ -111,4 +110,10 @@ class Source {
       name: parsedJson['name'],
     );
   }
+
+  bool operator ==(dynamic other) =>
+      other != null && other is Source && this.name == other.name;
+
+  @override
+  int get hashCode => super.hashCode;
 }

@@ -5,15 +5,15 @@ class SharedPrefKeys {
   static const String languageCode = 'languageCode';
 }
 
-class SharedPreferencesService {
-  static SharedPreferencesService _instance;
+class SharedPreferencesLanguageService {
+  static SharedPreferencesLanguageService _instance;
   static SharedPreferences _preferences;
 
-  SharedPreferencesService._internal();
+  SharedPreferencesLanguageService._internal();
 
-  static Future<SharedPreferencesService> get instance async {
+  static Future<SharedPreferencesLanguageService> get instance async {
     if (_instance == null) {
-      _instance = SharedPreferencesService._internal();
+      _instance = SharedPreferencesLanguageService._internal();
     }
 
     if (_preferences == null) {
