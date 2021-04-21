@@ -12,6 +12,7 @@ class NewsApiProvider {
   // use current day or given date period from the settings
   static final String _formattedDate =
       Jiffy(DateTime.now()).format('yyyy-MM-dd');
+
   // static final String _country = 'us';
   static String _searchQuery = '';
 
