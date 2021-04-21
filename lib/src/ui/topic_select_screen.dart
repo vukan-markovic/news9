@@ -6,6 +6,7 @@ import 'package:news/src/utils/app_localizations.dart';
 
 import '../constants/ColorConstants.dart';
 import '../extensions/Color.dart';
+import 'navigation_screen.dart';
 
 class TopicSelectScreen extends StatefulWidget {
   static Route route() {
@@ -20,9 +21,8 @@ class _TopicSelectScreenState extends State<TopicSelectScreen> {
   List<String> _categories = [];
 
   @override
-  void initState() {
-    super.initState();
-    getFromFuture();
+  void didChangeDependencies() async {
+    _selectedCategories = await categoryBloc.getAllCategories();
     _selectedCategories = _selectedCategories ?? [];
     _categories = [
       AppLocalizations.of(context).translate('category_business'),
@@ -33,11 +33,19 @@ class _TopicSelectScreenState extends State<TopicSelectScreen> {
       AppLocalizations.of(context).translate('category_sports'),
       AppLocalizations.of(context).translate('category_technology'),
     ];
+    print('BBBBBBBB' + _selectedCategories.length.toString());
+    super.didChangeDependencies();
   }
 
-  getFromFuture() async {
-    _selectedCategories = await categoryBloc.getAllCategories();
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+
+  // }
+
+  // getFromFuture() async {
+
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -86,13 +94,18 @@ class _TopicSelectScreenState extends State<TopicSelectScreen> {
                                 FirebaseAuth.instance.currentUser?.uid ??
                                     "wOJ3BsX5EnNgFAZYvPeGdK3TCVf2");
                             categoryBloc.insetCategoryList(_selectedCategories);
+
+                            Navigator.of(context).pushAndRemoveUntil<void>(
+                              NavigationScreen.route(),
+                              (route) => false,
+                            );
                           }
                         : null,
                     child: Text(
                       AppLocalizations.of(context).translate('finish'),
                       style: TextStyle(
-                          color:
-                              HexColor.fromHex(ColorConstants.secondaryWhite)),
+                        color: HexColor.fromHex(ColorConstants.secondaryWhite),
+                      ),
                     ),
                   ),
                 ),
