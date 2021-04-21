@@ -22,11 +22,13 @@ class SharedPreferencesTopicSelectService {
     var isFirstTime = _preferences.getBool('first_time');
 
     if (isFirstTime != null && !isFirstTime) {
-      _preferences.setBool('first_time', false);
       return false;
     } else {
-      _preferences.setBool('first_time', false);
       return true;
     }
+  }
+
+  void setValue() {
+    _preferences.setBool('first_time', false);
   }
 }

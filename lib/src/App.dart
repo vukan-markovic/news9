@@ -81,14 +81,13 @@ class _AppViewState extends State<AppView> {
                                   .instance;
 
                           sharedPrefService.isFirstTime().then((isFirstTime) {
-                            print('AAAAAAAAAAAAAa' + isFirstTime.toString());
                             isFirstTime
                                 ? _navigator.pushAndRemoveUntil<void>(
-                                    NavigationScreen.route(),
+                                    TopicSelectScreen.route(),
                                     (route) => false,
                                   )
                                 : _navigator.pushAndRemoveUntil<void>(
-                                    TopicSelectScreen.route(),
+                                    NavigationScreen.route(),
                                     (route) => false,
                                   );
                           });
