@@ -6,10 +6,13 @@ import '../../models/article/article_model.dart';
 class NewsBloc {
   final _repository = NewsRepository();
   final _newsFetcher = PublishSubject<ArticleModel>();
+  final _newsFetcherByCategory = PublishSubject<ArticleModel>();
   final _sourcesFetcher = PublishSubject<SourceModel>();
   final _favoriteNewsFetcher = PublishSubject<ArticleModel>();
 
   Stream<ArticleModel> get allNews => _newsFetcher.stream;
+
+  Stream<ArticleModel> get allNewsByCategory => _newsFetcherByCategory.stream;
 
   Stream<ArticleModel> get favoriteNews => _favoriteNewsFetcher.stream;
 
@@ -22,7 +25,6 @@ class NewsBloc {
     String country,
     String source,
     String paging,
-    String sorting,
     String query = "",
   }) async {
     ArticleModel news = await _repository.fetchAllNews(
@@ -30,7 +32,6 @@ class NewsBloc {
         dateFrom: dateFrom,
         dateTo: dateTo,
         country: country,
-        sorting: sorting,
         source: source,
         paging: paging,
         query: query);
@@ -38,6 +39,22 @@ class NewsBloc {
     deleteNewsBox("offline_news");
     insertNewsList(news);
     _newsFetcher.sink.add(news);
+  }
+
+  Future<void> fetchAllNewsByCategory({
+    String languageCode,
+    String country,
+    String paging,
+    String category,
+  }) async {
+    ArticleModel news = await _repository.fetchAllNewsByCategory(
+      languageCode: languageCode,
+      country: country,
+      paging: paging,
+      category: category,
+    );
+
+    _newsFetcherByCategory.sink.add(news);
   }
 
   fetchAllSources() async {
@@ -124,6 +141,7 @@ class NewsBloc {
     _newsFetcher.close();
     _sourcesFetcher.close();
     _favoriteNewsFetcher.close();
+    _newsFetcherByCategory.close();
   }
 }
 
