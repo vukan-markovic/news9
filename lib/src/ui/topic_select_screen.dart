@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:news/src/blocs/category_bloc/category_bloc.dart';
+import 'package:news/src/constants/categories.dart';
 import 'package:news/src/models/category/category_tile.dart';
 import 'package:news/src/utils/app_localizations.dart';
 import 'package:news/src/utils/shared_preferences_topic_select_service.dart';
@@ -40,36 +41,7 @@ class _TopicSelectScreenState extends State<TopicSelectScreen> {
 
   @override
   Widget build(BuildContext context) {
-    _categories = [
-      CategoryTile(
-        title: AppLocalizations.of(context).translate('category_business'),
-        icon: Icons.business,
-      ),
-      CategoryTile(
-        title: AppLocalizations.of(context).translate('category_entertainment'),
-        icon: Icons.sports_esports,
-      ),
-      CategoryTile(
-        title: AppLocalizations.of(context).translate('category_general'),
-        icon: Icons.home,
-      ),
-      CategoryTile(
-        title: AppLocalizations.of(context).translate('category_health'),
-        icon: Icons.local_hospital,
-      ),
-      CategoryTile(
-        title: AppLocalizations.of(context).translate('category_science'),
-        icon: Icons.science,
-      ),
-      CategoryTile(
-        title: AppLocalizations.of(context).translate('category_sports'),
-        icon: Icons.sports_soccer,
-      ),
-      CategoryTile(
-        title: AppLocalizations.of(context).translate('category_technology'),
-        icon: Icons.computer,
-      ),
-    ];
+    _categories = categories;
 
     return Scaffold(
       body: Container(
@@ -193,7 +165,8 @@ class _TopicSelectScreenState extends State<TopicSelectScreen> {
                     Icon(_categories[index].icon),
                     SizedBox(width: 4),
                     Text(
-                      _categories[index].title,
+                      AppLocalizations.of(context)
+                          .translate(_categories[index].title),
                       style: TextStyle(
                         fontWeight: FontWeight.w600,
                         fontSize: 16,

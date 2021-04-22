@@ -4,10 +4,10 @@ import 'package:news/src/blocs/advanced_search_bloc/advanced_search_bloc.dart';
 import 'package:news/src/blocs/language_bloc/language_bloc.dart';
 import 'package:news/src/constants/ColorConstants.dart';
 import 'package:news/src/extensions/Color.dart';
+import 'package:news/src/ui/news_list.dart';
 import 'package:news/src/utils/app_localizations.dart';
 import '../blocs/news_bloc/news_bloc.dart';
 import '../models/article/article_model.dart';
-import 'article_tile.dart';
 
 class GlobalNews extends StatefulWidget {
   @override
@@ -134,7 +134,7 @@ class _GlobalNewsState extends State<GlobalNews> {
                     ),
                   );
                 } else {
-                  return buildList(snapshot);
+                  return NewsList(snapshot);
                 }
               } else if (snapshot.hasError) {
                 print("Global news error");
@@ -146,19 +146,6 @@ class _GlobalNewsState extends State<GlobalNews> {
           );
         },
       ),
-    );
-  }
-
-  Widget buildList(AsyncSnapshot<ArticleModel> snapshot) {
-    return Container(
-      margin: EdgeInsets.only(top: 16),
-      child: ListView.builder(
-          itemCount: snapshot.data.articles.length,
-          shrinkWrap: true,
-          physics: ClampingScrollPhysics(),
-          itemBuilder: (context, index) {
-            return ArticleTile(article: snapshot.data.articles[index]);
-          }),
     );
   }
 }

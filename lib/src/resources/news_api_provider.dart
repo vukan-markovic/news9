@@ -74,4 +74,35 @@ class NewsApiProvider {
       throw Exception('Failed to load sources');
     }
   }
+
+  Future<void> fetchNewsListByCategory({
+    String languageCode,
+    String country,
+    String paging,
+    String category,
+  }) async {
+    if (languageCode == 'sr') {
+      this.country = 'Serbia';
+    } else {
+      this.country = country;
+    }
+
+    _testUrl = Uri.https('newsapi.org', '/v2/top-headlines', {
+      if (languageCode != 'sr') 'language': languageCode,
+      'pageSize': paging,
+      'apiKey': _apiKey,
+      'category': category,
+      'country': this.country != 'All'
+          ? countries.keys.firstWhere((k) => countries[k] == this.country)
+          : '',
+    });
+
+    final response = await client.get(_testUrl);
+
+    if (response.statusCode == 200) {
+      return ArticleModel.fromJson(json.decode(response.body));
+    } else {
+      throw Exception('Failed to load news');
+    }
+  }
 }
