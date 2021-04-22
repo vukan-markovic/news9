@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:news/src/blocs/connectivity_bloc/connectivity_bloc.dart';
 import 'package:news/src/blocs/language_bloc/language_bloc.dart';
 import 'package:news/src/constants/ColorConstants.dart';
 import 'package:news/src/extensions/Color.dart';
+import 'package:provider/provider.dart';
 
 import '../blocs/news_bloc/news_bloc.dart';
 import '../models/article/article_model.dart';
@@ -14,11 +16,32 @@ class GlobalNews extends StatefulWidget {
 }
 
 class _GlobalNewsState extends State<GlobalNews> {
+  String title = "Flutter News9";
+
+  var activeStream;
+
   @override
   void initState() {
-    newsBloc.fetchAllNews(
-        BlocProvider.of<LanguageBloc>(context).state.locale.languageCode);
     super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    var connectionState = Provider.of<ConnectivityStatus>(context);
+    print(connectionState);
+    if (connectionState == ConnectivityStatus.Offline) {
+      newsBloc.fetchNewsFromDatabase();
+      activeStream = newsBloc.offlineNews;
+      this.title = "Flutter News9 - Offline";
+      print("showing news From db");
+    } else if(connectionState == ConnectivityStatus.Cellular || connectionState == ConnectivityStatus.WiFi){
+      newsBloc.fetchAllNews(
+          BlocProvider.of<LanguageBloc>(context).state.locale.languageCode);
+      activeStream = newsBloc.allNews;
+      this.title = "Flutter News9";
+      print("showing news From api");
+    }
+    super.didChangeDependencies();
   }
 
   @override
@@ -32,11 +55,11 @@ class _GlobalNewsState extends State<GlobalNews> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Flutter News9"),
+        title: Text(this.title),
         backgroundColor: HexColor.fromHex(ColorConstants.primaryColor),
       ),
       body: StreamBuilder(
-        stream: newsBloc.allNews,
+        stream: activeStream,
         builder: (context, AsyncSnapshot<ArticleModel> snapshot) {
           print(snapshot);
           if (snapshot.hasData) {

@@ -7,11 +7,11 @@ class ConnectivityBloc {
 
   ConnectivityBloc() {
     Connectivity().onConnectivityChanged.listen((ConnectivityResult result) {
-      connectionStatusController.add(_getStatusFromResult(result));
+      connectionStatusController.add(getStatusFromResult(result));
     });
   }
 
-  ConnectivityStatus _getStatusFromResult(ConnectivityResult result) {
+  ConnectivityStatus getStatusFromResult(ConnectivityResult result) {
     switch (result) {
       case ConnectivityResult.mobile:
         return ConnectivityStatus.Cellular;

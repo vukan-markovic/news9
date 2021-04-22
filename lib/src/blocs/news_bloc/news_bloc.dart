@@ -7,10 +7,13 @@ class NewsBloc {
   final _repository = NewsRepository();
   final _newsFetcher = PublishSubject<ArticleModel>();
   final _favoriteNewsFetcher = PublishSubject<ArticleModel>();
+  final _offlineNewsFetcher = PublishSubject<ArticleModel>();
 
   Stream<ArticleModel> get allNews => _newsFetcher.stream;
 
   Stream<ArticleModel> get favoriteNews => _favoriteNewsFetcher.stream;
+
+  Stream<ArticleModel> get offlineNews => _offlineNewsFetcher.stream;
 
   fetchAllNews(String languageCode) async {
     ArticleModel news = await _repository.fetchAllNews(languageCode);
@@ -22,8 +25,8 @@ class NewsBloc {
   fetchFavoriteNewsFromDatabase() async {
     var news = await _repository.fetchNews("favorite_news");
     ArticleModel articles = ArticleModel();
-    news.forEach((i) {
-      articles.articles.add(mapArticle(i));
+    news.forEach((article) {
+      articles.articles.add(mapArticle(article));
     });
     _favoriteNewsFetcher.sink.add(articles);
   }
@@ -38,8 +41,13 @@ class NewsBloc {
   }
 
   fetchNewsFromDatabase() async {
-    ArticleModel news = await _repository.fetchNews("offline_news");
-    _favoriteNewsFetcher.sink.add(news);
+    var news = await _repository.fetchNews("offline_news");
+    ArticleModel articles = ArticleModel();
+    news.forEach((article) {
+      articles.articles.add(mapArticle(article));
+      print(articles.articles.length);
+    });
+    _offlineNewsFetcher.sink.add(articles);
   }
 
   insertNewsList(ArticleModel articlesModel) {
@@ -47,6 +55,7 @@ class NewsBloc {
     articlesModel.articles.forEach((element) {
       if (counter > 30) return;
       insertNews("offline_news", element);
+      print(element.title);
       counter++;
     });
   }

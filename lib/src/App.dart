@@ -1,3 +1,4 @@
+import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -44,6 +45,7 @@ class _AppViewState extends State<AppView> {
   @override
   Widget build(BuildContext context) {
     return StreamProvider<ConnectivityStatus>(
+        initialData: null,
         create: (context) =>
             ConnectivityBloc().connectionStatusController.stream,
         child: BlocProvider(
