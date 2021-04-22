@@ -24,9 +24,13 @@ class _RecommendationsScreenState extends State<RecommendationsScreen> {
 
   @override
   void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      getFromFuture();
-    });
+    getFromFuture();
+    super.initState();
+  }
+
+  getFromFuture() async {
+    _selectedCategories = await categoryBloc.getAllCategories();
+    _selectedCategory = _selectedCategories[0];
 
     state = BlocProvider.of<AdvancedSearchBloc>(context).state;
 
@@ -37,13 +41,6 @@ class _RecommendationsScreenState extends State<RecommendationsScreen> {
       paging: state.paging,
       category: _selectedCategory,
     );
-
-    super.initState();
-  }
-
-  getFromFuture() async {
-    _selectedCategories = await categoryBloc.getAllCategories();
-    _selectedCategory = _selectedCategories[0];
   }
 
   @override
