@@ -67,5 +67,7 @@
   "source": "Fuente",
   "paging": "Noticias por página",
   "all": "Todo",
-  "Share": "Cuota"
+  "Share": "Cuota", 
+  "from": "Desde",
+  "to": "Para"
 }
