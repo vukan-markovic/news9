@@ -67,5 +67,7 @@
   "source": "Fonte",
   "paging": "Notizie per pagina",
   "all": "Tutti",
-  "Share": "Condividere"
+  "Share": "Condividere",
+  "from": "Da",
+  "to": "A"
 }

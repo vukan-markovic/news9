@@ -67,5 +67,7 @@
   "source": "Source",
   "paging": "Nouvelles par page",
   "all": "Tout",
-  "Share": "Partager"
+  "Share": "Partager",
+  "from": "De",
+  "to": "À"
 }
