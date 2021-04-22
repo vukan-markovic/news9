@@ -5,11 +5,13 @@ import 'package:news/src/resources/user_repository.dart';
 import 'package:news/src/ui/login/login_page.dart';
 import 'package:news/src/ui/navigation_screen.dart';
 import 'package:news/src/ui/splash_page.dart';
+import 'package:news/src/ui/topic_select_screen.dart';
 import 'package:news/src/utils/app_localizations.dart';
 import 'blocs/authentication_bloc/authentication_bloc.dart';
 import 'blocs/change_theme_bloc/change_theme_bloc.dart';
 import 'blocs/language_bloc/language_bloc.dart';
 import 'ui/login/login_page.dart';
+import 'utils/shared_preferences_topic_select_service.dart';
 
 class App extends StatelessWidget {
   final AuthenticationRepository authenticationRepository =
@@ -71,13 +73,22 @@ class _AppViewState extends State<AppView> {
                 navigatorKey: _navigatorKey,
                 builder: (context, child) {
                   return BlocListener<AuthenticationBloc, AuthenticationState>(
-                    listener: (context, state) {
+                    listener: (context, state) async {
                       switch (state.status) {
                         case AuthenticationStatus.authenticated:
-                          _navigator.pushAndRemoveUntil<void>(
-                            NavigationScreen.route(),
-                            (route) => false,
-                          );
+                          final sharedPrefService =
+                              await SharedPreferencesTopicSelectService
+                                  .instance;
+
+                          sharedPrefService.isFirstTime()
+                              ? _navigator.pushAndRemoveUntil<void>(
+                                  TopicSelectScreen.route(),
+                                  (route) => false,
+                                )
+                              : _navigator.pushAndRemoveUntil<void>(
+                                  NavigationScreen.route(),
+                                  (route) => false,
+                                );
                           break;
                         case AuthenticationStatus.unauthenticated:
                           _navigator.pushAndRemoveUntil<void>(
