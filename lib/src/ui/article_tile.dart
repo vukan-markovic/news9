@@ -15,7 +15,7 @@ class ArticleTile extends StatefulWidget {
   _ArticleTileState createState() => _ArticleTileState();
 
   final Article article;
-  FavoriteNewsScreenState parent;
+  final FavoriteNewsScreenState parent;
 
   ArticleTile({this.article, this.parent});
 }

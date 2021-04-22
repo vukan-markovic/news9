@@ -67,5 +67,7 @@
     "source": "Source",
     "paging": "News per page",
     "all": "All",
-    "Share": "Share"
+    "Share": "Share", 
+    "from": "From", 
+    "to": "To"
   }
