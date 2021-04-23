@@ -19,9 +19,6 @@ class NewsBloc {
 
   Stream<ArticleModel> get offlineNews => _offlineNewsFetcher.stream;
 
-  fetchAllNews(String languageCode) async {
-    ArticleModel news = await _repository.fetchAllNews(languageCode);
-
   Stream<SourceModel> get allSources => _sourcesFetcher.stream;
 
   fetchAllNews({
@@ -90,8 +87,8 @@ class NewsBloc {
     var news = await _repository.fetchNews("offline_news");
     ArticleModel articles = ArticleModel();
     news.forEach((article) {
+      // print(article.title);
       articles.articles.add(mapArticle(article));
-      print(articles.articles.length);
     });
     _offlineNewsFetcher.sink.add(articles);
   }
@@ -101,9 +98,9 @@ class NewsBloc {
     articlesModel.articles.forEach((element) {
       if (counter > 30) return;
       insertNews("offline_news", element);
-      print(element.title);
       counter++;
     });
+    ;
   }
 
   insertNewsByUid(boxName, article) async {

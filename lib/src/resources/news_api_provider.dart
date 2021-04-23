@@ -8,18 +8,9 @@ import '../models/article/article_model.dart';
 
 class NewsApiProvider {
   Client client = Client();
-  static final String _apiKey = 'a7d73c371f074012846400e5bfff3492';
-
-  // use current day or given date period from the settings
-  static final String _formattedDate =
-      Jiffy(DateTime.now()).format('yyyy-MM-dd');
-
-  // static final String _country = 'us';
-  static String _searchQuery = '';
-
-  Future<ArticleModel> fetchNewsList(String languageCode) async {
-    Uri _testUrl;
   String country;
+  static final String _apiKey = '0b90b08600594946b41a86a1a46affbf';
+  Uri _testUrl;
 
   Future<ArticleModel> fetchNewsList({
     String languageCode,

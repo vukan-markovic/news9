@@ -20,14 +20,8 @@ class GlobalNews extends StatefulWidget {
 }
 
 class _GlobalNewsState extends State<GlobalNews> {
-<<<<<<< HEAD
-  String title = "Flutter News9";
-
   var activeStream;
 
-  @override
-  void initState() {
-=======
   final TextEditingController _filter = new TextEditingController();
   Icon _searchIcon = new Icon(Icons.search);
   Widget _appBarTitle = new Text('Flutter News9');
@@ -37,16 +31,6 @@ class _GlobalNewsState extends State<GlobalNews> {
   void initState() {
     state = BlocProvider.of<AdvancedSearchBloc>(context).state;
 
-    newsBloc.fetchAllNews(
-        languageCode:
-            BlocProvider.of<LanguageBloc>(context).state.locale.languageCode,
-        country: state.country,
-        paging: state.paging,
-        dateFrom: state.dateFrom,
-        dateTo: state.dateTo,
-        source: state.source);
-
->>>>>>> 3d96240c7f6b9183fb377fe24f08b9e32cce3406
     super.initState();
   }
 
@@ -57,13 +41,20 @@ class _GlobalNewsState extends State<GlobalNews> {
     if (connectionState == ConnectivityStatus.Offline) {
       newsBloc.fetchNewsFromDatabase();
       activeStream = newsBloc.offlineNews;
-      this.title = "Flutter News9 - Offline";
+      this._appBarTitle = Text("Flutter News9 - Offline");
       print("showing news From db");
-    } else if(connectionState == ConnectivityStatus.Cellular || connectionState == ConnectivityStatus.WiFi){
+    } else if (connectionState == ConnectivityStatus.Cellular ||
+        connectionState == ConnectivityStatus.WiFi) {
       newsBloc.fetchAllNews(
-          BlocProvider.of<LanguageBloc>(context).state.locale.languageCode);
+          languageCode:
+              BlocProvider.of<LanguageBloc>(context).state.locale.languageCode,
+          country: state.country,
+          paging: state.paging,
+          dateFrom: state.dateFrom,
+          dateTo: state.dateTo,
+          source: state.source);
       activeStream = newsBloc.allNews;
-      this.title = "Flutter News9";
+      this._appBarTitle = Text("Flutter News9");
       print("showing news From api");
     }
     super.didChangeDependencies();
@@ -143,11 +134,7 @@ class _GlobalNewsState extends State<GlobalNews> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-<<<<<<< HEAD
-        title: Text(this.title),
-=======
         title: _appBarTitle,
->>>>>>> 3d96240c7f6b9183fb377fe24f08b9e32cce3406
         backgroundColor: HexColor.fromHex(ColorConstants.primaryColor),
         actions: <Widget>[
           IconButton(
@@ -156,24 +143,10 @@ class _GlobalNewsState extends State<GlobalNews> {
           )
         ],
       ),
-<<<<<<< HEAD
-      body: StreamBuilder(
-        stream: activeStream,
-        builder: (context, AsyncSnapshot<ArticleModel> snapshot) {
-          print(snapshot);
-          if (snapshot.hasData) {
-            print("Global news has data");
-            return buildList(snapshot);
-          } else if (snapshot.hasError) {
-            print("Global news error");
-            return Text(snapshot.error.toString());
-          }
-          return Center(child: CircularProgressIndicator());
-=======
       body: BlocBuilder<AdvancedSearchBloc, AdvancedSearchState>(
         builder: (context, state) {
           return StreamBuilder(
-            stream: newsBloc.allNews,
+            stream: this.activeStream,
             builder: (context, AsyncSnapshot<ArticleModel> snapshot) {
               print(snapshot);
               if (snapshot.hasData) {
@@ -195,7 +168,6 @@ class _GlobalNewsState extends State<GlobalNews> {
               return Center(child: CircularProgressIndicator());
             },
           );
->>>>>>> 3d96240c7f6b9183fb377fe24f08b9e32cce3406
         },
       ),
     );
