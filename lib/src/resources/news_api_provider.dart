@@ -80,6 +80,7 @@ class NewsApiProvider {
     String country,
     String paging,
     String category,
+    String query,
   }) async {
     if (languageCode == 'sr') {
       this.country = 'Serbia';
@@ -90,6 +91,7 @@ class NewsApiProvider {
     _testUrl = Uri.https('newsapi.org', '/v2/top-headlines', {
       if (languageCode != 'sr') 'language': languageCode,
       'pageSize': paging,
+      'q': query,
       'apiKey': _apiKey,
       'category': category,
       'country': this.country != 'All'
