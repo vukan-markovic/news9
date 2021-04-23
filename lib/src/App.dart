@@ -6,6 +6,7 @@ import 'package:news/src/resources/user_repository.dart';
 import 'package:news/src/ui/login/login_page.dart';
 import 'package:news/src/ui/navigation_screen.dart';
 import 'package:news/src/ui/splash_page.dart';
+import 'package:news/src/ui/topic_select_screen.dart';
 import 'package:news/src/utils/app_localizations.dart';
 import 'package:provider/provider.dart';
 import 'blocs/authentication_bloc/authentication_bloc.dart';
@@ -13,6 +14,7 @@ import 'blocs/change_theme_bloc/change_theme_bloc.dart';
 import 'blocs/connectivity_bloc/connectivity_bloc.dart';
 import 'blocs/language_bloc/language_bloc.dart';
 import 'ui/login/login_page.dart';
+import 'utils/shared_preferences_topic_select_service.dart';
 
 class App extends StatelessWidget {
   final AuthenticationRepository authenticationRepository =
