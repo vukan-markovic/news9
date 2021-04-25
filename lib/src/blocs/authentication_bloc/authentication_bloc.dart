@@ -49,4 +49,8 @@ class AuthenticationBloc
     else
       return AuthenticationState.unauthenticated();
   }
+
+  bool emailProvider() {
+    return _authenticationRepository.isEmailProvider();
+  }
 }
