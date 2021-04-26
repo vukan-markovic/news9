@@ -68,16 +68,22 @@ class _GlobalNewsState extends State<GlobalNews> {
   }
 
   searchNews() {
-    newsBloc.fetchAllNews(
-        languageCode:
-            BlocProvider.of<LanguageBloc>(context).state.locale.languageCode,
-        country: state.country,
-        paging: state.paging,
-        dateFrom: state.dateFrom,
-        dateTo: state.dateTo,
-        source: state.source,
-        query: _filter.text);
-    _closeInputField();
+    var connectionState = Provider.of<ConnectivityStatus>(context, listen: false);
+    if (connectionState == ConnectivityStatus.Offline) {
+      newsBloc.fetchNewsFromDatabase(keyword: _filter.text);
+    } else if (connectionState == ConnectivityStatus.Cellular ||
+        connectionState == ConnectivityStatus.WiFi) {
+      newsBloc.fetchAllNews(
+          languageCode:
+              BlocProvider.of<LanguageBloc>(context).state.locale.languageCode,
+          country: state.country,
+          paging: state.paging,
+          dateFrom: state.dateFrom,
+          dateTo: state.dateTo,
+          source: state.source,
+          query: _filter.text);
+      _closeInputField();
+    }
   }
 
   void _searchPressed() {
