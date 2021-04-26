@@ -69,5 +69,8 @@
   "all": "Tout",
   "Share": "Partager",
   "from": "De",
-  "to": "À"
+  "to": "À",
+  "advanced_search_title": "Recherche d'actualités par période, pays ou source",
+  "global_news": "Actualités mondiales",
+  "global_recommended": "Nouvelles mondiales et recommandées"
 }

@@ -49,12 +49,14 @@ class NewsBloc {
     String country,
     String paging,
     String category,
+    String query = "",
   }) async {
     ArticleModel news = await _repository.fetchAllNewsByCategory(
       languageCode: languageCode,
       country: country,
       paging: paging,
       category: category,
+      query: query,
     );
 
     _newsFetcherByCategory.sink.add(news);

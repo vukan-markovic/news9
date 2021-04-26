@@ -31,12 +31,14 @@ class NewsRepository {
     String source,
     String paging,
     String category,
+    String query,
   }) =>
       newsApiProvider.fetchNewsListByCategory(
         languageCode: languageCode,
         country: country,
         paging: paging,
         category: category,
+        query: query,
       );
 
   Future<SourceModel> fetchAllSources() => newsApiProvider.fetchSourcesList();

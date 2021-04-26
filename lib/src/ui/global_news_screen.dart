@@ -7,9 +7,8 @@ import 'package:news/src/extensions/Color.dart';
 import 'package:provider/provider.dart';
 import 'package:news/src/blocs/advanced_search_bloc/advanced_search_bloc.dart';
 import 'package:news/src/blocs/language_bloc/language_bloc.dart';
-import 'package:news/src/constants/ColorConstants.dart';
-import 'package:news/src/extensions/Color.dart';
 import 'package:news/src/ui/news_list.dart';
+import 'package:news/src/ui/search/search_app_bar.dart';
 import 'package:news/src/utils/app_localizations.dart';
 import '../blocs/news_bloc/news_bloc.dart';
 import '../models/article/article_model.dart';
@@ -23,8 +22,7 @@ class _GlobalNewsState extends State<GlobalNews> {
   var activeStream;
 
   final TextEditingController _filter = new TextEditingController();
-  Icon _searchIcon = new Icon(Icons.search);
-  Widget _appBarTitle = new Text('Flutter News9');
+
   AdvancedSearchState state;
 
   @override
@@ -139,16 +137,7 @@ class _GlobalNewsState extends State<GlobalNews> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: _appBarTitle,
-        backgroundColor: HexColor.fromHex(ColorConstants.primaryColor),
-        actions: <Widget>[
-          IconButton(
-            icon: _searchIcon,
-            onPressed: () => _searchPressed(),
-          )
-        ],
-      ),
+      appBar: SearchAppBar(_filter, searchNews),
       body: BlocBuilder<AdvancedSearchBloc, AdvancedSearchState>(
         builder: (context, state) {
           return StreamBuilder(

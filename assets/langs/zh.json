@@ -69,5 +69,8 @@
   "all": "全部",
   "Share": "分享", 
   "from": "从",
-  "to": "至"
+  "to": "至",
+  "advanced_search_title": "按日期段、国家或来源搜索新闻",
+  "global_news": "全球新闻",
+  "global_recommended": "全球和推荐新闻"
 }
