@@ -6,6 +6,7 @@ import 'package:news/src/extensions/Color.dart';
 import 'package:news/src/models/article/article_model.dart';
 
 import 'article_tile.dart';
+import 'dialogs/filter_news_dialog.dart';
 
 class FavoriteNewsScreen extends StatefulWidget {
   FavoriteNewsScreenState createState() => FavoriteNewsScreenState();
@@ -21,9 +22,22 @@ class FavoriteNewsScreenState extends State<FavoriteNewsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Flutter News9"),
-        backgroundColor: HexColor.fromHex(ColorConstants.primaryColor),
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(50.0),
+        child: AppBar(
+          title: Text("Flutter News9"),
+          backgroundColor: HexColor.fromHex(ColorConstants.primaryColor),
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(Icons.filter_alt),
+              onPressed: () async {
+                var sortNews = await FilterNewsDialog.showFilterNewsDialog(
+                    context, 'favorites');
+                if (sortNews) newsBloc.sortFavoritesNews();
+              },
+            ),
+          ],
+        ),
       ),
       body: Container(
         child: StreamBuilder(

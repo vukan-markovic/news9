@@ -54,9 +54,12 @@ class _UserPageState extends State<UserPage> {
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Flutter News9"),
-        backgroundColor: HexColor.fromHex(ColorConstants.primaryColor),
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(50.0),
+        child: AppBar(
+          title: Text("Flutter News9"),
+          backgroundColor: HexColor.fromHex(ColorConstants.primaryColor),
+        ),
       ),
       body: ValueListenableBuilder(
         valueListenable: Hive.box<AppUser>('user').listenable(),

@@ -1,4 +1,7 @@
+import 'package:news/src/constants/enums.dart';
 import 'package:news/src/models/source_model.dart';
+import 'package:news/src/ui/dialogs/filter_news_dialog.dart';
+import 'package:news/src/utils/sorting.dart';
 import 'package:rxdart/rxdart.dart';
 import '../../resources/news_repository.dart';
 import '../../models/article/article_model.dart';
@@ -17,6 +20,9 @@ class NewsBloc {
   Stream<ArticleModel> get favoriteNews => _favoriteNewsFetcher.stream;
 
   Stream<SourceModel> get allSources => _sourcesFetcher.stream;
+
+  ArticleModel news;
+  ArticleModel articles;
 
   fetchAllNews({
     String languageCode,
@@ -48,7 +54,7 @@ class NewsBloc {
     String category,
     String query = "",
   }) async {
-    ArticleModel news = await _repository.fetchAllNewsByCategory(
+    news = await _repository.fetchAllNewsByCategory(
       languageCode: languageCode,
       country: country,
       paging: paging,
@@ -56,7 +62,7 @@ class NewsBloc {
       query: query,
     );
 
-    _newsFetcherByCategory.sink.add(news);
+    sortRecommendedNews();
   }
 
   fetchAllSources() async {
@@ -66,11 +72,12 @@ class NewsBloc {
 
   fetchFavoriteNewsFromDatabase() async {
     var news = await _repository.fetchNews("favorite_news");
-    ArticleModel articles = ArticleModel();
+    articles = ArticleModel();
     news.forEach((i) {
       articles.articles.add(mapArticle(i));
     });
-    _favoriteNewsFetcher.sink.add(articles);
+
+    sortFavoritesNews();
   }
 
   Future<List<String>> fetchFavoriteTitles() async {
@@ -144,6 +151,28 @@ class NewsBloc {
     _sourcesFetcher.close();
     _favoriteNewsFetcher.close();
     _newsFetcherByCategory.close();
+  }
+
+  void sortRecommendedNews() async {
+    if (optionsRecommended == SortOptions.title) {
+      _newsFetcherByCategory.sink.add(Sort.sortByTitle(news, orderRecommended));
+    } else if (optionsRecommended == SortOptions.date) {
+      _newsFetcherByCategory.sink.add(Sort.sortByDate(news, orderRecommended));
+    } else if (optionsRecommended == SortOptions.source) {
+      _newsFetcherByCategory.sink
+          .add(Sort.sortBySource(news, orderRecommended));
+    }
+  }
+
+  void sortFavoritesNews() async {
+    if (optionsFavorites == SortOptions.title) {
+      _favoriteNewsFetcher.sink.add(Sort.sortByTitle(articles, orderFavorites));
+    } else if (optionsFavorites == SortOptions.date) {
+      _favoriteNewsFetcher.sink.add(Sort.sortByDate(articles, orderFavorites));
+    } else if (optionsFavorites == SortOptions.source) {
+      _favoriteNewsFetcher.sink
+          .add(Sort.sortBySource(articles, orderFavorites));
+    }
   }
 }
 

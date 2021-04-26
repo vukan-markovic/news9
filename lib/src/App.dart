@@ -50,6 +50,7 @@ class _AppViewState extends State<AppView> {
           return BlocBuilder<LanguageBloc, LanguageState>(
             builder: (context, languageState) {
               return MaterialApp(
+                debugShowCheckedModeBanner: false,
                 locale: languageState.locale,
                 localizationsDelegates: [
                   GlobalMaterialLocalizations.delegate,

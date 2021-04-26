@@ -6,7 +6,7 @@ import 'package:news/src/blocs/reset_password_bloc/reset_password_state.dart';
 import 'package:news/src/ui/login/login_page.dart';
 import 'package:news/src/utils/app_localizations.dart';
 
-import '../dialog.dart';
+import '../dialogs/message_dialog.dart';
 
 class ResetPasswordForm extends StatelessWidget {
   @override
@@ -14,14 +14,14 @@ class ResetPasswordForm extends StatelessWidget {
     return BlocListener<ResetPasswordCubit, ResetPasswordState>(
       listener: (context, state) {
         if (state.status.isSubmissionFailure) {
-          AppDialog.showAppDialog(
+          MessageDialog.showMessageDialog(
             context: context,
             title: AppLocalizations.of(context).translate('invalid_email'),
             body: AppLocalizations.of(context).translate('invalid_email_body'),
           );
         } else if (state.status.isSubmissionSuccess) {
           Navigator.of(context).pushReplacement(LoginPage.route());
-          AppDialog.showAppDialog(
+          MessageDialog.showMessageDialog(
             context: context,
             title:
                 AppLocalizations.of(context).translate('reset_password_title'),
