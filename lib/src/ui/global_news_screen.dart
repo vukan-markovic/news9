@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:news/src/blocs/connectivity_bloc/connectivity_bloc.dart';
+import 'package:news/src/blocs/language_bloc/language_bloc.dart';
+import 'package:news/src/constants/ColorConstants.dart';
+import 'package:news/src/extensions/Color.dart';
+import 'package:provider/provider.dart';
 import 'package:news/src/blocs/advanced_search_bloc/advanced_search_bloc.dart';
 import 'package:news/src/blocs/language_bloc/language_bloc.dart';
 import 'package:news/src/ui/news_list.dart';
@@ -14,6 +19,8 @@ class GlobalNews extends StatefulWidget {
 }
 
 class _GlobalNewsState extends State<GlobalNews> {
+  var activeStream;
+
   final TextEditingController _filter = new TextEditingController();
 
   AdvancedSearchState state;
@@ -22,16 +29,33 @@ class _GlobalNewsState extends State<GlobalNews> {
   void initState() {
     state = BlocProvider.of<AdvancedSearchBloc>(context).state;
 
-    newsBloc.fetchAllNews(
-        languageCode:
-            BlocProvider.of<LanguageBloc>(context).state.locale.languageCode,
-        country: state.country,
-        paging: state.paging,
-        dateFrom: state.dateFrom,
-        dateTo: state.dateTo,
-        source: state.source);
-
     super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    var connectionState = Provider.of<ConnectivityStatus>(context);
+    print(connectionState);
+    if (connectionState == ConnectivityStatus.Offline) {
+      newsBloc.fetchNewsFromDatabase();
+      activeStream = newsBloc.offlineNews;
+      this._appBarTitle = Text("Flutter News9 - Offline");
+      print("showing news From db");
+    } else if (connectionState == ConnectivityStatus.Cellular ||
+        connectionState == ConnectivityStatus.WiFi) {
+      newsBloc.fetchAllNews(
+          languageCode:
+              BlocProvider.of<LanguageBloc>(context).state.locale.languageCode,
+          country: state.country,
+          paging: state.paging,
+          dateFrom: state.dateFrom,
+          dateTo: state.dateTo,
+          source: state.source);
+      activeStream = newsBloc.allNews;
+      this._appBarTitle = Text("Flutter News9");
+      print("showing news From api");
+    }
+    super.didChangeDependencies();
   }
 
   @override
@@ -60,7 +84,7 @@ class _GlobalNewsState extends State<GlobalNews> {
       body: BlocBuilder<AdvancedSearchBloc, AdvancedSearchState>(
         builder: (context, state) {
           return StreamBuilder(
-            stream: newsBloc.allNews,
+            stream: this.activeStream,
             builder: (context, AsyncSnapshot<ArticleModel> snapshot) {
               print(snapshot);
               if (snapshot.hasData) {

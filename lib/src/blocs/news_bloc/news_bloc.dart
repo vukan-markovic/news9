@@ -9,12 +9,15 @@ class NewsBloc {
   final _newsFetcherByCategory = PublishSubject<ArticleModel>();
   final _sourcesFetcher = PublishSubject<SourceModel>();
   final _favoriteNewsFetcher = PublishSubject<ArticleModel>();
+  final _offlineNewsFetcher = PublishSubject<ArticleModel>();
 
   Stream<ArticleModel> get allNews => _newsFetcher.stream;
 
   Stream<ArticleModel> get allNewsByCategory => _newsFetcherByCategory.stream;
 
   Stream<ArticleModel> get favoriteNews => _favoriteNewsFetcher.stream;
+
+  Stream<ArticleModel> get offlineNews => _offlineNewsFetcher.stream;
 
   Stream<SourceModel> get allSources => _sourcesFetcher.stream;
 
@@ -67,8 +70,8 @@ class NewsBloc {
   fetchFavoriteNewsFromDatabase() async {
     var news = await _repository.fetchNews("favorite_news");
     ArticleModel articles = ArticleModel();
-    news.forEach((i) {
-      articles.articles.add(mapArticle(i));
+    news.forEach((article) {
+      articles.articles.add(mapArticle(article));
     });
     _favoriteNewsFetcher.sink.add(articles);
   }
@@ -83,8 +86,13 @@ class NewsBloc {
   }
 
   fetchNewsFromDatabase() async {
-    ArticleModel news = await _repository.fetchNews("offline_news");
-    _favoriteNewsFetcher.sink.add(news);
+    var news = await _repository.fetchNews("offline_news");
+    ArticleModel articles = ArticleModel();
+    news.forEach((article) {
+      // print(article.title);
+      articles.articles.add(mapArticle(article));
+    });
+    _offlineNewsFetcher.sink.add(articles);
   }
 
   insertNewsList(ArticleModel articlesModel) {
@@ -94,6 +102,7 @@ class NewsBloc {
       insertNews("offline_news", element);
       counter++;
     });
+    ;
   }
 
   insertNewsByUid(boxName, article) async {

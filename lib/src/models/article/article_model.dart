@@ -72,7 +72,7 @@ class Article {
     _urlToImage = article['urlToImage'];
     _publishedAt = article['publishedAt'];
     newsBloc
-        .isArticleInFavorites(article['title'])
+        .isArticleInFavorites(article['title'].replaceAll(RegExp(r'[^\x20-\x7E]'), ''))
         .then((value) => _isFavorite = value);
     _source = Source.fromJson(article['source']);
   }
