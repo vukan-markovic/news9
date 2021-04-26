@@ -63,6 +63,14 @@
                 <string>503907637685958</string>
             </array>
         </dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.googleusercontent.apps.402145113976-h9020cufrvu3o7tdpravtff7lgms3lbt</string>
+			</array>
+		</dict>
     </array>
 </dict>
 </plist>
