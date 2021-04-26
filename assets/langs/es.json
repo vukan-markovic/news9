@@ -69,5 +69,8 @@
   "all": "Todo",
   "Share": "Cuota", 
   "from": "Desde",
-  "to": "Para"
+  "to": "Para",
+  "advanced_search_title": "Buscar noticias por periodo de tiempo, país o fuente",
+  "global_news": "Noticias mundiales",
+  "global_recommended": "Noticias mundiales y recomendadas"
 }

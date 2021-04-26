@@ -63,6 +63,15 @@ class _UserPageState extends State<UserPage> {
         builder: (context, Box<AppUser> box, widget) {
           AppUser user =
               box.get(context.read<AuthenticationBloc>().state.user.email);
+          if (user == null) {
+            user = AppUser(
+              email: context.read<AuthenticationBloc>().state.user.email,
+              dateOfBirth: "${DateTime.now().toLocal()}".split(' ')[0],
+              firstName: 'First name',
+              lastName: 'Last name',
+              gender: 'Male',
+            );
+          }
           if (user != null) {
             if (editText == 'Edit') {
               _gender = user.gender == 'Male' ? Gender.male : Gender.female;
