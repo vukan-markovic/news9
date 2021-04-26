@@ -17,7 +17,7 @@ class CategoryBloc {
   }
 
   deleteCategoriesByUid(String uid) async {
-    _categoryRepository.deleteCategoriesByUid();
+    _categoryRepository.deleteCategories();
   }
 
   getAllCategories() async {

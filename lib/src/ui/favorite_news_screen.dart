@@ -4,6 +4,7 @@ import 'package:news/src/blocs/news_bloc/news_bloc.dart';
 import 'package:news/src/constants/ColorConstants.dart';
 import 'package:news/src/extensions/Color.dart';
 import 'package:news/src/models/article/article_model.dart';
+import 'package:news/src/utils/app_localizations.dart';
 
 import 'article_tile.dart';
 import 'dialogs/filter_news_dialog.dart';
@@ -45,7 +46,15 @@ class FavoriteNewsScreenState extends State<FavoriteNewsScreen> {
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               print("i have data");
-              return buildList(snapshot);
+              if (snapshot.data.articles.length == 0) {
+                return Center(
+                  child: Text(
+                    AppLocalizations.of(context).translate('no_favorites'),
+                  ),
+                );
+              } else {
+                return buildList(snapshot);
+              }
             } else if (snapshot.hasError) {
               return Text(snapshot.error.toString());
             }

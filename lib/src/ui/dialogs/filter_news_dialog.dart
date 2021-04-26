@@ -26,7 +26,9 @@ class FilterNewsDialog {
       barrierDismissible: false,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text("Sort news by date, title or source"),
+          title: Text(
+            AppLocalizations.of(context).translate('filter_news_dialog_title'),
+          ),
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
@@ -38,7 +40,9 @@ class FilterNewsDialog {
           ),
           actions: <Widget>[
             TextButton(
-              child: Text(AppLocalizations.of(context).translate('ok')),
+              child: Text(
+                AppLocalizations.of(context).translate('ok'),
+              ),
               onPressed: () {
                 Navigator.of(context).pop(true);
                 if (screen == 'recommended') {
@@ -51,7 +55,9 @@ class FilterNewsDialog {
               },
             ),
             TextButton(
-              child: Text("Cancel"),
+              child: Text(
+                AppLocalizations.of(context).translate('cancel'),
+              ),
               onPressed: () => Navigator.of(context).pop(false),
             ),
           ],
@@ -71,9 +77,11 @@ class _OptionsInputState extends State<_OptionsInput> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Text('Sort by:'),
+        Text(AppLocalizations.of(context).translate('sort_by') + ':'),
         ListTile(
-          title: Text('Date'),
+          title: Text(
+            AppLocalizations.of(context).translate('date'),
+          ),
           trailing: Radio<SortOptions>(
             value: SortOptions.date,
             groupValue: options,
@@ -85,7 +93,9 @@ class _OptionsInputState extends State<_OptionsInput> {
           ),
         ),
         ListTile(
-          title: Text('Title'),
+          title: Text(
+            AppLocalizations.of(context).translate('title'),
+          ),
           trailing: Radio<SortOptions>(
             value: SortOptions.title,
             groupValue: options,
@@ -97,7 +107,9 @@ class _OptionsInputState extends State<_OptionsInput> {
           ),
         ),
         ListTile(
-          title: Text('Source'),
+          title: Text(
+            AppLocalizations.of(context).translate('source'),
+          ),
           trailing: Radio<SortOptions>(
             value: SortOptions.source,
             groupValue: options,
@@ -123,9 +135,11 @@ class _OrderInputState extends State<_OrderInput> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Text('Order:'),
+        Text(AppLocalizations.of(context).translate('order') + ':'),
         ListTile(
-          title: Text('ASC'),
+          title: Text(
+            AppLocalizations.of(context).translate('asc'),
+          ),
           trailing: Radio<SortOrder>(
             value: SortOrder.asc,
             groupValue: order,
@@ -137,7 +151,9 @@ class _OrderInputState extends State<_OrderInput> {
           ),
         ),
         ListTile(
-          title: Text('DESC'),
+          title: Text(
+            AppLocalizations.of(context).translate('desc'),
+          ),
           trailing: Radio<SortOrder>(
             value: SortOrder.desc,
             groupValue: order,

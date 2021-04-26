@@ -72,5 +72,14 @@
   "to": "Naar",
   "advanced_search_title": "Zoek nieuws op datumperiode, land of bron",
   "global_news": "Wereldwijd nieuws",
-  "global_recommended": "Wereldwijd en aanbevolen nieuws"
+  "global_recommended": "Wereldwijd en aanbevolen nieuws",
+  "filter_news_dialog_title": "Nieuws sorteren op datum, titel of bron",
+  "cancel": "Annuleren",
+  "sort_by": "Sorteren op",
+  "date": "Datum",
+  "title": "Titel",
+  "order": "Volgorde",
+  "asc": "Oplopend",
+  "desc": "Aflopend",
+  "no_favorites": "U hebt momenteel geen favorieten"
 }

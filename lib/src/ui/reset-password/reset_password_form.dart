@@ -5,7 +5,6 @@ import 'package:news/src/blocs/reset_password_bloc/reset_password_cubit.dart';
 import 'package:news/src/blocs/reset_password_bloc/reset_password_state.dart';
 import 'package:news/src/ui/login/login_page.dart';
 import 'package:news/src/utils/app_localizations.dart';
-
 import '../dialogs/message_dialog.dart';
 
 class ResetPasswordForm extends StatelessWidget {
