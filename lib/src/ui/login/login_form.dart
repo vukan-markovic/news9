@@ -1,11 +1,11 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:formz/formz.dart';
 import 'package:news/src/blocs/login_bloc/login_cubit.dart';
 import 'package:news/src/ui/reset-password/reset_password_page.dart';
 import 'package:news/src/ui/sign_up/sign_up_page.dart';
 import 'package:news/src/utils/app_localizations.dart';
-
 import '../dialogs/message_dialog.dart';
 
 class LoginForm extends StatelessWidget {
@@ -55,7 +55,9 @@ class LoginForm extends StatelessWidget {
                 _PasswordInput(),
                 SizedBox(height: 8.0),
                 _LoginButton(),
-                SizedBox(height: 8.0),
+                SizedBox(height: 16.0),
+                _GoogleLoginButton(),
+                SizedBox(height: 16.0),
                 TextButton(
                   onPressed: () => Navigator.of(context)
                       .pushReplacement(ResetPasswordPage.route()),
@@ -137,7 +139,7 @@ class _LoginButton extends StatelessWidget {
       buildWhen: (previous, current) => previous.status != current.status,
       builder: (context, state) {
         return state.status.isSubmissionInProgress
-            ? const CircularProgressIndicator()
+            ? CircularProgressIndicator()
             : Container(
                 width: 200,
                 child: ElevatedButton(
@@ -162,6 +164,34 @@ class _LoginButton extends StatelessWidget {
                 ),
               );
       },
+    );
+  }
+}
+
+class _GoogleLoginButton extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    return ElevatedButton.icon(
+      key: Key('loginForm_googleLogin_raisedButton'),
+      label: Text(
+        'Google',
+        style: TextStyle(color: Colors.white),
+      ),
+      style: ElevatedButton.styleFrom(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(30.0),
+        ),
+        primary: theme.accentColor,
+      ),
+      icon: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Icon(
+          FontAwesomeIcons.google,
+          color: Colors.white,
+        ),
+      ),
+      onPressed: () => context.read<LoginCubit>().logInWithGoogle(),
     );
   }
 }

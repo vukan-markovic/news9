@@ -50,6 +50,7 @@ class NewsRepository {
 
   insertNews(boxName, data) async {
     var box = await Hive.openBox(boxName);
+    print(data.title);
     box.add(data);
   }
 

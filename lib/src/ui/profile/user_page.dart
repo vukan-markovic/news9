@@ -83,9 +83,16 @@ class _UserPageState extends State<UserPage> {
                   new TextEditingController(text: user.lastName);
               context.read<UserPageCubit>().setInitialValues(user);
             }
+
             if (profileImage == null) {
               if (user.imagePath != null) {
-                if (kIsWeb) {
+                if (kIsWeb ||
+                    !context.read<AuthenticationBloc>().emailProvider() &&
+                        Uri.tryParse(user.imagePath).isAbsolute) {
+                  if (!context.read<AuthenticationBloc>().emailProvider()) {
+                    _imagePath = user.imagePath;
+                  }
+
                   profileImage = Image.network(
                     user.imagePath,
                   ).image;
@@ -278,9 +285,13 @@ class _UserPageState extends State<UserPage> {
                           title: Text(
                             AppLocalizations.of(context).translate('log_out'),
                           ),
-                          onTap: () => context
-                              .read<AuthenticationBloc>()
-                              .add(AuthenticationLogoutRequested()),
+                          onTap: () {
+                            profileImage = null;
+
+                            context
+                                .read<AuthenticationBloc>()
+                                .add(AuthenticationLogoutRequested());
+                          },
                         ),
                       ],
                     ),
