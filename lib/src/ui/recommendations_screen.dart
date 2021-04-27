@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news/src/blocs/advanced_search_bloc/advanced_search_bloc.dart';
 import 'package:news/src/blocs/category_bloc/category_bloc.dart';
+import 'package:news/src/blocs/connectivity_bloc/connectivity_bloc.dart';
 import 'package:news/src/blocs/language_bloc/language_bloc.dart';
 import 'package:news/src/blocs/news_bloc/news_bloc.dart';
 import 'package:news/src/constants/ColorConstants.dart';
@@ -11,6 +12,7 @@ import 'package:news/src/models/article/article_model.dart';
 import 'package:news/src/ui/news_list.dart';
 import 'package:news/src/ui/search/search_app_bar.dart';
 import 'package:news/src/utils/app_localizations.dart';
+import 'package:provider/provider.dart';
 
 String _selectedCategory;
 AdvancedSearchState state;
@@ -23,11 +25,17 @@ class RecommendationsScreen extends StatefulWidget {
 class _RecommendationsScreenState extends State<RecommendationsScreen> {
   List<String> _selectedCategories = [];
   final TextEditingController _filter = new TextEditingController();
+  var connectionState;
 
   @override
-  void initState() {
-    getFromFuture();
-    super.initState();
+  void didChangeDependencies() {
+    connectionState = Provider.of<ConnectivityStatus>(context);
+
+    if (connectionState == ConnectivityStatus.Cellular ||
+        connectionState == ConnectivityStatus.WiFi) {
+      getFromFuture();
+    }
+    super.didChangeDependencies();
   }
 
   getFromFuture() async {
@@ -62,41 +70,54 @@ class _RecommendationsScreenState extends State<RecommendationsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: SearchAppBar(_filter, searchNews, true, sortNews),
+      appBar: connectionState == ConnectivityStatus.Offline
+          ? AppBar(
+              title: Text('Flutter News9'),
+              backgroundColor: HexColor.fromHex(ColorConstants.primaryColor),
+            )
+          : SearchAppBar(_filter, searchNews, true, sortNews),
       body: BlocBuilder<AdvancedSearchBloc, AdvancedSearchState>(
         builder: (context, state) {
-          return StreamBuilder(
-            stream: newsBloc.allNewsByCategory,
-            builder: (context, AsyncSnapshot<ArticleModel> snapshot) {
-              if (snapshot.hasData) {
-                return Column(
-                  children: [
-                    Expanded(
-                      child: CategoriesList(_selectedCategories),
-                    ),
-                    if (snapshot.data.articles.length == 0)
+          if (connectionState == ConnectivityStatus.Offline) {
+            return Center(
+              child: Text(
+                AppLocalizations.of(context).translate('no_internet'),
+              ),
+            );
+          } else {
+            return StreamBuilder(
+              stream: newsBloc.allNewsByCategory,
+              builder: (context, AsyncSnapshot<ArticleModel> snapshot) {
+                if (snapshot.hasData) {
+                  return Column(
+                    children: [
                       Expanded(
-                        flex: 4,
-                        child: Center(
-                          child: Text(
-                            AppLocalizations.of(context).translate('no_news'),
-                          ),
-                        ),
-                      )
-                    else
-                      Expanded(
-                        flex: 4,
-                        child: NewsList(snapshot),
+                        child: CategoriesList(_selectedCategories),
                       ),
-                  ],
-                );
-              } else if (snapshot.hasError) {
-                return Text(snapshot.error.toString());
-              }
+                      if (snapshot.data.articles.length == 0)
+                        Expanded(
+                          flex: 4,
+                          child: Center(
+                            child: Text(
+                              AppLocalizations.of(context).translate('no_news'),
+                            ),
+                          ),
+                        )
+                      else
+                        Expanded(
+                          flex: 4,
+                          child: NewsList(snapshot),
+                        ),
+                    ],
+                  );
+                } else if (snapshot.hasError) {
+                  return Text(snapshot.error.toString());
+                }
 
-              return Center(child: CircularProgressIndicator());
-            },
-          );
+                return Center(child: CircularProgressIndicator());
+              },
+            );
+          }
         },
       ),
     );

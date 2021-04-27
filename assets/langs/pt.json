@@ -81,5 +81,6 @@
   "order": "Encomenda",
   "asc": "Ascendente",
   "desc": "Descendente",
-  "no_favorites": "Actualmente não tem favoritos"
+  "no_favorites": "Actualmente não tem favoritos",
+  "no_internet": "Por favor, providenciem ligação à Internet!"
 }

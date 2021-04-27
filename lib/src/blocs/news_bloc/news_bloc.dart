@@ -51,6 +51,10 @@ class NewsBloc {
     deleteNewsBox("offline_news");
     insertNewsList(news);
     _newsFetcher.sink.add(news);
+
+    ArticleModel popularNews =
+        await _repository.fetchMostPopularNews(languageCode, country);
+    _mostPopularNewsFetcher.sink.add(popularNews);
   }
 
   Future<void> fetchAllNewsByCategory({
@@ -74,11 +78,7 @@ class NewsBloc {
   Future<void> fetchMostPopularNews({
     String languageCode,
     String country,
-  }) async {
-    ArticleModel news =
-        await _repository.fetchMostPopularNews(languageCode, country);
-    _mostPopularNewsFetcher.sink.add(news);
-  }
+  }) async {}
 
   Future<void> fetchAllSources() async {
     SourceModel sources = await _repository.fetchAllSources();

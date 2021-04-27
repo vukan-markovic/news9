@@ -81,5 +81,6 @@
   "order": "Ordenar",
   "asc": "Ascendente",
   "desc": "Descendente",
-  "no_favorites": "Actualmente no tienes favoritos"
+  "no_favorites": "Actualmente no tienes favoritos",
+  "no_internet": "Por favor, proporcione conexión a Internet."
 }

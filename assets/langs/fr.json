@@ -81,5 +81,6 @@
   "order": "Commander",
   "asc": "Ascendant",
   "desc": "Descendant",
-  "no_favorites": "Vous n'avez actuellement aucun favori"
+  "no_favorites": "Vous n'avez actuellement aucun favori",
+  "no_internet": "Veuillez fournir une connexion Internet !"
 }

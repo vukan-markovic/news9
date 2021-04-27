@@ -19,6 +19,7 @@ class GlobalNews extends StatefulWidget {
 class _GlobalNewsState extends State<GlobalNews> {
   var activeStream;
   Widget _appBarTitle;
+  var connectionState;
 
   final TextEditingController _filter = new TextEditingController();
 
@@ -28,18 +29,12 @@ class _GlobalNewsState extends State<GlobalNews> {
   void initState() {
     state = BlocProvider.of<AdvancedSearchBloc>(context).state;
 
-    newsBloc.fetchMostPopularNews(
-      languageCode:
-          BlocProvider.of<LanguageBloc>(context).state.locale.languageCode,
-      country: state.country,
-    );
-
     super.initState();
   }
 
   @override
   void didChangeDependencies() {
-    var connectionState = Provider.of<ConnectivityStatus>(context);
+    connectionState = Provider.of<ConnectivityStatus>(context);
     print(connectionState);
     if (connectionState == ConnectivityStatus.Offline) {
       newsBloc.fetchNewsFromDatabase();
@@ -107,9 +102,8 @@ class _GlobalNewsState extends State<GlobalNews> {
                           stream: newsBloc.mostPopularNews,
                           builder:
                               (context, AsyncSnapshot<ArticleModel> snapshot) {
-                            print("CCCCCCCCCCCCCCCCCCCCCCCCCCCC" +
-                                snapshot.data.toString());
-                            if (snapshot.hasData) {
+                            if (connectionState != ConnectivityStatus.Offline &&
+                                snapshot.hasData) {
                               if (snapshot.data.articles.length >= 3) {
                                 return Expanded(
                                   child: MostPopularNews(

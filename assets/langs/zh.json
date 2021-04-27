@@ -81,5 +81,6 @@
   "order": "顺序",
   "asc": "升序",
   "desc": "降序",
-  "no_favorites": "您目前没有收藏"
+  "no_favorites": "您目前没有收藏",
+  "no_internet": "请提供网络连接!"
 }

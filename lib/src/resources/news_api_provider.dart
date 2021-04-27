@@ -120,10 +120,8 @@ class NewsApiProvider {
     final response = await client.get(_testUrl);
 
     if (response.statusCode == 200) {
-      print("AAAAAAAAAAAAAAAA" + response.body);
       return ArticleModel.fromJson(json.decode(response.body));
     } else {
-      print("AAAAAAAAAAAAAAAA" + response.body);
       throw Exception('Failed to load most popular news');
     }
   }

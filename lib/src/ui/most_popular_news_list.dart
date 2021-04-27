@@ -99,6 +99,7 @@ class _NewsTileState extends State<NewsTile> {
                             widget.article.title,
                             style: TextStyle(
                               color: Colors.white,
+                              fontWeight: FontWeight.w500,
                             ),
                           ),
                         ),
@@ -106,9 +107,11 @@ class _NewsTileState extends State<NewsTile> {
                           width: MediaQuery.of(context).size.width / 2,
                           padding: EdgeInsets.all(8.0),
                           child: Text(
-                            widget.article.description.substring(0, 50) + "...",
+                            widget.article.description.substring(0,
+                                    (widget.article.description.length ~/ 3)) +
+                                "...",
                             style: TextStyle(
-                              color: Colors.white,
+                              color: Colors.white70,
                             ),
                           ),
                         ),
