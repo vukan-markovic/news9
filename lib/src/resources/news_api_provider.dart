@@ -75,7 +75,7 @@ class NewsApiProvider {
     }
   }
 
-  Future<void> fetchNewsListByCategory({
+  Future<ArticleModel> fetchNewsListByCategory({
     String languageCode,
     String country,
     String paging,
@@ -105,6 +105,26 @@ class NewsApiProvider {
       return ArticleModel.fromJson(json.decode(response.body));
     } else {
       throw Exception('Failed to load news');
+    }
+  }
+
+  Future<ArticleModel> fetchMostPopularNews(
+      String languageCode, String country) async {
+    _testUrl = Uri.https('newsapi.org', '/v2/everything', {
+      if (languageCode != 'sr') 'language': languageCode,
+      'apiKey': _apiKey,
+      'sortBy': 'popularity',
+      'q': 'a',
+    });
+
+    final response = await client.get(_testUrl);
+
+    if (response.statusCode == 200) {
+      print("AAAAAAAAAAAAAAAA" + response.body);
+      return ArticleModel.fromJson(json.decode(response.body));
+    } else {
+      print("AAAAAAAAAAAAAAAA" + response.body);
+      throw Exception('Failed to load most popular news');
     }
   }
 }

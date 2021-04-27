@@ -2,16 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news/src/blocs/connectivity_bloc/connectivity_bloc.dart';
 import 'package:news/src/blocs/language_bloc/language_bloc.dart';
-import 'package:news/src/constants/ColorConstants.dart';
-import 'package:news/src/extensions/Color.dart';
 import 'package:provider/provider.dart';
 import 'package:news/src/blocs/advanced_search_bloc/advanced_search_bloc.dart';
-import 'package:news/src/blocs/language_bloc/language_bloc.dart';
 import 'package:news/src/ui/news_list.dart';
 import 'package:news/src/ui/search/search_app_bar.dart';
 import 'package:news/src/utils/app_localizations.dart';
 import '../blocs/news_bloc/news_bloc.dart';
 import '../models/article/article_model.dart';
+import 'most_popular_news_list.dart';
 
 class GlobalNews extends StatefulWidget {
   @override
@@ -29,6 +27,12 @@ class _GlobalNewsState extends State<GlobalNews> {
   @override
   void initState() {
     state = BlocProvider.of<AdvancedSearchBloc>(context).state;
+
+    newsBloc.fetchMostPopularNews(
+      languageCode:
+          BlocProvider.of<LanguageBloc>(context).state.locale.languageCode,
+      country: state.country,
+    );
 
     super.initState();
   }
@@ -97,7 +101,33 @@ class _GlobalNewsState extends State<GlobalNews> {
                     ),
                   );
                 } else {
-                  return NewsList(snapshot);
+                  return Column(
+                    children: [
+                      StreamBuilder(
+                          stream: newsBloc.mostPopularNews,
+                          builder:
+                              (context, AsyncSnapshot<ArticleModel> snapshot) {
+                            print("CCCCCCCCCCCCCCCCCCCCCCCCCCCC" +
+                                snapshot.data.toString());
+                            if (snapshot.hasData) {
+                              if (snapshot.data.articles.length >= 3) {
+                                return Expanded(
+                                  child: MostPopularNews(
+                                    snapshot.data.articles.take(3).toList(),
+                                  ),
+                                );
+                              } else if (snapshot.hasError) {
+                                return Text(snapshot.error.toString());
+                              }
+                            }
+                            return Container(width: 0.0, height: 0.0);
+                          }),
+                      Expanded(
+                        child: NewsList(snapshot),
+                        flex: 2,
+                      ),
+                    ],
+                  );
                 }
               } else if (snapshot.hasError) {
                 print("Global news error");
