@@ -1,23 +1,21 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:hive/hive.dart';
 
 class CategoryRepository {
-  final String uid =
-      FirebaseAuth.instance.currentUser?.uid ?? "wOJ3BsX5EnNgFAZYvPeGdK3TCVf2";
+  final String key = "category";
 
   insertCategory(data) async {
     var box = await Hive.openBox('category');
-    box.put(uid, data);
+    box.put(key, data);
   }
 
-  deleteCategoriesByUid() async {
+  deleteCategories() async {
     var box = await Hive.openBox('category');
-    box.delete(uid);
+    box.delete(key);
   }
 
   getAllCategories() async {
     var box = await Hive.openBox('category');
-    List<String> categories = box.get(uid);
+    List<String> categories = box.get(key);
     box.close();
     return categories;
   }

@@ -72,5 +72,14 @@
   "to": "至",
   "advanced_search_title": "按日期段、国家或来源搜索新闻",
   "global_news": "全球新闻",
-  "global_recommended": "全球和推荐新闻"
+  "global_recommended": "全球和推荐新闻",
+  "filter_news_dialog_title": "按日期、标题或来源对新闻进行排序",
+  "cancel": "取消",
+  "sort_by": "按以下方式排序",
+  "date": "日期",
+  "title": "标题",
+  "order": "顺序",
+  "asc": "升序",
+  "desc": "降序",
+  "no_favorites": "您目前没有收藏"
 }

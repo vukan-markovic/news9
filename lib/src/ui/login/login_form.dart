@@ -6,7 +6,7 @@ import 'package:news/src/blocs/login_bloc/login_cubit.dart';
 import 'package:news/src/ui/reset-password/reset_password_page.dart';
 import 'package:news/src/ui/sign_up/sign_up_page.dart';
 import 'package:news/src/utils/app_localizations.dart';
-import '../dialog.dart';
+import '../dialogs/message_dialog.dart';
 
 class LoginForm extends StatelessWidget {
   @override
@@ -14,7 +14,7 @@ class LoginForm extends StatelessWidget {
     return BlocListener<LoginCubit, LoginState>(
       listener: (context, state) {
         if (state.status.isSubmissionFailure) {
-          AppDialog.showAppDialog(
+          MessageDialog.showMessageDialog(
             context: context,
             title: AppLocalizations.of(context)
                 .translate('incorrect_credentials_title'),
@@ -22,7 +22,7 @@ class LoginForm extends StatelessWidget {
                 .translate('incorrect_credentials_body'),
           );
         } else if (state.status.isSubmissionSuccess && !state.emailVerified) {
-          AppDialog.showAppDialog(
+          MessageDialog.showMessageDialog(
             context: context,
             title: AppLocalizations.of(context)
                 .translate('email_not_verified_title'),

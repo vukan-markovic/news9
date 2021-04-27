@@ -47,67 +47,77 @@ class _AppViewState extends State<AppView> {
   @override
   Widget build(BuildContext context) {
     return StreamProvider<ConnectivityStatus>(
-        initialData: null,
-        create: (context) =>
-            ConnectivityBloc().connectionStatusController.stream,
-        child: BlocProvider(
-          create: (context) => ChangeThemeBloc()..onDecideThemeChange(),
-          child: BlocBuilder<ChangeThemeBloc, ChangeThemeState>(
-            builder: (context, themeState) {
-              return BlocBuilder<LanguageBloc, LanguageState>(
-                builder: (context, languageState) {
-                  return MaterialApp(
-                    locale: languageState.locale,
-                    localizationsDelegates: [
-                      GlobalMaterialLocalizations.delegate,
-                      GlobalWidgetsLocalizations.delegate,
-                      AppLocalizations.delegate,
-                    ],
-                    supportedLocales: [
-                      Locale('en', 'US'),
-                      Locale('de', 'DE'),
-                      Locale('es', 'ES'),
-                      Locale('fr', 'FR'),
-                      Locale('it', 'IT'),
-                      Locale('nl', 'NL'),
-                      Locale('no', 'NO'),
-                      Locale('pt', 'PT'),
-                      Locale('ru', 'RU'),
-                      Locale('zh', 'CN'),
-                      Locale('sr', 'SR'),
-                    ],
-                    theme: themeState.themeData,
-                    navigatorKey: _navigatorKey,
-                    builder: (context, child) {
-                      return BlocListener<AuthenticationBloc,
-                          AuthenticationState>(
-                        listener: (context, state) {
-                          switch (state.status) {
-                            case AuthenticationStatus.authenticated:
-                              _navigator.pushAndRemoveUntil<void>(
-                                NavigationScreen.route(),
-                                (route) => false,
-                              );
-                              break;
-                            case AuthenticationStatus.unauthenticated:
-                              _navigator.pushAndRemoveUntil<void>(
-                                LoginPage.route(),
-                                (route) => false,
-                              );
-                              break;
-                            default:
-                              break;
-                          }
-                        },
-                        child: child,
-                      );
-                    },
-                    onGenerateRoute: (_) => SplashPage.route(),
-                  );
-                },
-              );
-            },
-          ),
-        ));
+      initialData: null,
+      create: (context) => ConnectivityBloc().connectionStatusController.stream,
+      child: BlocProvider(
+        create: (context) => ChangeThemeBloc()..onDecideThemeChange(),
+        child: BlocBuilder<ChangeThemeBloc, ChangeThemeState>(
+          builder: (context, themeState) {
+            return BlocBuilder<LanguageBloc, LanguageState>(
+              builder: (context, languageState) {
+                return MaterialApp(
+                  debugShowCheckedModeBanner: false,
+                  locale: languageState.locale,
+                  localizationsDelegates: [
+                    GlobalMaterialLocalizations.delegate,
+                    GlobalWidgetsLocalizations.delegate,
+                    AppLocalizations.delegate,
+                  ],
+                  supportedLocales: [
+                    Locale('en', 'US'),
+                    Locale('de', 'DE'),
+                    Locale('es', 'ES'),
+                    Locale('fr', 'FR'),
+                    Locale('it', 'IT'),
+                    Locale('nl', 'NL'),
+                    Locale('no', 'NO'),
+                    Locale('pt', 'PT'),
+                    Locale('ru', 'RU'),
+                    Locale('zh', 'CN'),
+                    Locale('sr', 'SR'),
+                  ],
+                  theme: themeState.themeData,
+                  navigatorKey: _navigatorKey,
+                  builder: (context, child) {
+                    return BlocListener<AuthenticationBloc,
+                        AuthenticationState>(
+                      listener: (context, state) async {
+                        switch (state.status) {
+                          case AuthenticationStatus.authenticated:
+                            final sharedPrefService =
+                                await SharedPreferencesTopicSelectService
+                                    .instance;
+
+                            sharedPrefService.isFirstTime()
+                                ? _navigator.pushAndRemoveUntil<void>(
+                                    TopicSelectScreen.route(),
+                                    (route) => false,
+                                  )
+                                : _navigator.pushAndRemoveUntil<void>(
+                                    NavigationScreen.route(),
+                                    (route) => false,
+                                  );
+                            break;
+                          case AuthenticationStatus.unauthenticated:
+                            _navigator.pushAndRemoveUntil<void>(
+                              LoginPage.route(),
+                              (route) => false,
+                            );
+                            break;
+                          default:
+                            break;
+                        }
+                      },
+                      child: child,
+                    );
+                  },
+                  onGenerateRoute: (_) => SplashPage.route(),
+                );
+              },
+            );
+          },
+        ),
+      ),
+    );
   }
 }

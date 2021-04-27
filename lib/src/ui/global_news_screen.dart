@@ -20,6 +20,7 @@ class GlobalNews extends StatefulWidget {
 
 class _GlobalNewsState extends State<GlobalNews> {
   var activeStream;
+  Widget _appBarTitle;
 
   final TextEditingController _filter = new TextEditingController();
 
@@ -80,7 +81,7 @@ class _GlobalNewsState extends State<GlobalNews> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: SearchAppBar(_filter, searchNews),
+      appBar: SearchAppBar(_filter, searchNews, false, null),
       body: BlocBuilder<AdvancedSearchBloc, AdvancedSearchState>(
         builder: (context, state) {
           return StreamBuilder(
