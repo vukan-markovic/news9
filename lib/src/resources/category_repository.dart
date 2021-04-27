@@ -17,6 +17,8 @@ class CategoryRepository {
 
   getAllCategories() async {
     var box = await Hive.openBox('category');
-    return box.get(uid);
+    List<String> categories = box.get(uid);
+    box.close();
+    return categories;
   }
 }

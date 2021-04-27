@@ -70,5 +70,8 @@
   "all": " Alle",
   "Share": "Dele",
   "from": "Fra",
-  "to": " Til"
+  "to": " Til",
+  "advanced_search_title": "Søk etter nyheter etter datoperiode, land eller kilde",
+  "global_news": " Globale nyheter",
+  "global_recommended": " Globale og anbefalte nyheter"
 }

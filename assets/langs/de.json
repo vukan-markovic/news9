@@ -70,5 +70,8 @@
   "all": "Alle",
   "Share": "Teilen",
   "from": "Von",
-  "to": "An"
+  "to": "An",
+  "advanced_search_title": "Nachrichten nach Datumszeitraum, Land oder Quelle suchen",
+  "global_news": "Globale Nachrichten",
+  "global_recommended": "Globale und empfohlene Nachrichten"
 }

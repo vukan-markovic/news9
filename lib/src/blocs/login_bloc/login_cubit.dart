@@ -43,4 +43,14 @@ class LoginCubit extends Cubit<LoginState> {
       emit(state.copyWith(status: FormzStatus.submissionFailure));
     }
   }
+
+  Future<void> logInWithGoogle() async {
+    try {
+      await _authenticationRepository.logInWithGoogle();
+      emit(state.copyWith(
+          status: FormzStatus.submissionSuccess, emailVerified: true));
+    } on Exception {
+      emit(state.copyWith(status: FormzStatus.pure));
+    }
+  }
 }

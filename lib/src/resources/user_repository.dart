@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:hive/hive.dart';
 import 'package:meta/meta.dart';
 import 'package:news/src/models/user/user.dart';
@@ -11,11 +13,17 @@ class SignUpFailure implements Exception {}
 
 class LogOutFailure implements Exception {}
 
+class LogInWithGoogleFailure implements Exception {}
+
 class AuthenticationRepository {
-  AuthenticationRepository({firebase_auth.FirebaseAuth firebaseAuth})
-      : _firebaseAuth = firebaseAuth ?? firebase_auth.FirebaseAuth.instance;
+  AuthenticationRepository({
+    firebase_auth.FirebaseAuth firebaseAuth,
+    GoogleSignIn googleSignIn,
+  })  : _firebaseAuth = firebaseAuth ?? firebase_auth.FirebaseAuth.instance,
+        _googleSignIn = googleSignIn ?? GoogleSignIn.standard();
 
   final firebase_auth.FirebaseAuth _firebaseAuth;
+  final GoogleSignIn _googleSignIn;
 
   Stream<AppUser> get user {
     return _firebaseAuth.idTokenChanges().map((firebaseUser) {
@@ -24,7 +32,8 @@ class AuthenticationRepository {
   }
 
   Future<void> sendVerificationEmail() async {
-    if (!_firebaseAuth.currentUser.emailVerified) {
+    if (_firebaseAuth.currentUser != null &&
+        !_firebaseAuth.currentUser.emailVerified) {
       await _firebaseAuth.currentUser.sendEmailVerification();
     }
   }
@@ -34,9 +43,16 @@ class AuthenticationRepository {
     return _firebaseAuth.currentUser.emailVerified;
   }
 
-  bool checkEmailVerification() => _firebaseAuth.currentUser != null
-      ? _firebaseAuth.currentUser.emailVerified
-      : false;
+  bool checkEmailVerification() {
+    if (!isEmailProvider()) {
+      return true;
+    } else {
+      if (_firebaseAuth.currentUser != null) {
+        return _firebaseAuth.currentUser.emailVerified;
+      }
+      return false;
+    }
+  }
 
   Future<void> logInWithEmailAndPassword({
     @required String email,
@@ -49,6 +65,44 @@ class AuthenticationRepository {
       );
     } on Exception {
       throw LogInWithEmailAndPasswordFailure();
+    }
+  }
+
+  Future<void> logInWithGoogle() async {
+    try {
+      UserCredential user;
+
+      if (!kIsWeb) {
+        final googleUser = await _googleSignIn.signIn();
+        final googleAuth = await googleUser?.authentication;
+        final credential = firebase_auth.GoogleAuthProvider.credential(
+          accessToken: googleAuth?.accessToken,
+          idToken: googleAuth?.idToken,
+        );
+        user = await _firebaseAuth.signInWithCredential(credential);
+      } else {
+        user =
+            await FirebaseAuth.instance.signInWithPopup(GoogleAuthProvider());
+      }
+
+      if (user.additionalUserInfo.isNewUser) {
+        Box<AppUser> box = Hive.box<AppUser>('user');
+
+        box.put(
+          _firebaseAuth.currentUser.email,
+          AppUser(
+            id: _firebaseAuth.currentUser.uid,
+            firstName: _firebaseAuth.currentUser.displayName,
+            lastName: 'Last name',
+            dateOfBirth: DateTime.now().toString(),
+            email: _firebaseAuth.currentUser.email,
+            gender: 'Male',
+            imagePath: _firebaseAuth.currentUser.photoURL,
+          ),
+        );
+      }
+    } on Exception {
+      throw LogInWithGoogleFailure();
     }
   }
 
@@ -73,13 +127,15 @@ class AuthenticationRepository {
       Box<AppUser> box = Hive.box<AppUser>('user');
 
       box.put(
-          email,
-          AppUser(
-              firstName: firstName,
-              lastName: lastName,
-              dateOfBirth: dateOfBirth,
-              email: email,
-              gender: gender));
+        email,
+        AppUser(
+            id: _firebaseAuth.currentUser.uid,
+            firstName: firstName,
+            lastName: lastName,
+            dateOfBirth: dateOfBirth,
+            email: email,
+            gender: gender),
+      );
     } on Exception {
       throw SignUpFailure();
     }
@@ -95,15 +151,17 @@ class AuthenticationRepository {
   }) {
     Box<AppUser> box = Hive.box<AppUser>('user');
     box.put(
-        email,
-        AppUser(
-          email: email,
-          firstName: firstName,
-          lastName: lastName,
-          dateOfBirth: dateOfBirth,
-          gender: gender,
-          imagePath: imagePath,
-        ));
+      email,
+      AppUser(
+        id: _firebaseAuth.currentUser.uid,
+        email: email,
+        firstName: firstName,
+        lastName: lastName,
+        dateOfBirth: dateOfBirth,
+        gender: gender,
+        imagePath: imagePath,
+      ),
+    );
   }
 
   Future<void> logOut() async {
@@ -123,5 +181,9 @@ class AuthenticationRepository {
       dateOfBirth: '',
       gender: '',
     );
+  }
+
+  bool isEmailProvider() {
+    return _firebaseAuth.currentUser.providerData[0].providerId == 'password';
   }
 }

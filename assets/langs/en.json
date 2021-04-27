@@ -70,5 +70,8 @@
     "all": "All",
     "Share": "Share", 
     "from": "From", 
-    "to": "To"
+    "to": "To", 
+    "advanced_search_title": "Search news by date period, country or source",
+    "global_news": "Global news",
+    "global_recommended": "Global and Recommended news"
   }
