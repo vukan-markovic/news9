@@ -42,7 +42,10 @@ class FavoriteNewsScreenState extends State<FavoriteNewsScreen> {
               : IconButton(
                   icon: Icon(Icons.share_rounded),
                   onPressed: () {
-                    _shareArticles();
+                    if (selectedArticles.length == 1)
+                      _shareArticle();
+                    else
+                      _shareArticles();
                   })
         ],
       ),
@@ -102,6 +105,11 @@ class FavoriteNewsScreenState extends State<FavoriteNewsScreen> {
     });
     Share.share(
         "${AppLocalizations.of(context).translate('checkout_articles')} \n $links");
+  }
+
+  _shareArticle() {
+    Share.share(
+        "${AppLocalizations.of(context).translate('checkout_article')} \n ${selectedArticles.first.url}");
   }
 
   @override
