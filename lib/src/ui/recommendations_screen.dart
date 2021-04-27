@@ -9,6 +9,7 @@ import 'package:news/src/constants/categories.dart';
 import 'package:news/src/extensions/Color.dart';
 import 'package:news/src/models/article/article_model.dart';
 import 'package:news/src/ui/news_list.dart';
+import 'package:news/src/ui/search/search_app_bar.dart';
 import 'package:news/src/utils/app_localizations.dart';
 
 String _selectedCategory;
@@ -21,6 +22,7 @@ class RecommendationsScreen extends StatefulWidget {
 
 class _RecommendationsScreenState extends State<RecommendationsScreen> {
   List<String> _selectedCategories = [];
+  final TextEditingController _filter = new TextEditingController();
 
   @override
   void initState() {
@@ -43,13 +45,20 @@ class _RecommendationsScreenState extends State<RecommendationsScreen> {
     );
   }
 
+  searchNews() {
+    newsBloc.fetchAllNewsByCategory(
+        languageCode:
+            BlocProvider.of<LanguageBloc>(context).state.locale.languageCode,
+        country: state.country,
+        paging: state.paging,
+        category: _selectedCategory,
+        query: _filter.text);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Flutter News9'),
-        backgroundColor: HexColor.fromHex(ColorConstants.primaryColor),
-      ),
+      appBar: SearchAppBar(_filter, searchNews),
       body: BlocBuilder<AdvancedSearchBloc, AdvancedSearchState>(
         builder: (context, state) {
           return StreamBuilder(

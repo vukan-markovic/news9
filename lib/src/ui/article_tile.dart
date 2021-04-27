@@ -47,8 +47,19 @@ class _ArticleTileState extends State<ArticleTile> {
   }
 
   void _openArticleDetails(BuildContext context, Article article) {
-    Navigator.of(context)
-        .push(MaterialPageRoute(builder: (context) => ArticleDetails(article)));
+    bool isParentFavoriteScreen = widget.parent != null;
+    
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (context) => ArticleDetails(
+          article: article,
+          isFavorite: isArticleFavorite,
+          isParentFavoriteScreen: isParentFavoriteScreen,
+          callback: (value) {
+            setState(() {
+              isArticleFavorite = value;
+            });
+          }),
+    ));
   }
 
   _shareArticle() {
@@ -58,6 +69,9 @@ class _ArticleTileState extends State<ArticleTile> {
 
   _saveArticle() {
     newsBloc.insertNewsByUid("favorite_news", article);
+    setState(() {
+      isArticleFavorite = !isArticleFavorite;
+    });
   }
 
   @override

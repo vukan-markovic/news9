@@ -63,6 +63,15 @@ class _UserPageState extends State<UserPage> {
         builder: (context, Box<AppUser> box, widget) {
           AppUser user =
               box.get(context.read<AuthenticationBloc>().state.user.email);
+          if (user == null) {
+            user = AppUser(
+              email: context.read<AuthenticationBloc>().state.user.email,
+              dateOfBirth: "${DateTime.now().toLocal()}".split(' ')[0],
+              firstName: 'First name',
+              lastName: 'Last name',
+              gender: 'Male',
+            );
+          }
           if (user != null) {
             if (editText == 'Edit') {
               _gender = user.gender == 'Male' ? Gender.male : Gender.female;
@@ -72,9 +81,16 @@ class _UserPageState extends State<UserPage> {
                   new TextEditingController(text: user.lastName);
               context.read<UserPageCubit>().setInitialValues(user);
             }
+
             if (profileImage == null) {
               if (user.imagePath != null) {
-                if (kIsWeb) {
+                if (kIsWeb ||
+                    !context.read<AuthenticationBloc>().emailProvider() &&
+                        Uri.tryParse(user.imagePath).isAbsolute) {
+                  if (!context.read<AuthenticationBloc>().emailProvider()) {
+                    _imagePath = user.imagePath;
+                  }
+
                   profileImage = Image.network(
                     user.imagePath,
                   ).image;
@@ -267,9 +283,13 @@ class _UserPageState extends State<UserPage> {
                           title: Text(
                             AppLocalizations.of(context).translate('log_out'),
                           ),
-                          onTap: () => context
-                              .read<AuthenticationBloc>()
-                              .add(AuthenticationLogoutRequested()),
+                          onTap: () {
+                            profileImage = null;
+
+                            context
+                                .read<AuthenticationBloc>()
+                                .add(AuthenticationLogoutRequested());
+                          },
                         ),
                       ],
                     ),

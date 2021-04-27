@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:news/src/blocs/news_bloc/news_bloc.dart';
 import 'package:news/src/constants/ColorConstants.dart';
 import 'package:news/src/extensions/Color.dart';
 import 'package:news/src/models/article/article_model.dart';
@@ -10,12 +11,30 @@ import 'package:flutter_social_content_share/flutter_social_content_share.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:social_share/social_share.dart';
 
-class ArticleDetails extends StatelessWidget {
-  final Article _article;
+class ArticleDetails extends StatefulWidget {
+  final Article article;
+  final bool isFavorite;
+  final bool isParentFavoriteScreen;
+  final Function callback;
+
+  ArticleDetails({this.article, this.isFavorite, this.isParentFavoriteScreen, this.callback});
+
+  @override
+  _ArticleDetailsState createState() => _ArticleDetailsState();
+}
+
+class _ArticleDetailsState extends State<ArticleDetails> {
   final String _placeholderImageUrl =
       'https://iitpkd.ac.in/sites/default/files/default_images/default-news-image_0.png';
+  Article article;
+  bool _isFavorite;
 
-  ArticleDetails(this._article);
+  @override
+  void initState() {
+    this.article = widget.article;
+    this._isFavorite = widget.isFavorite ?? false;
+    super.initState();
+  }
 
   formatDate(String date) {
     return Jiffy(date).fromNow();
@@ -32,7 +51,7 @@ class ArticleDetails extends StatelessWidget {
   _shareTwitter(context, String url) async {
     SocialShare.shareTwitter(
       AppLocalizations.of(context).translate('checkout_article'),
-      url: _article.url,
+      url: article.url,
       hashtags: ["levi9", "flutter", "internship", "news9"],
     );
   }
@@ -79,11 +98,29 @@ class ArticleDetails extends StatelessWidget {
     }
   }
 
+  _saveArticle() {
+    newsBloc.insertNewsByUid("favorite_news", article);
+    setState(() {
+      _isFavorite = !_isFavorite;
+      widget.callback(_isFavorite);
+    });
+    if (!_isFavorite && widget.isParentFavoriteScreen) {
+      Navigator.pop(context);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Flutter News9 - ' + _article.source.name),
+        title: Text('Flutter News9 - ' + article.source.name),
+        backgroundColor: HexColor.fromHex(ColorConstants.primaryColor),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => _saveArticle(),
+        child: _isFavorite
+            ? Icon(Icons.favorite_rounded)
+            : Icon(Icons.favorite_border_rounded),
         backgroundColor: HexColor.fromHex(ColorConstants.primaryColor),
       ),
       body: SafeArea(
@@ -96,7 +133,7 @@ class ArticleDetails extends StatelessWidget {
                 Text.rich(
                   TextSpan(children: [
                     TextSpan(
-                      text: _article.source.name ??
+                      text: article.source.name ??
                           AppLocalizations.of(context)
                               .translate('source_not_stated'),
                       style: Theme.of(context).textTheme.subtitle2,
@@ -108,19 +145,19 @@ class ArticleDetails extends StatelessWidget {
                               ' ',
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
-                    TextSpan(text: formatDate(_article.publishedAt))
+                    TextSpan(text: formatDate(article.publishedAt))
                   ]),
                 ),
                 SizedBox(height: 10),
                 Text(
-                  _article.title ??
+                  article.title ??
                       AppLocalizations.of(context).translate('no_title'),
                   style: Theme.of(context).textTheme.headline4,
                   textAlign: TextAlign.center,
                 ),
                 SizedBox(height: 10),
                 Text(
-                  _article.description ??
+                  article.description ??
                       AppLocalizations.of(context).translate('no_description'),
                   style: Theme.of(context).textTheme.subtitle1,
                   textAlign: TextAlign.center,
@@ -132,7 +169,7 @@ class ArticleDetails extends StatelessWidget {
                       text: 'By ',
                     ),
                     TextSpan(
-                      text: _article.author ??
+                      text: article.author ??
                           AppLocalizations.of(context)
                               .translate('author_not_stated'),
                       style: Theme.of(context).textTheme.subtitle2,
@@ -145,33 +182,33 @@ class ArticleDetails extends StatelessWidget {
                   children: [
                     IconButton(
                       icon: Icon(FontAwesomeIcons.facebook),
-                      onPressed: () => _shareFacebook(context, _article.url),
+                      onPressed: () => _shareFacebook(context, article.url),
                     ),
                     IconButton(
                       icon: Icon(FontAwesomeIcons.twitter),
-                      onPressed: () => _shareTwitter(context, _article.url),
+                      onPressed: () => _shareTwitter(context, article.url),
                     ),
                     IconButton(
                       icon: Icon(FontAwesomeIcons.whatsapp),
-                      onPressed: () => _shareWhatsapp(context, _article.url),
+                      onPressed: () => _shareWhatsapp(context, article.url),
                     ),
                     IconButton(
                       icon: Icon(FontAwesomeIcons.sms),
-                      onPressed: () => _shareSms(context, _article.url),
+                      onPressed: () => _shareSms(context, article.url),
                     ),
                     IconButton(
                       icon: Icon(FontAwesomeIcons.envelope),
-                      onPressed: () => _shareEmail(context, _article.url),
+                      onPressed: () => _shareEmail(context, article.url),
                     ),
                     IconButton(
                       icon: Icon(FontAwesomeIcons.clipboard),
-                      onPressed: () => _copyToClipboard(context, _article.url),
+                      onPressed: () => _copyToClipboard(context, article.url),
                     ),
                   ],
                 ),
                 SizedBox(height: 10),
                 Image.network(
-                  _article.urlToImage ?? _placeholderImageUrl,
+                  article.urlToImage ?? _placeholderImageUrl,
                   height: 200,
                   width: MediaQuery.of(context).size.width,
                   fit: BoxFit.cover,
@@ -182,7 +219,7 @@ class ArticleDetails extends StatelessWidget {
                 ),
                 SizedBox(height: 10),
                 OutlinedButton(
-                  onPressed: () => _launchInWebViewWithJavaScript(_article.url),
+                  onPressed: () => _launchInWebViewWithJavaScript(article.url),
                   child: Text(
                     AppLocalizations.of(context).translate('whole_article'),
                     style: Theme.of(context).textTheme.subtitle2,

@@ -37,9 +37,33 @@ class _AdvancedSearchInputState extends State<AdvancedSearchInput> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  Text(
+                    AppLocalizations.of(context)
+                        .translate('advanced_search_title'),
+                    style: TextStyle(
+                      fontStyle: FontStyle.italic,
+                    ),
+                  ),
+                  Divider(height: 16),
+                  Text(
+                    AppLocalizations.of(context).translate('global_news'),
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  SizedBox(height: 8),
                   _DateInput(state.dateFrom, state.dateTo),
-                  _CountryInput(),
                   _SourceInput(),
+                  Divider(height: 16),
+                  Text(
+                    AppLocalizations.of(context)
+                        .translate('global_recommended'),
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  SizedBox(height: 8),
+                  _CountryInput(),
                   _PagingInput(state.paging),
                 ],
               ),
