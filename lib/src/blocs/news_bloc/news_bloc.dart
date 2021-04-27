@@ -84,7 +84,6 @@ class NewsBloc {
     });
     return favoriteTitles;
   }
-
   Future<void> fetchNewsFromDatabase({String keyword}) async {
     var news = await _repository.fetchNews("offline_news");
     ArticleModel articles = ArticleModel();
