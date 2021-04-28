@@ -14,7 +14,6 @@ class SilverAppBarGlobal extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SliverAppBar(
-      floating: true,
       backgroundColor: HexColor.fromHex(ColorConstants.backgroundColor),
       flexibleSpace: StreamBuilder(
           stream: newsBloc.mostPopularNews,

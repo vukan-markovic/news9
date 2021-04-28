@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news/src/blocs/connectivity_bloc/connectivity_bloc.dart';
 import 'package:news/src/blocs/language_bloc/language_bloc.dart';
+import 'package:news/src/blocs/news_bloc/news_bloc.dart';
 import 'package:news/src/ui/search/search_app_bar.dart';
 import 'package:provider/provider.dart';
 import 'package:news/src/blocs/advanced_search_bloc/advanced_search_bloc.dart';
 import 'package:news/src/ui/global_news/global_news_list.dart';
 import 'package:news/src/ui/global_news/silver_app_bar_globals.dart';
 import 'package:news/src/utils/app_localizations.dart';
-import '../../blocs/news_bloc/news_bloc.dart';
 import '../../models/article/article_model.dart';
 
 class GlobalNews extends StatefulWidget {
@@ -66,15 +66,22 @@ class _GlobalNewsState extends State<GlobalNews> {
   }
 
   searchNews() {
-    newsBloc.fetchAllNews(
-        languageCode:
-            BlocProvider.of<LanguageBloc>(context).state.locale.languageCode,
-        country: state.country,
-        paging: state.paging,
-        dateFrom: state.dateFrom,
-        dateTo: state.dateTo,
-        source: state.source,
-        query: _filter.text);
+    var connectionState =
+        Provider.of<ConnectivityStatus>(context, listen: false);
+    if (connectionState == ConnectivityStatus.Offline) {
+      newsBloc.fetchNewsFromDatabase(keyword: _filter.text);
+    } else if (connectionState == ConnectivityStatus.Cellular ||
+        connectionState == ConnectivityStatus.WiFi) {
+      newsBloc.fetchAllNews(
+          languageCode:
+              BlocProvider.of<LanguageBloc>(context).state.locale.languageCode,
+          country: state.country,
+          paging: state.paging,
+          dateFrom: state.dateFrom,
+          dateTo: state.dateTo,
+          source: state.source,
+          query: _filter.text);
+    }
   }
 
   @override
