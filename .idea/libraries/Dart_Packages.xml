@@ -205,6 +205,34 @@
             </list>
           </value>
         </entry>
+        <entry key="connectivity">
+          <value>
+            <list>
+              <option value="$PROJECT_DIR$/../../src/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/connectivity-3.0.3/lib" />
+            </list>
+          </value>
+        </entry>
+        <entry key="connectivity_for_web">
+          <value>
+            <list>
+              <option value="$PROJECT_DIR$/../../src/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/connectivity_for_web-0.4.0/lib" />
+            </list>
+          </value>
+        </entry>
+        <entry key="connectivity_macos">
+          <value>
+            <list>
+              <option value="$PROJECT_DIR$/../../src/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/connectivity_macos-0.2.0/lib" />
+            </list>
+          </value>
+        </entry>
+        <entry key="connectivity_platform_interface">
+          <value>
+            <list>
+              <option value="$PROJECT_DIR$/../../src/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/connectivity_platform_interface-2.0.1/lib" />
+            </list>
+          </value>
+        </entry>
         <entry key="convert">
           <value>
             <list>
@@ -349,6 +377,13 @@
           <value>
             <list>
               <option value="$PROJECT_DIR$/../../src/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_plugin_android_lifecycle-2.0.1/lib" />
+            </list>
+          </value>
+        </entry>
+        <entry key="flutter_slidable">
+          <value>
+            <list>
+              <option value="$PROJECT_DIR$/../../src/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_slidable-0.6.0/lib" />
             </list>
           </value>
         </entry>
@@ -692,6 +727,13 @@
           <value>
             <list>
               <option value="$PROJECT_DIR$/../../src/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/rxdart-0.26.0/lib" />
+            </list>
+          </value>
+        </entry>
+        <entry key="share">
+          <value>
+            <list>
+              <option value="$PROJECT_DIR$/../../src/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/share-2.0.1/lib" />
             </list>
           </value>
         </entry>

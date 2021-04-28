@@ -66,15 +66,72 @@ class _GlobalNewsState extends State<GlobalNews> {
   }
 
   searchNews() {
-    newsBloc.fetchAllNews(
-        languageCode:
-            BlocProvider.of<LanguageBloc>(context).state.locale.languageCode,
-        country: state.country,
-        paging: state.paging,
-        dateFrom: state.dateFrom,
-        dateTo: state.dateTo,
-        source: state.source,
-        query: _filter.text);
+    var connectionState = Provider.of<ConnectivityStatus>(context, listen: false);
+    if (connectionState == ConnectivityStatus.Offline) {
+      newsBloc.fetchNewsFromDatabase(keyword: _filter.text);
+    } else if (connectionState == ConnectivityStatus.Cellular ||
+        connectionState == ConnectivityStatus.WiFi) {
+      newsBloc.fetchAllNews(
+          languageCode:
+              BlocProvider.of<LanguageBloc>(context).state.locale.languageCode,
+          country: state.country,
+          paging: state.paging,
+          dateFrom: state.dateFrom,
+          dateTo: state.dateTo,
+          source: state.source,
+          query: _filter.text);
+      _closeInputField();
+    }
+  }
+
+  void _searchPressed() {
+    if (this._searchIcon.icon == Icons.search) {
+      setState(() {
+        this._searchIcon = new Icon(Icons.close);
+        this._appBarTitle = _createInputField();
+      });
+    } else {
+      _closeInputField();
+    }
+  }
+
+  Widget _createInputField() {
+    return new TextField(
+      controller: _filter,
+      autofocus: true,
+      style: TextStyle(
+        color: HexColor.fromHex(ColorConstants.secondaryWhite),
+      ),
+      cursorColor: HexColor.fromHex(ColorConstants.secondaryWhite),
+      decoration: new InputDecoration(
+        prefixIcon: new Icon(
+          Icons.search,
+          color: HexColor.fromHex(ColorConstants.secondaryWhite),
+        ),
+        hintText: 'Search...',
+        hintStyle:
+            TextStyle(color: HexColor.fromHex(ColorConstants.silverGray)),
+        focusedBorder: UnderlineInputBorder(
+          borderSide: BorderSide(
+            color: HexColor.fromHex(ColorConstants.secondaryWhite),
+          ),
+        ),
+        enabledBorder: UnderlineInputBorder(
+          borderSide: BorderSide(
+            color: HexColor.fromHex(ColorConstants.secondaryWhite),
+          ),
+        ),
+      ),
+      onSubmitted: (_) => searchNews(),
+    );
+  }
+
+  void _closeInputField() {
+    setState(() {
+      this._searchIcon = new Icon(Icons.search);
+      this._appBarTitle = new Text('Flutter News9');
+      _filter.clear();
+    });
   }
 
   @override

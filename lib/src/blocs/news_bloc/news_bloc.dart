@@ -84,13 +84,15 @@ class NewsBloc {
     });
     return favoriteTitles;
   }
-
-  fetchNewsFromDatabase() async {
+  Future<void> fetchNewsFromDatabase({String keyword}) async {
     var news = await _repository.fetchNews("offline_news");
     ArticleModel articles = ArticleModel();
     news.forEach((article) {
-      // print(article.title);
-      articles.articles.add(mapArticle(article));
+      if (keyword == null) {
+        articles.articles.add(mapArticle(article));
+      } else if (article.title.toLowerCase().contains(keyword)) {
+        articles.articles.add(mapArticle(article));
+      }
     });
     _offlineNewsFetcher.sink.add(articles);
   }
@@ -135,7 +137,7 @@ class NewsBloc {
     });
   }
 
-  mapArticle(Article article) {
+  Article mapArticle(Article article) {
     return Article.create(
         article.author,
         article.title,
