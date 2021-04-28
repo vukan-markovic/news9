@@ -16,7 +16,6 @@ import 'package:flutter/foundation.dart';
 import 'package:news/src/ui/profile/language_input.dart';
 import 'package:news/src/ui/topic_select_screen.dart';
 import 'package:news/src/utils/app_localizations.dart';
-
 import 'advanced_search_input.dart';
 
 class UserPage extends StatefulWidget {
@@ -54,9 +53,12 @@ class _UserPageState extends State<UserPage> {
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Flutter News9"),
-        backgroundColor: HexColor.fromHex(ColorConstants.primaryColor),
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(50.0),
+        child: AppBar(
+          title: Text("Flutter News9"),
+          backgroundColor: HexColor.fromHex(ColorConstants.primaryColor),
+        ),
       ),
       body: ValueListenableBuilder(
         valueListenable: Hive.box<AppUser>('user').listenable(),

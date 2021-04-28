@@ -73,5 +73,14 @@
   "to": "An",
   "advanced_search_title": "Nachrichten nach Datumszeitraum, Land oder Quelle suchen",
   "global_news": "Globale Nachrichten",
-  "global_recommended": "Globale und empfohlene Nachrichten"
+  "global_recommended": "Globale und empfohlene Nachrichten",
+  "filter_news_dialog_title": "Nachrichten nach Datum, Titel oder Quelle sortieren",
+  "cancel": "Abbrechen",
+  "sort_by": "Sortieren nach",
+  "date": "Datum",
+  "title": "Titel",
+  "order": "Bestellung",
+  "asc": "Aufsteigend",
+  "desc": "Absteigend",
+  "no_favorites": "Sie haben derzeit keine Favoriten"
 }

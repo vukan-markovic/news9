@@ -6,8 +6,8 @@ import 'package:news/src/extensions/Color.dart';
 import 'package:news/src/models/article/article_model.dart';
 import 'package:news/src/utils/app_localizations.dart';
 import 'package:share/share.dart';
-
 import 'article_tile.dart';
+import 'dialogs/filter_news_dialog.dart';
 
 class FavoriteNewsScreen extends StatefulWidget {
   FavoriteNewsScreenState createState() => FavoriteNewsScreenState();
@@ -25,36 +25,56 @@ class FavoriteNewsScreenState extends State<FavoriteNewsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Flutter News9"),
-        backgroundColor: HexColor.fromHex(ColorConstants.primaryColor),
-        actions: [
-          selectedArticles.isEmpty
-              ? Container()
-              : IconButton(
-                  icon: Icon(Icons.delete_rounded),
-                  onPressed: () {
-                    newsBloc.deleteNewsList(selectedArticles);
-                    newsBloc.fetchFavoriteNewsFromDatabase();
-                  }),
-          selectedArticles.isEmpty
-              ? Container()
-              : IconButton(
-                  icon: Icon(Icons.share_rounded),
-                  onPressed: () {
-                    if (selectedArticles.length == 1)
-                      _shareArticle();
-                    else
-                      _shareArticles();
-                  })
-        ],
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(50.0),
+        child: AppBar(
+          title: Text("Flutter News9"),
+          backgroundColor: HexColor.fromHex(ColorConstants.primaryColor),
+          actions: <Widget>[
+            selectedArticles.isEmpty
+                ? Container()
+                : IconButton(
+                    icon: Icon(Icons.delete_rounded),
+                    onPressed: () {
+                      newsBloc.deleteNewsList(selectedArticles);
+                      newsBloc.fetchFavoriteNewsFromDatabase();
+                    }),
+            selectedArticles.isEmpty
+                ? Container()
+                : IconButton(
+                    icon: Icon(Icons.share_rounded),
+                    onPressed: () {
+                      if (selectedArticles.length == 1)
+                        _shareArticle();
+                      else
+                        _shareArticles();
+                    }),
+            IconButton(
+              icon: Icon(Icons.filter_alt),
+              onPressed: () async {
+                var sortNews = await FilterNewsDialog.showFilterNewsDialog(
+                    context, 'favorites');
+                if (sortNews) newsBloc.sortFavoritesNews();
+              },
+            ),
+          ],
+        ),
       ),
       body: Container(
         child: StreamBuilder(
           stream: newsBloc.favoriteNews,
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              return buildList(snapshot);
+              print("i have data");
+              if (snapshot.data.articles.length == 0) {
+                return Center(
+                  child: Text(
+                    AppLocalizations.of(context).translate('no_favorites'),
+                  ),
+                );
+              } else {
+                return buildList(snapshot);
+              }
             } else if (snapshot.hasError) {
               return Text(snapshot.error.toString());
             }

@@ -2,14 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:news/src/blocs/connectivity_bloc/connectivity_bloc.dart';
 import 'package:news/src/constants/ColorConstants.dart';
 import 'package:news/src/extensions/Color.dart';
+import 'package:news/src/ui/dialogs/filter_news_dialog.dart';
 import 'package:news/src/ui/search/search_news.dart';
 import 'package:provider/provider.dart';
 
 class SearchAppBar extends StatefulWidget implements PreferredSizeWidget {
-  SearchAppBar(this.filter, this.searchNews);
+  SearchAppBar(
+      this.filter, this.searchNews, this.showFilterButton, this.sortNews);
 
   final TextEditingController filter;
   final void Function() searchNews;
+  final void Function() sortNews;
+  final bool showFilterButton;
 
   @override
   _SearchAppBarState createState() => _SearchAppBarState();
@@ -31,7 +35,16 @@ class _SearchAppBarState extends State<SearchAppBar> {
         IconButton(
           icon: _searchIcon,
           onPressed: () => _searchPressed(),
-        )
+        ),
+        if (widget.showFilterButton)
+          IconButton(
+            icon: Icon(Icons.filter_alt),
+            onPressed: () async {
+              var sortNews = await FilterNewsDialog.showFilterNewsDialog(
+                  context, 'recommended');
+              if (sortNews) widget.sortNews();
+            },
+          ),
       ],
     );
   }

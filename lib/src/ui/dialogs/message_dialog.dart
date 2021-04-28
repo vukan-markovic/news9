@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:news/src/utils/app_localizations.dart';
 
-class AppDialog {
-  static Future<void> showAppDialog({context, title, body}) async {
+class MessageDialog {
+  static Future<void> showMessageDialog({context, title, body}) async {
     return showDialog<void>(
       context: context,
       barrierDismissible: true,

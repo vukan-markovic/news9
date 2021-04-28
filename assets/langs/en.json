@@ -73,5 +73,14 @@
     "to": "To", 
     "advanced_search_title": "Search news by date period, country or source",
     "global_news": "Global news",
-    "global_recommended": "Global and Recommended news"
+    "global_recommended": "Global and Recommended news", 
+    "filter_news_dialog_title": "Sort news by date, title or source",
+    "cancel": "Cancel",
+    "sort_by": "Sort by",
+    "date": "Date",
+    "title": "Title",
+    "order": "Order", 
+    "asc": "Ascending",
+    "desc": "Descending",
+    "no_favorites": "You currently have no favorites"
   }

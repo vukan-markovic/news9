@@ -73,5 +73,14 @@
   "to": "Para",
   "advanced_search_title": "Buscar noticias por periodo de tiempo, país o fuente",
   "global_news": "Noticias mundiales",
-  "global_recommended": "Noticias mundiales y recomendadas"
+  "global_recommended": "Noticias mundiales y recomendadas",
+  "filter_news_dialog_title": "Ordenar las noticias por fecha, título o fuente",
+  "cancel": "Cancelar",
+  "sort_by": "Ordenar por",
+  "date": "Fecha",
+  "title": "Título",
+  "order": "Ordenar",
+  "asc": "Ascendente",
+  "desc": "Descendente",
+  "no_favorites": "Actualmente no tienes favoritos"
 }

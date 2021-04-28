@@ -31,6 +31,8 @@ class ArticleModel {
   int get totalarticles => _totalResults;
 
   List<Article> get articles => _articles;
+
+  set articles(List<Article> articles) => this._articles = articles;
 }
 
 @HiveType(typeId: 1)

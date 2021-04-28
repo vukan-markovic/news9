@@ -2,11 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news/src/blocs/connectivity_bloc/connectivity_bloc.dart';
 import 'package:news/src/blocs/language_bloc/language_bloc.dart';
-import 'package:news/src/constants/ColorConstants.dart';
-import 'package:news/src/extensions/Color.dart';
 import 'package:provider/provider.dart';
 import 'package:news/src/blocs/advanced_search_bloc/advanced_search_bloc.dart';
-import 'package:news/src/blocs/language_bloc/language_bloc.dart';
 import 'package:news/src/ui/news_list.dart';
 import 'package:news/src/ui/search/search_app_bar.dart';
 import 'package:news/src/utils/app_localizations.dart';
@@ -20,7 +17,7 @@ class GlobalNews extends StatefulWidget {
 
 class _GlobalNewsState extends State<GlobalNews> {
   var activeStream;
-
+  Widget _appBarTitle;
   final TextEditingController _filter = new TextEditingController();
   AdvancedSearchState state;
 
@@ -63,7 +60,6 @@ class _GlobalNewsState extends State<GlobalNews> {
   }
 
   searchNews() {
-    print("i searched");
     var connectionState =
         Provider.of<ConnectivityStatus>(context, listen: false);
     if (connectionState == ConnectivityStatus.Offline) {
@@ -92,7 +88,7 @@ class _GlobalNewsState extends State<GlobalNews> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: SearchAppBar(_filter, searchNews),
+      appBar: SearchAppBar(_filter, searchNews, false, null),
       body: BlocBuilder<AdvancedSearchBloc, AdvancedSearchState>(
         builder: (context, state) {
           return StreamBuilder(
