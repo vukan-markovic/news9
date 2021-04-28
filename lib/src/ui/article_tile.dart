@@ -47,13 +47,11 @@ class _ArticleTileState extends State<ArticleTile> {
   }
 
   void _openArticleDetails(BuildContext context, Article article) {
-    bool isParentFavoriteScreen = widget.parent != null;
     
     Navigator.of(context).push(MaterialPageRoute(
       builder: (context) => ArticleDetails(
           article: article,
           isFavorite: isArticleFavorite,
-          isParentFavoriteScreen: isParentFavoriteScreen,
           callback: (value) {
             setState(() {
               isArticleFavorite = value;
