@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news/src/blocs/connectivity_bloc/connectivity_bloc.dart';
 import 'package:news/src/blocs/language_bloc/language_bloc.dart';
+import 'package:news/src/ui/search/search_app_bar.dart';
 import 'package:provider/provider.dart';
 import 'package:news/src/blocs/advanced_search_bloc/advanced_search_bloc.dart';
-import 'package:news/src/ui/news_list.dart';
-import 'package:news/src/ui/search/search_app_bar.dart';
+import 'package:news/src/ui/global_news/global_news_list.dart';
+import 'package:news/src/ui/global_news/silver_app_bar_globals.dart';
 import 'package:news/src/utils/app_localizations.dart';
-import '../blocs/news_bloc/news_bloc.dart';
-import '../models/article/article_model.dart';
-import 'most_popular_news_list.dart';
+import '../../blocs/news_bloc/news_bloc.dart';
+import '../../models/article/article_model.dart';
 
 class GlobalNews extends StatefulWidget {
   @override
@@ -20,15 +20,12 @@ class _GlobalNewsState extends State<GlobalNews> {
   var activeStream;
   Widget _appBarTitle;
   var connectionState;
-
   final TextEditingController _filter = new TextEditingController();
-
   AdvancedSearchState state;
 
   @override
   void initState() {
     state = BlocProvider.of<AdvancedSearchBloc>(context).state;
-
     super.initState();
   }
 
@@ -36,6 +33,7 @@ class _GlobalNewsState extends State<GlobalNews> {
   void didChangeDependencies() {
     connectionState = Provider.of<ConnectivityStatus>(context);
     print(connectionState);
+
     if (connectionState == ConnectivityStatus.Offline) {
       newsBloc.fetchNewsFromDatabase();
       activeStream = newsBloc.offlineNews;
@@ -51,10 +49,12 @@ class _GlobalNewsState extends State<GlobalNews> {
           dateFrom: state.dateFrom,
           dateTo: state.dateTo,
           source: state.source);
+
       activeStream = newsBloc.allNews;
       this._appBarTitle = Text("Flutter News9");
       print("showing news From api");
     }
+
     super.didChangeDependencies();
   }
 
@@ -96,30 +96,10 @@ class _GlobalNewsState extends State<GlobalNews> {
                     ),
                   );
                 } else {
-                  return Column(
-                    children: [
-                      StreamBuilder(
-                          stream: newsBloc.mostPopularNews,
-                          builder:
-                              (context, AsyncSnapshot<ArticleModel> snapshot) {
-                            if (connectionState != ConnectivityStatus.Offline &&
-                                snapshot.hasData) {
-                              if (snapshot.data.articles.length >= 3) {
-                                return Expanded(
-                                  child: MostPopularNews(
-                                    snapshot.data.articles.take(3).toList(),
-                                  ),
-                                );
-                              } else if (snapshot.hasError) {
-                                return Text(snapshot.error.toString());
-                              }
-                            }
-                            return Container(width: 0.0, height: 0.0);
-                          }),
-                      Expanded(
-                        child: NewsList(snapshot),
-                        flex: 2,
-                      ),
+                  return CustomScrollView(
+                    slivers: [
+                      SilverAppBarGlobal(connectionState),
+                      GlobalNewsList(snapshot),
                     ],
                   );
                 }

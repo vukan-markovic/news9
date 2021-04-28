@@ -9,7 +9,7 @@ import 'package:news/src/constants/ColorConstants.dart';
 import 'package:news/src/constants/categories.dart';
 import 'package:news/src/extensions/Color.dart';
 import 'package:news/src/models/article/article_model.dart';
-import 'package:news/src/ui/news_list.dart';
+import 'package:news/src/ui/recommended_news/recommended_news_list.dart';
 import 'package:news/src/ui/search/search_app_bar.dart';
 import 'package:news/src/utils/app_localizations.dart';
 import 'package:provider/provider.dart';
@@ -106,7 +106,7 @@ class _RecommendationsScreenState extends State<RecommendationsScreen> {
                       else
                         Expanded(
                           flex: 4,
-                          child: NewsList(snapshot),
+                          child: RecommendedNewsList(snapshot),
                         ),
                     ],
                   );

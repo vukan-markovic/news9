@@ -68,7 +68,6 @@ class _NewsTileState extends State<NewsTile> {
           minWidth: MediaQuery.of(context).size.width / 2,
         ),
         child: Card(
-          color: Colors.white,
           child: Row(
             children: [
               Stack(
@@ -92,26 +91,32 @@ class _NewsTileState extends State<NewsTile> {
                       mainAxisAlignment: MainAxisAlignment.end,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Container(
-                          width: MediaQuery.of(context).size.width / 2,
-                          padding: EdgeInsets.all(8.0),
-                          child: Text(
-                            widget.article.title,
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w500,
+                        Expanded(
+                          child: Container(
+                            width: MediaQuery.of(context).size.width / 2,
+                            padding: EdgeInsets.all(8.0),
+                            child: Text(
+                              widget.article.title,
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w500,
+                              ),
                             ),
                           ),
                         ),
-                        Container(
-                          width: MediaQuery.of(context).size.width / 2,
-                          padding: EdgeInsets.all(8.0),
-                          child: Text(
-                            widget.article.description.substring(0,
-                                    (widget.article.description.length ~/ 3)) +
-                                "...",
-                            style: TextStyle(
-                              color: Colors.white70,
+                        Expanded(
+                          child: Container(
+                            width: MediaQuery.of(context).size.width / 2,
+                            padding: EdgeInsets.all(8.0),
+                            child: Text(
+                              widget.article.description.substring(
+                                      0,
+                                      (widget.article.description.length ~/
+                                          3)) +
+                                  "...",
+                              style: TextStyle(
+                                color: Colors.white70,
+                              ),
                             ),
                           ),
                         ),
