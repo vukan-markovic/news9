@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:news/src/blocs/category_bloc/category_bloc.dart';
 import 'package:news/src/constants/categories.dart';
 import 'package:news/src/models/category/category_tile.dart';
@@ -19,7 +20,7 @@ class TopicSelectScreen extends StatefulWidget {
 }
 
 class _TopicSelectScreenState extends State<TopicSelectScreen> {
-  List<String> _selectedCategories = [];
+  var _selectedCategories = [];
   List<CategoryTile> _categories = [];
 
   @override
@@ -31,7 +32,7 @@ class _TopicSelectScreenState extends State<TopicSelectScreen> {
     super.initState();
   }
 
-  getFromFuture() async {
+  Future<void> getFromFuture() async {
     _selectedCategories = await categoryBloc.getAllCategories();
 
     setState(() {
@@ -149,33 +150,36 @@ class _TopicSelectScreenState extends State<TopicSelectScreen> {
             mainAxisSpacing: 12),
         itemCount: _categories.length,
         itemBuilder: (context, index) {
-          return GestureDetector(
-            onTap: () {
-              setTileState(index);
-            },
-            child: Card(
-              color: _selectedCategories.contains(_categories[index].title)
-                  ? HexColor.fromHex(ColorConstants.primaryColor)
-                  : Colors.white,
-              child: Padding(
-                padding: const EdgeInsets.only(left: 4),
-                child: Row(
-                  children: [
-                    Icon(_categories[index].icon),
-                    SizedBox(width: 4),
-                    Text(
-                      AppLocalizations.of(context)
-                          .translate(_categories[index].title),
-                      style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 16,
-                        color: _selectedCategories
-                                .contains(_categories[index].title)
-                            ? HexColor.fromHex(ColorConstants.secondaryWhite)
-                            : HexColor.fromHex(ColorConstants.lightBlack),
+          return MouseRegion(
+            cursor: SystemMouseCursors.click,
+            child: GestureDetector(
+              onTap: () {
+                setTileState(index);
+              },
+              child: Card(
+                color: _selectedCategories.contains(_categories[index].title)
+                    ? HexColor.fromHex(ColorConstants.primaryColor)
+                    : Colors.white,
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 4),
+                  child: Row(
+                    children: [
+                      Icon(_categories[index].icon),
+                      SizedBox(width: 4),
+                      Text(
+                        AppLocalizations.of(context)
+                            .translate(_categories[index].title),
+                        style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 16,
+                          color: _selectedCategories
+                                  .contains(_categories[index].title)
+                              ? HexColor.fromHex(ColorConstants.secondaryWhite)
+                              : HexColor.fromHex(ColorConstants.lightBlack),
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),

@@ -112,21 +112,24 @@ class _PasswordInput extends StatelessWidget {
       buildWhen: (previous, current) => previous.password != current.password,
       builder: (context, state) {
         return TextField(
-          key: const Key('loginForm_passwordInput_textField'),
-          onChanged: (password) =>
-              context.read<LoginCubit>().passwordChanged(password),
-          obscureText: true,
-          enableSuggestions: false,
-          autocorrect: false,
-          decoration: InputDecoration(
-            prefixIcon: Icon(Icons.vpn_key),
-            labelText: AppLocalizations.of(context).translate('password'),
-            helperText: '',
-            errorText: state.password.invalid
-                ? AppLocalizations.of(context).translate('invalid_password')
-                : null,
-          ),
-        );
+            key: const Key('loginForm_passwordInput_textField'),
+            onChanged: (password) =>
+                context.read<LoginCubit>().passwordChanged(password),
+            obscureText: true,
+            enableSuggestions: false,
+            autocorrect: false,
+            decoration: InputDecoration(
+              prefixIcon: Icon(Icons.vpn_key),
+              labelText: AppLocalizations.of(context).translate('password'),
+              helperText: '',
+              errorText: state.password.invalid
+                  ? AppLocalizations.of(context).translate('invalid_password')
+                  : null,
+            ),
+            onSubmitted: (value) async {
+              if (state.status.isValidated)
+                await context.read<LoginCubit>().logInWithCredentials();
+            });
       },
     );
   }
@@ -150,9 +153,12 @@ class _LoginButton extends StatelessWidget {
                     ),
                     primary: Colors.blue,
                   ),
-                  child: Text(
-                    AppLocalizations.of(context).translate('log_in'),
-                    style: TextStyle(fontSize: 24),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 4),
+                    child: Text(
+                      AppLocalizations.of(context).translate('log_in'),
+                      style: TextStyle(fontSize: 24),
+                    ),
                   ),
                   onPressed: state.status.isValidated
                       ? () async {

@@ -39,7 +39,8 @@ class _GlobalNewsState extends State<GlobalNews> {
       activeStream = newsBloc.offlineNews;
       this._appBarTitle = Text("Flutter News9 - Offline");
       print("showing news From db");
-    } else if (connectionState == ConnectivityStatus.Cellular ||
+    } else if (connectionState == null ||
+        connectionState == ConnectivityStatus.Cellular ||
         connectionState == ConnectivityStatus.WiFi) {
       newsBloc.fetchAllNews(
           languageCode:
