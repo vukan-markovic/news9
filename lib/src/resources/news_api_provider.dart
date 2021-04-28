@@ -45,10 +45,9 @@ class NewsApiProvider {
         'from': Jiffy(DateTime.parse(dateFrom)).format('yyyy-MM-dd'),
         'to': Jiffy(DateTime.parse(dateTo)).format('yyyy-MM-dd'),
         'pageSize': paging,
-        'q': query,
+        'q': query.isEmpty ? 'a' : query,
         'language': languageCode,
         'apiKey': _apiKey,
-        'sources': 'bbc-news', //TODO Add new default sources
       });
     }
 

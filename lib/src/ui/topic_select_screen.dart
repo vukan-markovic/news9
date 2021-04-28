@@ -118,8 +118,7 @@ class _TopicSelectScreenState extends State<TopicSelectScreen> {
                                 (route) => false,
                               );
                             } else {
-                              Navigator.of(context)
-                                  .pop(); //TODO Go to Recommendation screen when implemented.
+                              Navigator.of(context).pop();
                             }
                           }
                         : null,
