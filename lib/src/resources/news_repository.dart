@@ -54,9 +54,9 @@ class NewsRepository {
     box.add(data);
   }
 
-  insertNewsByUuid(boxName, data, uuid) async {
+  insertNewsByUuid(boxName, Article data, uuid) async {
     var box = await Hive.openBox(boxName);
-    box.put(data.title, data);
+    box.put(data.title.replaceAll(RegExp(r'[^\x20-\x7E]'), ''), data);
   }
 
   //function should call box.clear() but doesn't work

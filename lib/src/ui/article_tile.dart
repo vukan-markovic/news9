@@ -8,16 +8,15 @@ import 'package:news/src/models/article/article_model.dart';
 import 'package:news/src/constants/ColorConstants.dart';
 import 'package:news/src/extensions/Color.dart';
 import 'package:news/src/utils/app_localizations.dart';
-import 'package:news/src/ui/favorite_news_screen.dart';
 import 'article_details.dart';
 
 class ArticleTile extends StatefulWidget {
   _ArticleTileState createState() => _ArticleTileState();
 
   final Article article;
-  final FavoriteNewsScreenState parent;
+  final String backgroundColor;
 
-  ArticleTile({this.article, this.parent});
+  ArticleTile({@required this.article, this.backgroundColor});
 }
 
 class _ArticleTileState extends State<ArticleTile> {
@@ -48,8 +47,17 @@ class _ArticleTileState extends State<ArticleTile> {
   }
 
   void _openArticleDetails(BuildContext context, Article article) {
-    Navigator.of(context)
-        .push(MaterialPageRoute(builder: (context) => ArticleDetails(article)));
+    
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (context) => ArticleDetails(
+          article: article,
+          isFavorite: isArticleFavorite,
+          callback: (value) {
+            setState(() {
+              isArticleFavorite = value;
+            });
+          }),
+    ));
   }
 
   _shareArticle() {
@@ -59,6 +67,9 @@ class _ArticleTileState extends State<ArticleTile> {
 
   _saveArticle() {
     newsBloc.insertNewsByUid("favorite_news", article);
+    setState(() {
+      isArticleFavorite = !isArticleFavorite;
+    });
   }
 
   @override
@@ -75,6 +86,7 @@ class _ArticleTileState extends State<ArticleTile> {
           child: Stack(children: [
             Card(
               elevation: 3,
+              color: widget.backgroundColor != null ? HexColor?.fromHex(widget.backgroundColor) : HexColor.fromHex(ColorConstants.secondaryWhite),
               child: Padding(
                 padding: const EdgeInsets.only(top: 8.0),
                 child: Container(

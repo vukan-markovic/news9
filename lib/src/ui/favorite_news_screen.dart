@@ -5,7 +5,7 @@ import 'package:news/src/constants/ColorConstants.dart';
 import 'package:news/src/extensions/Color.dart';
 import 'package:news/src/models/article/article_model.dart';
 import 'package:news/src/utils/app_localizations.dart';
-
+import 'package:share/share.dart';
 import 'article_tile.dart';
 import 'dialogs/filter_news_dialog.dart';
 
@@ -14,6 +14,8 @@ class FavoriteNewsScreen extends StatefulWidget {
 }
 
 class FavoriteNewsScreenState extends State<FavoriteNewsScreen> {
+  List<Article> selectedArticles = [];
+
   @override
   void initState() {
     newsBloc.fetchFavoriteNewsFromDatabase();
@@ -29,6 +31,24 @@ class FavoriteNewsScreenState extends State<FavoriteNewsScreen> {
           title: Text("Flutter News9"),
           backgroundColor: HexColor.fromHex(ColorConstants.primaryColor),
           actions: <Widget>[
+            selectedArticles.isEmpty
+                ? Container()
+                : IconButton(
+                    icon: Icon(Icons.delete_rounded),
+                    onPressed: () {
+                      newsBloc.deleteNewsList(selectedArticles);
+                      newsBloc.fetchFavoriteNewsFromDatabase();
+                    }),
+            selectedArticles.isEmpty
+                ? Container()
+                : IconButton(
+                    icon: Icon(Icons.share_rounded),
+                    onPressed: () {
+                      if (selectedArticles.length == 1)
+                        _shareArticle();
+                      else
+                        _shareArticles();
+                    }),
             IconButton(
               icon: Icon(Icons.filter_alt),
               onPressed: () async {
@@ -66,10 +86,6 @@ class FavoriteNewsScreenState extends State<FavoriteNewsScreen> {
   }
 
   Widget buildList(AsyncSnapshot<ArticleModel> snapshot) {
-    snapshot.data.articles.forEach((element) {
-      print(element.title);
-    });
-    print(snapshot.data.articles.length);
     return Container(
       margin: EdgeInsets.only(top: 16),
       child: ListView.builder(
@@ -77,10 +93,43 @@ class FavoriteNewsScreenState extends State<FavoriteNewsScreen> {
           shrinkWrap: true,
           physics: ClampingScrollPhysics(),
           itemBuilder: (context, index) {
-            return ArticleTile(
-                article: snapshot.data.articles[index], parent: this);
+            return Container(
+                child: GestureDetector(
+                    onLongPress: () {
+                      setState(() {
+                        if (selectedArticles
+                            .contains(snapshot.data.articles[index])) {
+                          selectedArticles
+                              .remove(snapshot.data.articles[index]);
+                        } else
+                          selectedArticles.add(snapshot.data.articles[index]);
+                      });
+                    },
+                    child: _getArticleTileType(snapshot.data.articles[index])));
           }),
     );
+  }
+
+  ArticleTile _getArticleTileType(Article article) {
+    if (!selectedArticles.contains(article)) {
+      return ArticleTile(article: article);
+    } else
+      return ArticleTile(
+          article: article, backgroundColor: ColorConstants.primaryColor);
+  }
+
+  _shareArticles() {
+    String links = "";
+    selectedArticles.forEach((element) {
+      links += element.url + "\n\n";
+    });
+    Share.share(
+        "${AppLocalizations.of(context).translate('checkout_articles')} \n $links");
+  }
+
+  _shareArticle() {
+    Share.share(
+        "${AppLocalizations.of(context).translate('checkout_article')} \n ${selectedArticles.first.url}");
   }
 
   @override

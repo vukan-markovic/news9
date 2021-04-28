@@ -93,12 +93,15 @@ class NewsBloc {
     return favoriteTitles;
   }
 
-  fetchNewsFromDatabase() async {
+  Future<void> fetchNewsFromDatabase({String keyword}) async {
     var news = await _repository.fetchNews("offline_news");
     ArticleModel articles = ArticleModel();
     news.forEach((article) {
-      // print(article.title);
-      articles.articles.add(mapArticle(article));
+      if (keyword == null) {
+        articles.articles.add(mapArticle(article));
+      } else if (article.title.toLowerCase().contains(keyword)) {
+        articles.articles.add(mapArticle(article));
+      }
     });
     _offlineNewsFetcher.sink.add(articles);
   }
@@ -110,7 +113,6 @@ class NewsBloc {
       insertNews("offline_news", element);
       counter++;
     });
-    ;
   }
 
   insertNewsByUid(boxName, article) async {
@@ -136,7 +138,14 @@ class NewsBloc {
     _repository.deleteNewsByUuid('favorite_news', uuid);
   }
 
-  mapArticle(Article article) {
+  deleteNewsList(List<Article> articles) {
+    articles.forEach((element) {
+      print("deleting selected news");
+      deleteNewsByUuid(element.title.replaceAll(RegExp(r'[^\x20-\x7E]'), ''));
+    });
+  }
+
+  Article mapArticle(Article article) {
     return Article.create(
         article.author,
         article.title,
@@ -161,6 +170,7 @@ class NewsBloc {
     _sourcesFetcher.close();
     _favoriteNewsFetcher.close();
     _newsFetcherByCategory.close();
+    _offlineNewsFetcher.close();
   }
 
   void sortRecommendedNews() async {
