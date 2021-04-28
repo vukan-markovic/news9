@@ -55,10 +55,14 @@ class _RecommendationsScreenState extends State<RecommendationsScreen> {
         query: _filter.text);
   }
 
+  void sortNews() {
+    newsBloc.sortRecommendedNews();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: SearchAppBar(_filter, searchNews),
+      appBar: SearchAppBar(_filter, searchNews, true, sortNews),
       body: BlocBuilder<AdvancedSearchBloc, AdvancedSearchState>(
         builder: (context, state) {
           return StreamBuilder(

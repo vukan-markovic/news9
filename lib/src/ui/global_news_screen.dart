@@ -2,11 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news/src/blocs/connectivity_bloc/connectivity_bloc.dart';
 import 'package:news/src/blocs/language_bloc/language_bloc.dart';
-import 'package:news/src/constants/ColorConstants.dart';
-import 'package:news/src/extensions/Color.dart';
 import 'package:provider/provider.dart';
 import 'package:news/src/blocs/advanced_search_bloc/advanced_search_bloc.dart';
-import 'package:news/src/blocs/language_bloc/language_bloc.dart';
 import 'package:news/src/ui/news_list.dart';
 import 'package:news/src/ui/search/search_app_bar.dart';
 import 'package:news/src/utils/app_localizations.dart';
@@ -20,9 +17,8 @@ class GlobalNews extends StatefulWidget {
 
 class _GlobalNewsState extends State<GlobalNews> {
   var activeStream;
-
+  Widget _appBarTitle;
   final TextEditingController _filter = new TextEditingController();
-  Widget _appBarTitle = new Text('Flutter News9');
   AdvancedSearchState state;
 
   @override
@@ -66,7 +62,8 @@ class _GlobalNewsState extends State<GlobalNews> {
   }
 
   searchNews() {
-    var connectionState = Provider.of<ConnectivityStatus>(context, listen: false);
+    var connectionState =
+        Provider.of<ConnectivityStatus>(context, listen: false);
     if (connectionState == ConnectivityStatus.Offline) {
       newsBloc.fetchNewsFromDatabase(keyword: _filter.text);
     } else if (connectionState == ConnectivityStatus.Cellular ||
@@ -80,64 +77,13 @@ class _GlobalNewsState extends State<GlobalNews> {
           dateTo: state.dateTo,
           source: state.source,
           query: _filter.text);
-      _closeInputField();
     }
-  }
-
-  void _searchPressed() {
-    if (this._searchIcon.icon == Icons.search) {
-      setState(() {
-        this._searchIcon = new Icon(Icons.close);
-        this._appBarTitle = _createInputField();
-      });
-    } else {
-      _closeInputField();
-    }
-  }
-
-  Widget _createInputField() {
-    return new TextField(
-      controller: _filter,
-      autofocus: true,
-      style: TextStyle(
-        color: HexColor.fromHex(ColorConstants.secondaryWhite),
-      ),
-      cursorColor: HexColor.fromHex(ColorConstants.secondaryWhite),
-      decoration: new InputDecoration(
-        prefixIcon: new Icon(
-          Icons.search,
-          color: HexColor.fromHex(ColorConstants.secondaryWhite),
-        ),
-        hintText: 'Search...',
-        hintStyle:
-            TextStyle(color: HexColor.fromHex(ColorConstants.silverGray)),
-        focusedBorder: UnderlineInputBorder(
-          borderSide: BorderSide(
-            color: HexColor.fromHex(ColorConstants.secondaryWhite),
-          ),
-        ),
-        enabledBorder: UnderlineInputBorder(
-          borderSide: BorderSide(
-            color: HexColor.fromHex(ColorConstants.secondaryWhite),
-          ),
-        ),
-      ),
-      onSubmitted: (_) => searchNews(),
-    );
-  }
-
-  void _closeInputField() {
-    setState(() {
-      this._searchIcon = new Icon(Icons.search);
-      this._appBarTitle = new Text('Flutter News9');
-      _filter.clear();
-    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: SearchAppBar(_filter, searchNews),
+      appBar: SearchAppBar(_filter, searchNews, false, null),
       body: BlocBuilder<AdvancedSearchBloc, AdvancedSearchState>(
         builder: (context, state) {
           return StreamBuilder(

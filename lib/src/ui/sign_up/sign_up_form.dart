@@ -6,7 +6,7 @@ import 'package:news/src/constants/enums.dart';
 import 'package:news/src/ui/login/login_page.dart';
 import 'package:news/src/utils/app_localizations.dart';
 
-import '../dialog.dart';
+import '../dialogs/message_dialog.dart';
 
 class SignUpForm extends StatelessWidget {
   @override
@@ -14,7 +14,7 @@ class SignUpForm extends StatelessWidget {
     return BlocListener<SignUpCubit, SignUpState>(
       listener: (context, state) {
         if (state.status.isSubmissionFailure) {
-          AppDialog.showAppDialog(
+          MessageDialog.showMessageDialog(
             context: context,
             title:
                 AppLocalizations.of(context).translate('invalid_sign_up_title'),
@@ -23,7 +23,7 @@ class SignUpForm extends StatelessWidget {
           );
         } else if (state.status.isSubmissionSuccess) {
           Navigator.of(context).pushReplacement(LoginPage.route());
-          AppDialog.showAppDialog(
+          MessageDialog.showMessageDialog(
             context: context,
             title: AppLocalizations.of(context)
                 .translate('verification_email_title'),
