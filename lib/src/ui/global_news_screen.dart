@@ -22,7 +22,7 @@ class _GlobalNewsState extends State<GlobalNews> {
   var activeStream;
 
   final TextEditingController _filter = new TextEditingController();
-
+  Widget _appBarTitle = new Text('Flutter News9');
   AdvancedSearchState state;
 
   @override

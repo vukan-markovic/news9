@@ -130,6 +130,13 @@ class NewsBloc {
     _repository.deleteNewsByUuid('favorite_news', uuid);
   }
 
+  deleteNewsList(List<Article> articles) {
+    articles.forEach((element) {
+      print("deleting selected news");
+      deleteNewsByUuid(element.title.replaceAll(RegExp(r'[^\x20-\x7E]'), ''));
+    });
+  }
+
   Article mapArticle(Article article) {
     return Article.create(
         article.author,
