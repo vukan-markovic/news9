@@ -9,15 +9,39 @@ class RecommendedNewsList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.only(top: 16),
-      child: ListView.builder(
-          itemCount: snapshot.data.articles.length,
-          shrinkWrap: true,
-          physics: ClampingScrollPhysics(),
-          itemBuilder: (context, index) {
-            return ArticleTile(article: snapshot.data.articles[index]);
-          }),
-    );
+    if (MediaQuery.of(context).size.width > 400) {
+      return Container(
+        margin: EdgeInsets.only(top: 16),
+        child: Scrollbar(
+          child: GridView.builder(
+            itemCount: snapshot.data.articles.length,
+            shrinkWrap: true,
+            physics: ClampingScrollPhysics(),
+            itemBuilder: (context, index) {
+              return ArticleTile(article: snapshot.data.articles[index]);
+            },
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              childAspectRatio: 5 / 2.5,
+              crossAxisSpacing: 12,
+              mainAxisSpacing: 12,
+            ),
+          ),
+        ),
+      );
+    } else {
+      return Container(
+        margin: EdgeInsets.only(top: 16),
+        child: Scrollbar(
+          child: ListView.builder(
+              itemCount: snapshot.data.articles.length,
+              shrinkWrap: true,
+              physics: ClampingScrollPhysics(),
+              itemBuilder: (context, index) {
+                return ArticleTile(article: snapshot.data.articles[index]);
+              }),
+        ),
+      );
+    }
   }
 }
