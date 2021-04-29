@@ -25,7 +25,7 @@ class NewsRepository {
         query: query,
       );
 
-  fetchAllNewsByCategory({
+  Future<ArticleModel> fetchAllNewsByCategory({
     String languageCode,
     String country,
     String source,
@@ -40,6 +40,10 @@ class NewsRepository {
         category: category,
         query: query,
       );
+
+  Future<ArticleModel> fetchMostPopularNews(
+          String languageCode, String country) =>
+      newsApiProvider.fetchMostPopularNews(languageCode, country);
 
   Future<SourceModel> fetchAllSources() => newsApiProvider.fetchSourcesList();
 

@@ -82,5 +82,6 @@
   "order": "Bestellung",
   "asc": "Aufsteigend",
   "desc": "Absteigend",
-  "no_favorites": "Sie haben derzeit keine Favoriten"
+  "no_favorites": "Sie haben derzeit keine Favoriten",
+  "no_internet": "Bitte Internetanschluss bereitstellen!"
 }

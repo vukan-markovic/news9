@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:share/share.dart';
-
 import 'package:news/src/blocs/news_bloc/news_bloc.dart';
 import 'package:news/src/models/article/article_model.dart';
 import 'package:news/src/constants/ColorConstants.dart';
@@ -47,7 +46,6 @@ class _ArticleTileState extends State<ArticleTile> {
   }
 
   void _openArticleDetails(BuildContext context, Article article) {
-    
     Navigator.of(context).push(MaterialPageRoute(
       builder: (context) => ArticleDetails(
           article: article,
@@ -86,7 +84,9 @@ class _ArticleTileState extends State<ArticleTile> {
           child: Stack(children: [
             Card(
               elevation: 3,
-              color: widget.backgroundColor != null ? HexColor?.fromHex(widget.backgroundColor) : HexColor.fromHex(ColorConstants.secondaryWhite),
+              color: widget.backgroundColor != null
+                  ? HexColor?.fromHex(widget.backgroundColor)
+                  : HexColor.fromHex(ColorConstants.secondaryWhite),
               child: Padding(
                 padding: const EdgeInsets.only(top: 8.0),
                 child: Container(

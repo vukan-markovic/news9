@@ -82,5 +82,6 @@
   "order": "Rekkefølge",
   "asc": "Stigende",
   "desc": "Fallende",
-  "no_favorites": "Du har for øyeblikket ingen favoritter"
+  "no_favorites": "Du har for øyeblikket ingen favoritter",
+  "no_internet": "Vennligst oppgi internettforbindelse!"
 }

@@ -6,9 +6,9 @@ import 'package:news/src/constants/ColorConstants.dart';
 import 'package:news/src/extensions/Color.dart';
 import 'package:news/src/ui/favorite_news_screen.dart';
 import 'package:news/src/ui/profile/profile.dart';
-import 'package:news/src/ui/recommendations_screen.dart';
+import 'package:news/src/ui/recommended_news/recommendations_screen.dart';
 import 'package:news/src/utils/app_localizations.dart';
-import 'global_news_screen.dart';
+import 'global_news/global_news_screen.dart';
 
 class NavigationScreen extends StatefulWidget {
   _NavigationScreenState createState() => _NavigationScreenState();

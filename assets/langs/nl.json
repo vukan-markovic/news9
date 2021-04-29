@@ -82,5 +82,6 @@
   "order": "Volgorde",
   "asc": "Oplopend",
   "desc": "Aflopend",
-  "no_favorites": "U hebt momenteel geen favorieten"
+  "no_favorites": "U hebt momenteel geen favorieten",
+  "no_internet": "Zorg voor een internetverbinding!"
 }

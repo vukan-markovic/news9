@@ -9,7 +9,7 @@ import '../models/article/article_model.dart';
 class NewsApiProvider {
   Client client = Client();
   String country;
-  static final String _apiKey = '8e1a97acfeb74d2b8f521ea7acdfc33d';
+  static final String _apiKey = 'dac629f785f04e6d9167d54f6c493349';
   Uri _testUrl;
 
   Future<ArticleModel> fetchNewsList({
@@ -57,6 +57,7 @@ class NewsApiProvider {
     if (response.statusCode == 200) {
       return ArticleModel.fromJson(json.decode(response.body));
     } else {
+      print(response.body);
       throw Exception('Failed to load news');
     }
   }
@@ -75,7 +76,7 @@ class NewsApiProvider {
     }
   }
 
-  Future<void> fetchNewsListByCategory({
+  Future<ArticleModel> fetchNewsListByCategory({
     String languageCode,
     String country,
     String paging,
@@ -105,6 +106,24 @@ class NewsApiProvider {
       return ArticleModel.fromJson(json.decode(response.body));
     } else {
       throw Exception('Failed to load news');
+    }
+  }
+
+  Future<ArticleModel> fetchMostPopularNews(
+      String languageCode, String country) async {
+    _testUrl = Uri.https('newsapi.org', '/v2/everything', {
+      if (languageCode != 'sr') 'language': languageCode,
+      'apiKey': _apiKey,
+      'sortBy': 'popularity',
+      'q': 'a',
+    });
+
+    final response = await client.get(_testUrl);
+
+    if (response.statusCode == 200) {
+      return ArticleModel.fromJson(json.decode(response.body));
+    } else {
+      throw Exception('Failed to load most popular news');
     }
   }
 }

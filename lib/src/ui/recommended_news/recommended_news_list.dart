@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:news/src/models/article/article_model.dart';
+import '../article_tile.dart';
 
-import 'article_tile.dart';
-
-class NewsList extends StatelessWidget {
-  NewsList(this.snapshot);
+class RecommendedNewsList extends StatelessWidget {
+  RecommendedNewsList(this.snapshot);
 
   final AsyncSnapshot<ArticleModel> snapshot;
 
