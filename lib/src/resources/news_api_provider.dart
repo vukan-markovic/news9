@@ -56,7 +56,6 @@ class NewsApiProvider {
     if (response.statusCode == 200) {
       return ArticleModel.fromJson(json.decode(response.body));
     } else {
-      print(response.body);
       throw Exception('Failed to load news');
     }
   }
