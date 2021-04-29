@@ -106,7 +106,8 @@ class _GlobalNewsState extends State<GlobalNews> {
                 } else {
                   return CustomScrollView(
                     slivers: [
-                      SilverAppBarGlobal(connectionState),
+                      if (connectionState != ConnectivityStatus.Offline)
+                        SilverAppBarGlobal(),
                       GlobalNewsList(snapshot),
                     ],
                   );

@@ -20,11 +20,10 @@ class RecommendedNewsList extends StatelessWidget {
             itemBuilder: (context, index) {
               return ArticleTile(article: snapshot.data.articles[index]);
             },
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
-              childAspectRatio: 5 / 2.5,
-              crossAxisSpacing: 12,
-              mainAxisSpacing: 12,
+              childAspectRatio: MediaQuery.of(context).size.width /
+                  MediaQuery.of(context).size.height,
             ),
           ),
         ),

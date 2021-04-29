@@ -102,7 +102,7 @@ class _NewsTileState extends State<NewsTile> {
                                 widget.article.title,
                                 style: TextStyle(
                                   color: Colors.white,
-                                  fontWeight: FontWeight.w500,
+                                  fontWeight: FontWeight.w900,
                                 ),
                               ),
                             ),
@@ -111,16 +111,20 @@ class _NewsTileState extends State<NewsTile> {
                             child: Container(
                               width: MediaQuery.of(context).size.width / 2,
                               padding: EdgeInsets.all(8.0),
-                              child: Text(
-                                widget.article.description.substring(
-                                        0,
-                                        (widget.article.description.length ~/
-                                            3)) +
-                                    "...",
-                                style: TextStyle(
-                                  color: Colors.white70,
-                                ),
-                              ),
+                              child: widget.article.description != null
+                                  ? Text(
+                                      widget.article.description.substring(
+                                              0,
+                                              (widget.article.description
+                                                      .length ~/
+                                                  3)) +
+                                          "...",
+                                      style: TextStyle(
+                                        color: Colors.white70,
+                                        fontWeight: FontWeight.w900,
+                                      ),
+                                    )
+                                  : Container(),
                             ),
                           ),
                         ],

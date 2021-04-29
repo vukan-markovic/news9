@@ -9,7 +9,7 @@ import '../models/article/article_model.dart';
 class NewsApiProvider {
   Client client = Client();
   String country;
-  static final String _apiKey = 'dac629f785f04e6d9167d54f6c493349';
+  static final String _apiKey = '4460355a5e504e9db438ca6df6fc1df1';
   Uri _testUrl;
 
   Future<ArticleModel> fetchNewsList({

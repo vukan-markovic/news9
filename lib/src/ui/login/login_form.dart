@@ -39,10 +39,10 @@ class LoginForm extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Align(
-                  alignment: Alignment.centerLeft,
+                  alignment: Alignment.center,
                   child: Text(
                     AppLocalizations.of(context).translate('login'),
-                    textAlign: TextAlign.left,
+                    textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 36,
                       fontWeight: FontWeight.bold,
@@ -87,17 +87,21 @@ class _EmailInput extends StatelessWidget {
     return BlocBuilder<LoginCubit, LoginState>(
       buildWhen: (previous, current) => previous.email != current.email,
       builder: (context, state) {
-        return TextField(
-          key: const Key('loginForm_emailInput_textField'),
-          onChanged: (email) => context.read<LoginCubit>().emailChanged(email),
-          keyboardType: TextInputType.emailAddress,
-          decoration: InputDecoration(
-            prefixIcon: Icon(Icons.person),
-            labelText: AppLocalizations.of(context).translate('email'),
-            helperText: '',
-            errorText: state.email.invalid
-                ? AppLocalizations.of(context).translate('invalid_email')
-                : null,
+        return ConstrainedBox(
+          constraints: BoxConstraints(maxWidth: 400),
+          child: TextField(
+            key: const Key('loginForm_emailInput_textField'),
+            onChanged: (email) =>
+                context.read<LoginCubit>().emailChanged(email),
+            keyboardType: TextInputType.emailAddress,
+            decoration: InputDecoration(
+              prefixIcon: Icon(Icons.person),
+              labelText: AppLocalizations.of(context).translate('email'),
+              helperText: '',
+              errorText: state.email.invalid
+                  ? AppLocalizations.of(context).translate('invalid_email')
+                  : null,
+            ),
           ),
         );
       },
@@ -111,25 +115,28 @@ class _PasswordInput extends StatelessWidget {
     return BlocBuilder<LoginCubit, LoginState>(
       buildWhen: (previous, current) => previous.password != current.password,
       builder: (context, state) {
-        return TextField(
-            key: const Key('loginForm_passwordInput_textField'),
-            onChanged: (password) =>
-                context.read<LoginCubit>().passwordChanged(password),
-            obscureText: true,
-            enableSuggestions: false,
-            autocorrect: false,
-            decoration: InputDecoration(
-              prefixIcon: Icon(Icons.vpn_key),
-              labelText: AppLocalizations.of(context).translate('password'),
-              helperText: '',
-              errorText: state.password.invalid
-                  ? AppLocalizations.of(context).translate('invalid_password')
-                  : null,
-            ),
-            onSubmitted: (value) async {
-              if (state.status.isValidated)
-                await context.read<LoginCubit>().logInWithCredentials();
-            });
+        return ConstrainedBox(
+          constraints: BoxConstraints(maxWidth: 400),
+          child: TextField(
+              key: const Key('loginForm_passwordInput_textField'),
+              onChanged: (password) =>
+                  context.read<LoginCubit>().passwordChanged(password),
+              obscureText: true,
+              enableSuggestions: false,
+              autocorrect: false,
+              decoration: InputDecoration(
+                prefixIcon: Icon(Icons.vpn_key),
+                labelText: AppLocalizations.of(context).translate('password'),
+                helperText: '',
+                errorText: state.password.invalid
+                    ? AppLocalizations.of(context).translate('invalid_password')
+                    : null,
+              ),
+              onSubmitted: (value) async {
+                if (state.status.isValidated)
+                  await context.read<LoginCubit>().logInWithCredentials();
+              }),
+        );
       },
     );
   }

@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:hive/hive.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:news/src/blocs/authentication_bloc/authentication_bloc.dart';
@@ -119,10 +120,15 @@ class _UserPageState extends State<UserPage> {
                         onTap: () => editText == 'Edit'
                             ? null
                             : getImage(user.email, user.gender),
-                        child: CircleAvatar(
-                          radius: 48,
-                          backgroundImage: profileImage,
-                          backgroundColor: Colors.transparent,
+                        child: MouseRegion(
+                          cursor: editText == 'Save'
+                              ? SystemMouseCursors.click
+                              : SystemMouseCursors.basic,
+                          child: CircleAvatar(
+                            radius: 48,
+                            backgroundImage: profileImage,
+                            backgroundColor: Colors.transparent,
+                          ),
                         ),
                       ),
                     ),

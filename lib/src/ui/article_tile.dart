@@ -97,52 +97,68 @@ class _ArticleTileState extends State<ArticleTile> {
                     width: MediaQuery.of(context).size.width,
                     child: Container(
                       padding: EdgeInsets.symmetric(horizontal: 16),
-                      alignment: Alignment.bottomCenter,
+                      alignment: Alignment.center,
                       decoration: BoxDecoration(
-                          borderRadius: BorderRadius.only(
-                              bottomRight: Radius.circular(6),
-                              bottomLeft: Radius.circular(6))),
+                        borderRadius: BorderRadius.only(
+                          bottomRight: Radius.circular(6),
+                          bottomLeft: Radius.circular(6),
+                        ),
+                      ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisSize: MainAxisSize.min,
                         children: <Widget>[
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(article.source.name),
-                              Text(
-                                formatDate(article.publishedAt),
-                                style: TextStyle(
-                                  color: Colors.grey,
+                          Flexible(
+                            fit: FlexFit.loose,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(article.source.name),
+                                Text(
+                                  formatDate(article.publishedAt),
+                                  style: TextStyle(
+                                    color: Colors.grey,
+                                  ),
                                 ),
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(6),
-                            child: Image.network(
-                              article.urlToImage ?? _placeholderImageUrl,
-                              height: 200,
-                              width: MediaQuery.of(context).size.width,
-                              fit: BoxFit.cover,
-                              errorBuilder: (BuildContext context,
-                                  Object exception, StackTrace stackTrace) {
-                                return Image.asset('assets/placeholder.png');
-                              },
+                              ],
                             ),
                           ),
                           SizedBox(
                             height: 10,
                           ),
-                          Text(
-                            article.title,
-                            style: TextStyle(
-                                color: Colors.black87,
-                                fontSize: 20,
-                                fontWeight: FontWeight.w500),
+                          Flexible(
+                            fit: FlexFit.loose,
+                            flex: 3,
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(6),
+                              child: Center(
+                                child: Image.network(
+                                  article.urlToImage ?? _placeholderImageUrl,
+                                  height: 200,
+                                  width: MediaQuery.of(context).size.width,
+                                  fit: BoxFit.cover,
+                                  errorBuilder: (BuildContext context,
+                                      Object exception, StackTrace stackTrace) {
+                                    return Image.asset(
+                                        'assets/placeholder.png');
+                                  },
+                                ),
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Flexible(
+                            fit: FlexFit.loose,
+                            flex: 2,
+                            child: Text(
+                              article.title,
+                              style: TextStyle(
+                                  color: Colors.black87,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w500),
+                            ),
                           ),
                         ],
                       ),

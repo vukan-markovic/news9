@@ -45,6 +45,10 @@ class _TopicSelectScreenState extends State<TopicSelectScreen> {
     _categories = categories;
 
     return Scaffold(
+      appBar: AppBar(
+        title: Text('Flutter News9'),
+        backgroundColor: HexColor.fromHex(ColorConstants.primaryColor),
+      ),
       body: Container(
         padding: EdgeInsets.all(16),
         child: Column(
@@ -144,7 +148,7 @@ class _TopicSelectScreenState extends State<TopicSelectScreen> {
         scrollDirection: Axis.vertical,
         shrinkWrap: true,
         gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-            maxCrossAxisExtent: 200,
+            maxCrossAxisExtent: 220,
             childAspectRatio: 5 / 2.5,
             crossAxisSpacing: 12,
             mainAxisSpacing: 12),
