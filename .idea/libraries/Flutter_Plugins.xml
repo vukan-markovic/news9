@@ -2,11 +2,9 @@
   <library name="Flutter Plugins" type="FlutterPluginsLibraryType">
     <CLASSES>
       <root url="file://$PROJECT_DIR$/../../../../../../flutter/.pub-cache/hosted/pub.dartlang.org/url_launcher_linux-2.0.0" />
-      <root url="file://$PROJECT_DIR$/../../../../../../flutter/.pub-cache/hosted/pub.dartlang.org/cloud_firestore-1.0.5" />
       <root url="file://$PROJECT_DIR$/../../../../../../flutter/.pub-cache/hosted/pub.dartlang.org/image_picker-0.7.4" />
       <root url="file://$PROJECT_DIR$/../../../../../../flutter/.pub-cache/hosted/pub.dartlang.org/share-2.0.1" />
       <root url="file://$PROJECT_DIR$/../../../../../../flutter/.pub-cache/hosted/pub.dartlang.org/path_provider-2.0.1" />
-      <root url="file://$PROJECT_DIR$/../../../../../../flutter/.pub-cache/hosted/pub.dartlang.org/firebase_auth-1.1.0" />
       <root url="file://$PROJECT_DIR$/../../../../../../flutter/.pub-cache/hosted/pub.dartlang.org/shared_preferences_linux-2.0.0" />
       <root url="file://$PROJECT_DIR$/../../../../../../flutter/.pub-cache/hosted/pub.dartlang.org/flutter_social_content_share-0.0.4" />
       <root url="file://$PROJECT_DIR$/../../../../../../flutter/.pub-cache/hosted/pub.dartlang.org/firebase_core_web-1.0.2" />
@@ -15,20 +13,20 @@
       <root url="file://$PROJECT_DIR$/../../../../../../flutter/.pub-cache/hosted/pub.dartlang.org/social_share-2.1.1" />
       <root url="file://$PROJECT_DIR$/../../../../../../flutter/.pub-cache/hosted/pub.dartlang.org/google_sign_in_web-0.10.0" />
       <root url="file://$PROJECT_DIR$/../../../../../../flutter/.pub-cache/hosted/pub.dartlang.org/shared_preferences_web-2.0.0" />
-      <root url="file://$PROJECT_DIR$/../../../../../../flutter/.pub-cache/hosted/pub.dartlang.org/cloud_firestore_web-1.0.5" />
       <root url="file://$PROJECT_DIR$/../../../../../../flutter/.pub-cache/hosted/pub.dartlang.org/connectivity_for_web-0.4.0" />
       <root url="file://$PROJECT_DIR$/../../../../../../flutter/.pub-cache/hosted/pub.dartlang.org/connectivity-3.0.3" />
       <root url="file://$PROJECT_DIR$/../../../../../../flutter/.pub-cache/hosted/pub.dartlang.org/flutter_plugin_android_lifecycle-2.0.1" />
       <root url="file://$PROJECT_DIR$/../../../../../../flutter/.pub-cache/hosted/pub.dartlang.org/url_launcher_macos-2.0.0" />
       <root url="file://$PROJECT_DIR$/../../../../../../flutter/.pub-cache/hosted/pub.dartlang.org/url_launcher-6.0.3" />
-      <root url="file://$PROJECT_DIR$/../../../../../../flutter/.pub-cache/hosted/pub.dartlang.org/firebase_auth_web-1.0.6" />
       <root url="file://$PROJECT_DIR$/../../../../../../flutter/.pub-cache/hosted/pub.dartlang.org/google_sign_in-5.0.2" />
       <root url="file://$PROJECT_DIR$/../../../../../../flutter/.pub-cache/hosted/pub.dartlang.org/image_picker_for_web-2.0.0" />
-      <root url="file://$PROJECT_DIR$/../../../../../../flutter/.pub-cache/hosted/pub.dartlang.org/firebase_core-1.0.3" />
       <root url="file://$PROJECT_DIR$/../../../../../../flutter/.pub-cache/hosted/pub.dartlang.org/shared_preferences-2.0.5" />
       <root url="file://$PROJECT_DIR$/../../../../../../flutter/.pub-cache/hosted/pub.dartlang.org/url_launcher_windows-2.0.0" />
       <root url="file://$PROJECT_DIR$/../../../../../../flutter/.pub-cache/hosted/pub.dartlang.org/shared_preferences_windows-2.0.0" />
-      <root url="file://$PROJECT_DIR$/../../../../../../flutter/.pub-cache/hosted/pub.dartlang.org/path_provider_windows-2.0.0" />
+      <root url="file://$PROJECT_DIR$/../../../../../../flutter/.pub-cache/hosted/pub.dartlang.org/firebase_auth-1.1.2" />
+      <root url="file://$PROJECT_DIR$/../../../../../../flutter/.pub-cache/hosted/pub.dartlang.org/firebase_core-1.1.0" />
+      <root url="file://$PROJECT_DIR$/../../../../../../flutter/.pub-cache/hosted/pub.dartlang.org/path_provider_windows-2.0.1" />
+      <root url="file://$PROJECT_DIR$/../../../../../../flutter/.pub-cache/hosted/pub.dartlang.org/firebase_auth_web-1.1.0" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
