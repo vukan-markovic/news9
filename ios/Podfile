@@ -1,6 +1,6 @@
 platform :ios, '9.0'
 
-target 'news' do
+target 'flutterNews9' do
 
 use_frameworks!
 
