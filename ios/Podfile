@@ -1,6 +1,6 @@
 platform :ios, '9.0'
 
-target 'testing_gowtham' do
+target 'news' do
 
 use_frameworks!
 
