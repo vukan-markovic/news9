@@ -52,13 +52,16 @@ class NewsApiProvider {
       });
     }
 
-    final response = await client.get(_testUrl);
+    try {
+      final response = await client.get(_testUrl);
 
-    if (response.statusCode == 200) {
-      return ArticleModel.fromJson(json.decode(response.body));
-    } else {
-      print(response.body);
-      throw Exception('Failed to load news');
+      if (response.statusCode == 200) {
+        return ArticleModel.fromJson(json.decode(response.body));
+      } else {
+        throw Exception('Failed to load news');
+      }
+    } catch (e) {
+      return ArticleModel.fromDatabase([]);
     }
   }
 
