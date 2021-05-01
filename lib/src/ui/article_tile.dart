@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:share/share.dart';
@@ -75,79 +76,98 @@ class _ArticleTileState extends State<ArticleTile> {
     return Slidable(
       actionPane: SlidableDrawerActionPane(),
       actionExtentRatio: 0.33,
-      child: GestureDetector(
-        onTap: () => _openArticleDetails(context, article),
-        child: AnimatedContainer(
-          alignment: Alignment.topCenter,
-          duration: Duration(milliseconds: 800),
-          curve: Curves.easeIn,
-          child: Stack(children: [
-            Card(
-              elevation: 3,
-              color: widget.backgroundColor != null
-                  ? HexColor?.fromHex(widget.backgroundColor)
-                  : HexColor.fromHex(ColorConstants.secondaryWhite),
-              child: Padding(
-                padding: const EdgeInsets.only(top: 8.0),
-                child: Container(
-                  margin: EdgeInsets.only(bottom: 24),
-                  width: MediaQuery.of(context).size.width,
+      child: MouseRegion(
+        cursor: SystemMouseCursors.click,
+        child: GestureDetector(
+          onTap: () => _openArticleDetails(context, article),
+          child: AnimatedContainer(
+            alignment: Alignment.topCenter,
+            duration: Duration(milliseconds: 800),
+            curve: Curves.easeIn,
+            child: Stack(children: [
+              Card(
+                elevation: 3,
+                color: widget.backgroundColor != null
+                    ? HexColor?.fromHex(widget.backgroundColor)
+                    : HexColor.fromHex(ColorConstants.secondaryWhite),
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 8.0),
                   child: Container(
-                    padding: EdgeInsets.symmetric(horizontal: 16),
-                    alignment: Alignment.bottomCenter,
-                    decoration: BoxDecoration(
+                    margin: EdgeInsets.only(bottom: 24),
+                    width: MediaQuery.of(context).size.width,
+                    child: Container(
+                      padding: EdgeInsets.symmetric(horizontal: 16),
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
                         borderRadius: BorderRadius.only(
-                            bottomRight: Radius.circular(6),
-                            bottomLeft: Radius.circular(6))),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.min,
-                      children: <Widget>[
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(article.source.name),
-                            Text(
-                              formatDate(article.publishedAt),
-                              style: TextStyle(
-                                color: Colors.grey,
+                          bottomRight: Radius.circular(6),
+                          bottomLeft: Radius.circular(6),
+                        ),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: <Widget>[
+                          Flexible(
+                            fit: FlexFit.loose,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(article.source.name),
+                                Text(
+                                  formatDate(article.publishedAt),
+                                  style: TextStyle(
+                                    color: Colors.grey,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Flexible(
+                            fit: FlexFit.loose,
+                            flex: 3,
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(6),
+                              child: Center(
+                                child: Image.network(
+                                  article.urlToImage ?? _placeholderImageUrl,
+                                  height: 200,
+                                  width: MediaQuery.of(context).size.width,
+                                  fit: BoxFit.cover,
+                                  errorBuilder: (BuildContext context,
+                                      Object exception, StackTrace stackTrace) {
+                                    return Image.asset(
+                                        'assets/placeholder.png');
+                                  },
+                                ),
                               ),
                             ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(6),
-                          child: Image.network(
-                            article.urlToImage ?? _placeholderImageUrl,
-                            height: 200,
-                            width: MediaQuery.of(context).size.width,
-                            fit: BoxFit.cover,
-                            errorBuilder: (BuildContext context,
-                                Object exception, StackTrace stackTrace) {
-                              return Image.asset('assets/placeholder.png');
-                            },
                           ),
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Text(
-                          article.title,
-                          style: TextStyle(
-                              color: Colors.black87,
-                              fontSize: 20,
-                              fontWeight: FontWeight.w500),
-                        ),
-                      ],
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Flexible(
+                            fit: FlexFit.loose,
+                            flex: 2,
+                            child: Text(
+                              article.title,
+                              style: TextStyle(
+                                  color: Colors.black87,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w500),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
-          ]),
+            ]),
+          ),
         ),
       ),
       secondaryActions: <Widget>[

@@ -8,20 +8,20 @@ class CategoryBloc {
 
   Stream<List<String>> get selectedCategories => _categoryFetches.stream;
 
-  insetCategoryList(List<String> data) {
+  void insetCategoryList(data) {
     _categoryRepository.insertCategory(data);
   }
 
-  insertCategory(Category category) async {
+  void insertCategory(Category category) {
     _categoryRepository.insertCategory(category);
   }
 
-  deleteCategoriesByUid(String uid) async {
+  void deleteCategoriesByUid(String uid) {
     _categoryRepository.deleteCategories();
   }
 
   getAllCategories() async {
-    return await _categoryRepository.getAllCategories();
+    return _categoryRepository.getAllCategories();
   }
 
   dispose() {

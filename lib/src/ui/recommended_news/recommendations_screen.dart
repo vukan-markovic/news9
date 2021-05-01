@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news/src/blocs/advanced_search_bloc/advanced_search_bloc.dart';
 import 'package:news/src/blocs/category_bloc/category_bloc.dart';
@@ -23,7 +24,7 @@ class RecommendationsScreen extends StatefulWidget {
 }
 
 class _RecommendationsScreenState extends State<RecommendationsScreen> {
-  List<String> _selectedCategories = [];
+  var _selectedCategories = [];
   final TextEditingController _filter = new TextEditingController();
   var connectionState;
 
@@ -32,13 +33,14 @@ class _RecommendationsScreenState extends State<RecommendationsScreen> {
     connectionState = Provider.of<ConnectivityStatus>(context);
 
     if (connectionState == ConnectivityStatus.Cellular ||
-        connectionState == ConnectivityStatus.WiFi) {
+        connectionState == ConnectivityStatus.WiFi ||
+        connectionState == null) {
       getFromFuture();
     }
     super.didChangeDependencies();
   }
 
-  getFromFuture() async {
+  Future<void> getFromFuture() async {
     _selectedCategories = await categoryBloc.getAllCategories();
     _selectedCategory = _selectedCategories[0];
 
@@ -127,7 +129,7 @@ class _RecommendationsScreenState extends State<RecommendationsScreen> {
 class CategoriesList extends StatelessWidget {
   CategoriesList(this.selectedCategories);
 
-  final List<String> selectedCategories;
+  final selectedCategories;
 
   @override
   Widget build(BuildContext context) {
@@ -171,32 +173,35 @@ class _CategoryTileState extends State<CategoryTile> {
           category: _selectedCategory,
         );
       },
-      child: ConstrainedBox(
-        constraints: new BoxConstraints(
-          minWidth: 150,
-        ),
-        child: Card(
-          color: widget.category == _selectedCategory
-              ? HexColor.fromHex(ColorConstants.primaryColor)
-              : Colors.white,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(
-                getIconOfCategory(widget.category),
-              ),
-              SizedBox(width: 4),
-              Text(
-                AppLocalizations.of(context).translate(widget.category),
-                style: TextStyle(
-                  fontWeight: FontWeight.w600,
-                  fontSize: 16,
-                  color: widget.category == _selectedCategory
-                      ? HexColor.fromHex(ColorConstants.secondaryWhite)
-                      : HexColor.fromHex(ColorConstants.lightBlack),
+      child: MouseRegion(
+        cursor: SystemMouseCursors.click,
+        child: ConstrainedBox(
+          constraints: new BoxConstraints(
+            minWidth: 150,
+          ),
+          child: Card(
+            color: widget.category == _selectedCategory
+                ? HexColor.fromHex(ColorConstants.primaryColor)
+                : Colors.white,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  getIconOfCategory(widget.category),
                 ),
-              ),
-            ],
+                SizedBox(width: 4),
+                Text(
+                  AppLocalizations.of(context).translate(widget.category),
+                  style: TextStyle(
+                    fontWeight: FontWeight.w600,
+                    fontSize: 16,
+                    color: widget.category == _selectedCategory
+                        ? HexColor.fromHex(ColorConstants.secondaryWhite)
+                        : HexColor.fromHex(ColorConstants.lightBlack),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

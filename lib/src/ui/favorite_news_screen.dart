@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:news/src/blocs/news_bloc/news_bloc.dart';
 import 'package:news/src/constants/ColorConstants.dart';
@@ -39,16 +40,17 @@ class FavoriteNewsScreenState extends State<FavoriteNewsScreen> {
                       newsBloc.deleteNewsList(selectedArticles);
                       newsBloc.fetchFavoriteNewsFromDatabase();
                     }),
-            selectedArticles.isEmpty
-                ? Container()
-                : IconButton(
-                    icon: Icon(Icons.share_rounded),
-                    onPressed: () {
-                      if (selectedArticles.length == 1)
-                        _shareArticle();
-                      else
-                        _shareArticles();
-                    }),
+            if (selectedArticles.isNotEmpty &&
+                Theme.of(context).platform != TargetPlatform.macOS &&
+                !kIsWeb)
+              IconButton(
+                  icon: Icon(Icons.share_rounded),
+                  onPressed: () {
+                    if (selectedArticles.length == 1)
+                      _shareArticle();
+                    else
+                      _shareArticles();
+                  }),
             IconButton(
               icon: Icon(Icons.filter_alt),
               onPressed: () async {
@@ -88,25 +90,28 @@ class FavoriteNewsScreenState extends State<FavoriteNewsScreen> {
   Widget buildList(AsyncSnapshot<ArticleModel> snapshot) {
     return Container(
       margin: EdgeInsets.only(top: 16),
-      child: ListView.builder(
-          itemCount: snapshot.data.articles.length,
-          shrinkWrap: true,
-          physics: ClampingScrollPhysics(),
-          itemBuilder: (context, index) {
-            return Container(
-                child: GestureDetector(
-                    onLongPress: () {
-                      setState(() {
-                        if (selectedArticles
-                            .contains(snapshot.data.articles[index])) {
-                          selectedArticles
-                              .remove(snapshot.data.articles[index]);
-                        } else
-                          selectedArticles.add(snapshot.data.articles[index]);
-                      });
-                    },
-                    child: _getArticleTileType(snapshot.data.articles[index])));
-          }),
+      child: Scrollbar(
+        child: ListView.builder(
+            itemCount: snapshot.data.articles.length,
+            shrinkWrap: true,
+            physics: ClampingScrollPhysics(),
+            itemBuilder: (context, index) {
+              return Container(
+                  child: GestureDetector(
+                      onLongPress: () {
+                        setState(() {
+                          if (selectedArticles
+                              .contains(snapshot.data.articles[index])) {
+                            selectedArticles
+                                .remove(snapshot.data.articles[index]);
+                          } else
+                            selectedArticles.add(snapshot.data.articles[index]);
+                        });
+                      },
+                      child:
+                          _getArticleTileType(snapshot.data.articles[index])));
+            }),
+      ),
     );
   }
 
