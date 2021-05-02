@@ -4,7 +4,7 @@ PODS:
     - AppAuth/ExternalUserAgent (= 1.4.0)
   - AppAuth/Core (1.4.0)
   - AppAuth/ExternalUserAgent (1.4.0)
-  - connectivity (0.0.1):
+  - connectivity_plus (0.0.1):
     - Flutter
     - Reachability
   - FBSDKCoreKit (9.2.0):
@@ -99,7 +99,7 @@ PODS:
     - Flutter
 
 DEPENDENCIES:
-  - connectivity (from `.symlinks/plugins/connectivity/ios`)
+  - connectivity_plus (from `.symlinks/plugins/connectivity_plus/ios`)
   - firebase_auth (from `.symlinks/plugins/firebase_auth/ios`)
   - firebase_core (from `.symlinks/plugins/firebase_core/ios`)
   - Flutter (from `Flutter`)
@@ -131,8 +131,8 @@ SPEC REPOS:
     - Reachability
 
 EXTERNAL SOURCES:
-  connectivity:
-    :path: ".symlinks/plugins/connectivity/ios"
+  connectivity_plus:
+    :path: ".symlinks/plugins/connectivity_plus/ios"
   firebase_auth:
     :path: ".symlinks/plugins/firebase_auth/ios"
   firebase_core:
@@ -158,7 +158,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   AppAuth: 31bcec809a638d7bd2f86ea8a52bd45f6e81e7c7
-  connectivity: c4130b2985d4ef6fd26f9702e886bd5260681467
+  connectivity_plus: f5e5e0b894ec1187bfab9816d6c2f034da8d46da
   FBSDKCoreKit: dace5abafc2fd9272733e6d027bcf18102712117
   FBSDKShareKit: 1210ece9e8f516ef0bb40ac329929a2874aef274
   Firebase: 26223c695fe322633274198cb19dca8cb7e54416
