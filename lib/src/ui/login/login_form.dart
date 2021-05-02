@@ -2,10 +2,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:formz/formz.dart';
+import 'package:news/src/blocs/connectivity_bloc/connectivity_bloc.dart';
 import 'package:news/src/blocs/login_bloc/login_cubit.dart';
 import 'package:news/src/ui/reset-password/reset_password_page.dart';
 import 'package:news/src/ui/sign_up/sign_up_page.dart';
 import 'package:news/src/utils/app_localizations.dart';
+import 'package:provider/provider.dart';
 import '../dialogs/message_dialog.dart';
 
 class LoginForm extends StatelessWidget {
@@ -13,7 +15,15 @@ class LoginForm extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocListener<LoginCubit, LoginState>(
       listener: (context, state) {
-        if (state.status.isSubmissionFailure) {
+        if (state.status.isSubmissionFailure &&
+            Provider.of<ConnectivityStatus>(context, listen: false) ==
+                ConnectivityStatus.Offline) {
+          MessageDialog.showMessageDialog(
+            context: context,
+            title: AppLocalizations.of(context).translate('no_connection'),
+            body: AppLocalizations.of(context).translate('no_internet'),
+          );
+        } else if (state.status.isSubmissionFailure) {
           MessageDialog.showMessageDialog(
             context: context,
             title: AppLocalizations.of(context)

@@ -15,8 +15,10 @@ class ArticleTile extends StatefulWidget {
 
   final Article article;
   final String backgroundColor;
+  final bool enabled;
 
-  ArticleTile({@required this.article, this.backgroundColor});
+  ArticleTile(
+      {@required this.article, this.backgroundColor, @required this.enabled});
 }
 
 class _ArticleTileState extends State<ArticleTile> {
@@ -74,6 +76,7 @@ class _ArticleTileState extends State<ArticleTile> {
   @override
   Widget build(BuildContext context) {
     return Slidable(
+      enabled: widget.enabled,
       actionPane: SlidableDrawerActionPane(),
       actionExtentRatio: 0.33,
       child: MouseRegion(

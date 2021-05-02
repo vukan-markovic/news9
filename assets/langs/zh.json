@@ -83,5 +83,17 @@
   "asc": "升序",
   "desc": "降序",
   "no_favorites": "您目前没有收藏",
-  "no_internet": "请提供网络连接!"
+  "no_internet": "请提供网络连接!",
+  "no_connection": "没有互联网",
+  "English": "语 言",
+  "Serbian": "塞尔维亚语",
+  "German": "德国",
+  "Spanish": "西班牙",
+  "French": "法语",
+  "Italian": "意大利语",
+  "Dutch": "荷兰语",
+  "Norwegian": "挪威语",
+  "Portuguese": "葡萄牙语",
+  "Russian": "俄语",
+  "Chinese": "中文"
 }

@@ -29,51 +29,54 @@ class _AdvancedSearchInputState extends State<AdvancedSearchInput> {
           country = state.country;
         }
 
-        return ExpansionTile(
-          leading: Icon(Icons.settings),
-          title: Text(
-            AppLocalizations.of(context).translate('advanced_search'),
-          ),
-          children: [
-            Container(
-              margin: EdgeInsets.symmetric(horizontal: 16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    AppLocalizations.of(context)
-                        .translate('advanced_search_title'),
-                    style: TextStyle(
-                      fontStyle: FontStyle.italic,
-                    ),
-                  ),
-                  Divider(height: 16),
-                  Text(
-                    AppLocalizations.of(context).translate('global_news'),
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  SizedBox(height: 8),
-                  _DateInput(state.dateFrom, state.dateTo),
-                  if (Provider.of<ConnectivityStatus>(context) !=
-                      ConnectivityStatus.Offline)
-                    _SourceInput(),
-                  Divider(height: 16),
-                  Text(
-                    AppLocalizations.of(context)
-                        .translate('global_recommended'),
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  SizedBox(height: 8),
-                  _CountryInput(),
-                  _PagingInput(state.paging),
-                ],
-              ),
+        return Theme(
+          data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
+          child: ExpansionTile(
+            leading: Icon(Icons.settings),
+            title: Text(
+              AppLocalizations.of(context).translate('advanced_search'),
             ),
-          ],
+            children: [
+              Container(
+                margin: EdgeInsets.symmetric(horizontal: 16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      AppLocalizations.of(context)
+                          .translate('advanced_search_title'),
+                      style: TextStyle(
+                        fontStyle: FontStyle.italic,
+                      ),
+                    ),
+                    Divider(height: 16),
+                    Text(
+                      AppLocalizations.of(context).translate('global_news'),
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    SizedBox(height: 8),
+                    _DateInput(state.dateFrom, state.dateTo),
+                    if (Provider.of<ConnectivityStatus>(context) !=
+                        ConnectivityStatus.Offline)
+                      _SourceInput(),
+                    Divider(height: 16),
+                    Text(
+                      AppLocalizations.of(context)
+                          .translate('global_recommended'),
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    SizedBox(height: 8),
+                    _CountryInput(),
+                    _PagingInput(state.paging),
+                  ],
+                ),
+              ),
+            ],
+          ),
         );
       },
     );
@@ -99,6 +102,7 @@ class __CountryInputState extends State<_CountryInput> {
             cursor: SystemMouseCursors.click,
             child: DropdownButton<String>(
               value: country,
+              isExpanded: true,
               icon: const Icon(Icons.arrow_downward),
               iconSize: 24,
               elevation: 16,
@@ -164,6 +168,7 @@ class __SourceInputState extends State<_SourceInput> {
                   child: MouseRegion(
                     cursor: SystemMouseCursors.click,
                     child: DropdownButton<Source>(
+                      isExpanded: true,
                       value: source,
                       icon: const Icon(Icons.arrow_downward),
                       iconSize: 24,
@@ -234,6 +239,7 @@ class __PagingInputState extends State<_PagingInput> {
           child: MouseRegion(
             cursor: SystemMouseCursors.click,
             child: DropdownButton<String>(
+              isExpanded: true,
               value: paging,
               icon: const Icon(Icons.arrow_downward),
               iconSize: 24,

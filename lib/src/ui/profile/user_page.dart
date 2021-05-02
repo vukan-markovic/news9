@@ -109,6 +109,7 @@ class _UserPageState extends State<UserPage> {
           }
           return Center(
             child: Container(
+              constraints: BoxConstraints(maxWidth: 600),
               margin: EdgeInsets.symmetric(horizontal: 24),
               child: SingleChildScrollView(
                 child: Column(
@@ -427,38 +428,43 @@ class __GenderInputState extends State<_GenderInput> {
   @override
   Widget build(BuildContext context) {
     return Row(
+      mainAxisSize: MainAxisSize.min,
       children: [
         Expanded(
           child: Text(AppLocalizations.of(context).translate('gender') + ':'),
         ),
-        Expanded(
-          flex: 5,
-          child: ListTile(
-            title: Text(AppLocalizations.of(context).translate('male')),
-            leading: Radio<Gender>(
-              value: Gender.male,
-              groupValue: _gender,
-              onChanged: (Gender value) {
-                setState(() {
-                  _gender = value;
-                });
-              },
-            ),
-          ),
+        SizedBox(
+          width: 8,
         ),
         Expanded(
-          flex: 5,
-          child: ListTile(
-            title: Text(AppLocalizations.of(context).translate('female')),
-            leading: Radio<Gender>(
-              value: Gender.female,
-              groupValue: _gender,
-              onChanged: (Gender value) {
-                setState(() {
-                  _gender = value;
-                });
-              },
-            ),
+          flex: 4,
+          child: Column(
+            children: [
+              ListTile(
+                title: Text(AppLocalizations.of(context).translate('male')),
+                leading: Radio<Gender>(
+                  value: Gender.male,
+                  groupValue: _gender,
+                  onChanged: (Gender value) {
+                    setState(() {
+                      _gender = value;
+                    });
+                  },
+                ),
+              ),
+              ListTile(
+                title: Text(AppLocalizations.of(context).translate('female')),
+                leading: Radio<Gender>(
+                  value: Gender.female,
+                  groupValue: _gender,
+                  onChanged: (Gender value) {
+                    setState(() {
+                      _gender = value;
+                    });
+                  },
+                ),
+              ),
+            ],
           ),
         ),
       ],

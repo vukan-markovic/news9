@@ -117,10 +117,16 @@ class FavoriteNewsScreenState extends State<FavoriteNewsScreen> {
 
   ArticleTile _getArticleTileType(Article article) {
     if (!selectedArticles.contains(article)) {
-      return ArticleTile(article: article);
+      return ArticleTile(
+        article: article,
+        enabled: false,
+      );
     } else
       return ArticleTile(
-          article: article, backgroundColor: ColorConstants.primaryColor);
+        article: article,
+        backgroundColor: ColorConstants.primaryColor,
+        enabled: false,
+      );
   }
 
   _shareArticles() {

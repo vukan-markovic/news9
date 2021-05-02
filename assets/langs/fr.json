@@ -83,5 +83,17 @@
   "asc": "Ascendant",
   "desc": "Descendant",
   "no_favorites": "Vous n'avez actuellement aucun favori",
-  "no_internet": "Veuillez fournir une connexion Internet !"
+  "no_internet": "Veuillez fournir une connexion Internet !",
+  "no_connection": "Pas d'internet",
+  "English": "Anglais",
+  "Serbian": "Serbe",
+  "German": "Allemand",
+  "Spanish": "Espagnol",
+  "French": "Français",
+  "Italian": "Italien",
+  "Dutch": "Néerlandais",
+  "Norwegian": "Norvégien",
+  "Portuguese": "Portugais",
+  "Russian": "Russe",
+  "Chinese": "Chinois"
 }
