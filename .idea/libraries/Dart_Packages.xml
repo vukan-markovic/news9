@@ -142,27 +142,6 @@
             </list>
           </value>
         </entry>
-        <entry key="cloud_firestore">
-          <value>
-            <list>
-              <option value="$PROJECT_DIR$/../../../../../../flutter/.pub-cache/hosted/pub.dartlang.org/cloud_firestore-1.0.7/lib" />
-            </list>
-          </value>
-        </entry>
-        <entry key="cloud_firestore_platform_interface">
-          <value>
-            <list>
-              <option value="$PROJECT_DIR$/../../../../../../flutter/.pub-cache/hosted/pub.dartlang.org/cloud_firestore_platform_interface-4.0.3/lib" />
-            </list>
-          </value>
-        </entry>
-        <entry key="cloud_firestore_web">
-          <value>
-            <list>
-              <option value="$PROJECT_DIR$/../../../../../../flutter/.pub-cache/hosted/pub.dartlang.org/cloud_firestore_web-1.0.7/lib" />
-            </list>
-          </value>
-        </entry>
         <entry key="code_builder">
           <value>
             <list>
@@ -230,13 +209,6 @@
           <value>
             <list>
               <option value="$PROJECT_DIR$/../../../../../../flutter/.pub-cache/hosted/pub.dartlang.org/dart_style-2.0.1/lib" />
-            </list>
-          </value>
-        </entry>
-        <entry key="dio">
-          <value>
-            <list>
-              <option value="$PROJECT_DIR$/../../../../../../flutter/.pub-cache/hosted/pub.dartlang.org/dio-4.0.0/lib" />
             </list>
           </value>
         </entry>
@@ -970,9 +942,6 @@
       <root url="file://$PROJECT_DIR$/../../../../../../flutter/.pub-cache/hosted/pub.dartlang.org/checked_yaml-2.0.1/lib" />
       <root url="file://$PROJECT_DIR$/../../../../../../flutter/.pub-cache/hosted/pub.dartlang.org/cli_util-0.3.0/lib" />
       <root url="file://$PROJECT_DIR$/../../../../../../flutter/.pub-cache/hosted/pub.dartlang.org/clock-1.1.0/lib" />
-      <root url="file://$PROJECT_DIR$/../../../../../../flutter/.pub-cache/hosted/pub.dartlang.org/cloud_firestore-1.0.7/lib" />
-      <root url="file://$PROJECT_DIR$/../../../../../../flutter/.pub-cache/hosted/pub.dartlang.org/cloud_firestore_platform_interface-4.0.3/lib" />
-      <root url="file://$PROJECT_DIR$/../../../../../../flutter/.pub-cache/hosted/pub.dartlang.org/cloud_firestore_web-1.0.7/lib" />
       <root url="file://$PROJECT_DIR$/../../../../../../flutter/.pub-cache/hosted/pub.dartlang.org/code_builder-3.7.0/lib" />
       <root url="file://$PROJECT_DIR$/../../../../../../flutter/.pub-cache/hosted/pub.dartlang.org/collection-1.15.0/lib" />
       <root url="file://$PROJECT_DIR$/../../../../../../flutter/.pub-cache/hosted/pub.dartlang.org/connectivity-3.0.3/lib" />
@@ -983,7 +952,6 @@
       <root url="file://$PROJECT_DIR$/../../../../../../flutter/.pub-cache/hosted/pub.dartlang.org/crypto-3.0.1/lib" />
       <root url="file://$PROJECT_DIR$/../../../../../../flutter/.pub-cache/hosted/pub.dartlang.org/cupertino_icons-1.0.2/lib" />
       <root url="file://$PROJECT_DIR$/../../../../../../flutter/.pub-cache/hosted/pub.dartlang.org/dart_style-2.0.1/lib" />
-      <root url="file://$PROJECT_DIR$/../../../../../../flutter/.pub-cache/hosted/pub.dartlang.org/dio-4.0.0/lib" />
       <root url="file://$PROJECT_DIR$/../../../../../../flutter/.pub-cache/hosted/pub.dartlang.org/equatable-2.0.0/lib" />
       <root url="file://$PROJECT_DIR$/../../../../../../flutter/.pub-cache/hosted/pub.dartlang.org/fake_async-1.2.0/lib" />
       <root url="file://$PROJECT_DIR$/../../../../../../flutter/.pub-cache/hosted/pub.dartlang.org/ffi-1.0.0/lib" />
