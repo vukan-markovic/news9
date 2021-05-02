@@ -7,7 +7,7 @@
 	<key>classes</key>
 	<dict/>
 	<key>objectVersion</key>
-	<string>51</string>
+	<string>54</string>
 	<key>objects</key>
 	<dict>
 		<key>1498D2321E8E86230040F4C2</key>
@@ -294,6 +294,52 @@
 			<key>showEnvVarsInLog</key>
 			<string>0</string>
 		</dict>
+		<key>5AC6B6B5263D58FB0090704A</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.plist.xml</string>
+			<key>name</key>
+			<string>GoogleService-Info.plist</string>
+			<key>path</key>
+			<string>Runner/GoogleService-Info.plist</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>5AC6B6B6263D59500090704A</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.plist.xml</string>
+			<key>name</key>
+			<string>GoogleService-Info.plist</string>
+			<key>path</key>
+			<string>Runner/GoogleService-Info.plist</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>5AC6B6B7263D59960090704A</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.plist.xml</string>
+			<key>path</key>
+			<string>GoogleService-Info.plist</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>5AC6B6B8263D59960090704A</key>
+		<dict>
+			<key>fileRef</key>
+			<string>5AC6B6B7263D59960090704A</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
 		<key>74858FAD1ED2DC5600515810</key>
 		<dict>
 			<key>isa</key>
@@ -372,6 +418,8 @@
 		<dict>
 			<key>children</key>
 			<array>
+				<string>5AC6B6B5263D58FB0090704A</string>
+				<string>5AC6B6B6263D59500090704A</string>
 				<string>3B3967151E833CAA004F5970</string>
 				<string>9740EEB21CF90195004384FC</string>
 				<string>7AFA3C8E1D35360C0083082E</string>
@@ -472,7 +520,7 @@
 			<key>buildConfigurationList</key>
 			<string>97C146E91CF9000F007C117D</string>
 			<key>compatibilityVersion</key>
-			<string>Xcode 9.3</string>
+			<string>Xcode 12.0</string>
 			<key>developmentRegion</key>
 			<string>en</string>
 			<key>hasScannedForEncodings</key>
@@ -547,6 +595,7 @@
 			<array>
 				<string>97C147011CF9000F007C117D</string>
 				<string>3B3967161E833CAA004F5970</string>
+				<string>5AC6B6B8263D59960090704A</string>
 				<string>97C146FE1CF9000F007C117D</string>
 				<string>97C146FC1CF9000F007C117D</string>
 			</array>
@@ -616,6 +665,7 @@
 		<dict>
 			<key>children</key>
 			<array>
+				<string>5AC6B6B7263D59960090704A</string>
 				<string>97C146FA1CF9000F007C117D</string>
 				<string>97C146FD1CF9000F007C117D</string>
 				<string>97C146FF1CF9000F007C117D</string>
