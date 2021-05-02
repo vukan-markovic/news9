@@ -394,6 +394,13 @@
             </list>
           </value>
         </entry>
+        <entry key="google_fonts">
+          <value>
+            <list>
+              <option value="$PROJECT_DIR$/../../../../../../flutter/.pub-cache/hosted/pub.dartlang.org/google_fonts-2.0.0/lib" />
+            </list>
+          </value>
+        </entry>
         <entry key="google_sign_in">
           <value>
             <list>
@@ -988,6 +995,7 @@
       <root url="file://$PROJECT_DIR$/../../../../../../flutter/.pub-cache/hosted/pub.dartlang.org/font_awesome_flutter-9.0.0/lib" />
       <root url="file://$PROJECT_DIR$/../../../../../../flutter/.pub-cache/hosted/pub.dartlang.org/formz-0.3.2/lib" />
       <root url="file://$PROJECT_DIR$/../../../../../../flutter/.pub-cache/hosted/pub.dartlang.org/glob-2.0.1/lib" />
+      <root url="file://$PROJECT_DIR$/../../../../../../flutter/.pub-cache/hosted/pub.dartlang.org/google_fonts-2.0.0/lib" />
       <root url="file://$PROJECT_DIR$/../../../../../../flutter/.pub-cache/hosted/pub.dartlang.org/google_sign_in-5.0.2/lib" />
       <root url="file://$PROJECT_DIR$/../../../../../../flutter/.pub-cache/hosted/pub.dartlang.org/google_sign_in_platform_interface-2.0.1/lib" />
       <root url="file://$PROJECT_DIR$/../../../../../../flutter/.pub-cache/hosted/pub.dartlang.org/google_sign_in_web-0.10.0/lib" />
