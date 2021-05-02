@@ -6,12 +6,14 @@ import 'package:news/src/ui/search/search_news.dart';
 
 class SearchAppBar extends StatefulWidget implements PreferredSizeWidget {
   SearchAppBar(
-      this.filter, this.searchNews, this.showFilterButton, this.sortNews);
+      this.filter, this.searchNews, this.showFilterButton, this.sortNews,
+      [this.appBarTitle]);
 
   final TextEditingController filter;
   final void Function() searchNews;
   final void Function() sortNews;
   final bool showFilterButton;
+  final Widget appBarTitle;
 
   @override
   _SearchAppBarState createState() => _SearchAppBarState();
@@ -21,8 +23,20 @@ class SearchAppBar extends StatefulWidget implements PreferredSizeWidget {
 }
 
 class _SearchAppBarState extends State<SearchAppBar> {
-  Icon _searchIcon = new Icon(Icons.search);
-  Widget _appBarTitle = new Text('Flutter News9');
+  Icon _searchIcon = Icon(Icons.search);
+  Widget _appBarTitle;
+
+  @override
+  void initState() {
+    _appBarTitle = widget.appBarTitle ?? Text('Flutter News9');
+    super.initState();
+  }
+
+  @override
+  void didUpdateWidget(covariant SearchAppBar oldWidget) {
+    _appBarTitle = widget.appBarTitle ?? Text('Flutter News9');
+    super.didUpdateWidget(oldWidget);
+  }
 
   @override
   Widget build(BuildContext context) {

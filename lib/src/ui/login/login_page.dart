@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news/src/blocs/login_bloc/login_cubit.dart';
+import 'package:news/src/constants/ColorConstants.dart';
+import 'package:news/src/extensions/Color.dart';
 import 'package:news/src/resources/user_repository.dart';
-import 'package:news/src/utils/app_localizations.dart';
 import 'login_form.dart';
 
 class LoginPage extends StatelessWidget {
@@ -14,9 +15,8 @@ class LoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          AppLocalizations.of(context).translate('login'),
-        ),
+        title: Text('Flutter News9'),
+        backgroundColor: HexColor.fromHex(ColorConstants.primaryColor),
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),

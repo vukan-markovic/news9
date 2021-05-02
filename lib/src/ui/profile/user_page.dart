@@ -202,7 +202,7 @@ class _UserPageState extends State<UserPage> {
                             ? CircularProgressIndicator()
                             : ElevatedButton(
                                 key: const Key(
-                                    'signUpForm_continue_raisedButton'),
+                                    'edit_raisedButton'),
                                 child: Text(
                                   AppLocalizations.of(context)
                                       .translate(editText),
@@ -212,7 +212,7 @@ class _UserPageState extends State<UserPage> {
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(5),
                                   ),
-                                  primary: Colors.blue,
+                                  primary: HexColor.fromHex(ColorConstants.primaryColor),
                                 ),
                                 onPressed: state.status.isValidated
                                     ? () async {

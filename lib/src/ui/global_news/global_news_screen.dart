@@ -37,7 +37,6 @@ class _GlobalNewsState extends State<GlobalNews> {
     if (connectionState == ConnectivityStatus.Offline) {
       newsBloc.fetchNewsFromDatabase();
       activeStream = newsBloc.offlineNews;
-      this._appBarTitle = Text("Flutter News9 - Offline");
       print("showing news From db");
     } else if (connectionState == null ||
         connectionState == ConnectivityStatus.Cellular ||
@@ -52,7 +51,6 @@ class _GlobalNewsState extends State<GlobalNews> {
           source: state.source);
 
       activeStream = newsBloc.allNews;
-      this._appBarTitle = Text("Flutter News9");
       print("showing news From api");
     }
 
@@ -87,8 +85,14 @@ class _GlobalNewsState extends State<GlobalNews> {
 
   @override
   Widget build(BuildContext context) {
+    if (connectionState == ConnectivityStatus.Offline) {
+      this._appBarTitle = Text("Flutter News9 - Offline");
+    } else {
+      this._appBarTitle = Text("Flutter News9");
+    }
+
     return Scaffold(
-      appBar: SearchAppBar(_filter, searchNews, false, null),
+      appBar: SearchAppBar(_filter, searchNews, false, null, _appBarTitle),
       body: BlocBuilder<AdvancedSearchBloc, AdvancedSearchState>(
         builder: (context, state) {
           return StreamBuilder(

@@ -3,7 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
 import 'package:news/src/blocs/connectivity_bloc/connectivity_bloc.dart';
 import 'package:news/src/blocs/sign_up_bloc/sign_up_cubit.dart';
+import 'package:news/src/constants/ColorConstants.dart';
 import 'package:news/src/constants/enums.dart';
+import 'package:news/src/extensions/Color.dart';
 import 'package:news/src/ui/login/login_page.dart';
 import 'package:news/src/utils/app_localizations.dart';
 import 'package:provider/provider.dart';
@@ -322,12 +324,13 @@ class _SignUpButton extends StatelessWidget {
                 key: const Key('signUpForm_continue_raisedButton'),
                 child: Text(
                   AppLocalizations.of(context).translate('create_account'),
+                  style: TextStyle(fontSize: 16),
                 ),
                 style: ElevatedButton.styleFrom(
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(5),
                   ),
-                  primary: Colors.blue,
+                  primary: HexColor.fromHex(ColorConstants.primaryColor),
                 ),
                 onPressed: state.status.isValidated
                     ? () => _submitForm(context)

@@ -42,28 +42,52 @@ class _NavigationScreenState extends State<NavigationScreen> {
           items: [
             BottomNavigationBarItem(
                 icon: _currentIndex == 0
-                    ? Icon(Icons.home_rounded)
-                    : Icon(Icons.home_outlined),
+                    ? Icon(
+                        Icons.home_rounded,
+                        color: HexColor.fromHex(ColorConstants.secondaryWhite),
+                      )
+                    : Icon(
+                        Icons.home_outlined,
+                        color: HexColor.fromHex(ColorConstants.secondaryWhite),
+                      ),
                 label: AppLocalizations.of(context).translate('global'),
                 backgroundColor: HexColor.fromHex(ColorConstants.primaryColor)),
             BottomNavigationBarItem(
               icon: _currentIndex == 1
-                  ? Icon(Icons.star_rounded)
-                  : Icon(Icons.star_border_rounded),
+                  ? Icon(
+                      Icons.star_rounded,
+                      color: HexColor.fromHex(ColorConstants.secondaryWhite),
+                    )
+                  : Icon(
+                      Icons.star_border_rounded,
+                      color: HexColor.fromHex(ColorConstants.secondaryWhite),
+                    ),
               label: AppLocalizations.of(context).translate('recommended'),
               backgroundColor: HexColor.fromHex(ColorConstants.primaryColor),
             ),
             BottomNavigationBarItem(
               icon: _currentIndex == 2
-                  ? Icon(Icons.bookmark_rounded)
-                  : Icon(Icons.bookmark_border_rounded),
+                  ? Icon(
+                      Icons.bookmark_rounded,
+                      color: HexColor.fromHex(ColorConstants.secondaryWhite),
+                    )
+                  : Icon(
+                      Icons.bookmark_border_rounded,
+                      color: HexColor.fromHex(ColorConstants.secondaryWhite),
+                    ),
               label: AppLocalizations.of(context).translate('favorites'),
               backgroundColor: HexColor.fromHex(ColorConstants.primaryColor),
             ),
             BottomNavigationBarItem(
               icon: _currentIndex == 3
-                  ? Icon(Icons.person_rounded)
-                  : Icon(Icons.person_outline_rounded),
+                  ? Icon(
+                      Icons.person_rounded,
+                      color: HexColor.fromHex(ColorConstants.secondaryWhite),
+                    )
+                  : Icon(
+                      Icons.person_outline_rounded,
+                      color: HexColor.fromHex(ColorConstants.secondaryWhite),
+                    ),
               label: AppLocalizations.of(context).translate('profile'),
               backgroundColor: HexColor.fromHex(ColorConstants.primaryColor),
             ),

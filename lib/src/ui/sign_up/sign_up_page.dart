@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news/src/blocs/sign_up_bloc/sign_up_cubit.dart';
+import 'package:news/src/constants/ColorConstants.dart';
+import 'package:news/src/extensions/Color.dart';
 import 'package:news/src/resources/user_repository.dart';
 import 'package:news/src/ui/sign_up/sign_up_form.dart';
-import 'package:news/src/utils/app_localizations.dart';
 
 class SignUpPage extends StatelessWidget {
   const SignUpPage({Key key}) : super(key: key);
@@ -16,9 +17,8 @@ class SignUpPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          AppLocalizations.of(context).translate('sign_up'),
-        ),
+        title: Text('Flutter News9'),
+        backgroundColor: HexColor.fromHex(ColorConstants.primaryColor),
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),

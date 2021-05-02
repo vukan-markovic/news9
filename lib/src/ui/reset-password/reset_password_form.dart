@@ -4,6 +4,8 @@ import 'package:formz/formz.dart';
 import 'package:news/src/blocs/connectivity_bloc/connectivity_bloc.dart';
 import 'package:news/src/blocs/reset_password_bloc/reset_password_cubit.dart';
 import 'package:news/src/blocs/reset_password_bloc/reset_password_state.dart';
+import 'package:news/src/constants/ColorConstants.dart';
+import 'package:news/src/extensions/Color.dart';
 import 'package:news/src/ui/login/login_page.dart';
 import 'package:news/src/utils/app_localizations.dart';
 import 'package:provider/provider.dart';
@@ -120,9 +122,9 @@ class _ResetPasswordButton extends StatelessWidget {
                 key: const Key('resetPasswordForm_continue_raisedButton'),
                 style: ElevatedButton.styleFrom(
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(5.0),
+                    borderRadius: BorderRadius.circular(5),
                   ),
-                  primary: Colors.blue,
+                  primary: HexColor.fromHex(ColorConstants.primaryColor),
                 ),
                 child: Text(
                   AppLocalizations.of(context).translate('reset_password'),

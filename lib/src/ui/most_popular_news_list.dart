@@ -1,8 +1,10 @@
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:news/src/constants/ColorConstants.dart';
+import 'package:news/src/extensions/Color.dart';
 import 'package:news/src/models/article/article_model.dart';
 import 'article_details.dart';
-import 'favorite_news_screen.dart';
 
 class MostPopularNews extends StatelessWidget {
   MostPopularNews(this.articles);
@@ -26,10 +28,9 @@ class MostPopularNews extends StatelessWidget {
 }
 
 class NewsTile extends StatefulWidget {
-  NewsTile({this.article, this.parent});
+  NewsTile({this.article});
 
   final Article article;
-  final FavoriteNewsScreenState parent;
 
   @override
   _NewsTileState createState() => _NewsTileState();
@@ -48,37 +49,35 @@ class _NewsTileState extends State<NewsTile> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        bool isParentFavoriteScreen = widget.parent != null;
-
-        Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => ArticleDetails(
-              article: widget.article,
-              isFavorite: isArticleFavorite,
-              isParentFavoriteScreen: isParentFavoriteScreen,
-              callback: (value) {
-                setState(() {
-                  isArticleFavorite = value;
-                });
-              }),
-        ));
-      },
-      child: MouseRegion(
-        cursor: SystemMouseCursors.click,
-        child: ConstrainedBox(
-          constraints: new BoxConstraints(
-            minWidth: MediaQuery.of(context).size.width / 2,
-          ),
-          child: Card(
-            child: Row(
-              children: [
-                Stack(
-                  alignment: Alignment.center,
-                  children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(6),
-                      child: Image.network(
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(12),
+      child: GestureDetector(
+        onTap: () {
+          Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => ArticleDetails(
+                article: widget.article,
+                isFavorite: isArticleFavorite,
+                isParentFavoriteScreen: false,
+                callback: (value) {
+                  setState(() {
+                    isArticleFavorite = value;
+                  });
+                }),
+          ));
+        },
+        child: MouseRegion(
+          cursor: SystemMouseCursors.click,
+          child: ConstrainedBox(
+            constraints: new BoxConstraints(
+              minWidth: MediaQuery.of(context).size.width / 2,
+            ),
+            child: Card(
+              child: Row(
+                children: [
+                  Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      Image.network(
                         widget.article.urlToImage ?? _placeholderImageUrl,
                         height: MediaQuery.of(context).size.height,
                         width: MediaQuery.of(context).size.width / 2,
@@ -88,51 +87,64 @@ class _NewsTileState extends State<NewsTile> {
                           return Image.asset('assets/placeholder.png');
                         },
                       ),
-                    ),
-                    Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Expanded(
-                            child: Container(
-                              width: MediaQuery.of(context).size.width / 2,
-                              padding: EdgeInsets.all(8.0),
-                              child: Text(
-                                widget.article.title,
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w900,
-                                ),
+                      ClipRRect(
+                        child: BackdropFilter(
+                          filter: ImageFilter.blur(sigmaX: 1, sigmaY: 1),
+                          child: Container(
+                            color: Colors.grey.withOpacity(0.2),
+                            child: Center(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Expanded(
+                                    child: Container(
+                                      width:
+                                          MediaQuery.of(context).size.width / 2,
+                                      padding: EdgeInsets.all(8.0),
+                                      child: Text(
+                                        widget.article.title,
+                                        style: TextStyle(
+                                          color: HexColor.fromHex(ColorConstants.backgroundColor),
+                                          fontWeight: FontWeight.w900,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: Container(
+                                      width:
+                                          MediaQuery.of(context).size.width / 2,
+                                      padding: EdgeInsets.all(8.0),
+                                      child: widget.article.description != null
+                                          ? Text(
+                                              widget.article.description
+                                                      .substring(
+                                                          0,
+                                                          (widget
+                                                                  .article
+                                                                  .description
+                                                                  .length ~/
+                                                              3)) +
+                                                  "...",
+                                              style: TextStyle(
+                                                color: HexColor.fromHex(ColorConstants.secondaryWhite),
+                                                fontWeight: FontWeight.w900,
+                                              ),
+                                            )
+                                          : Container(),
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
                           ),
-                          Expanded(
-                            child: Container(
-                              width: MediaQuery.of(context).size.width / 2,
-                              padding: EdgeInsets.all(8.0),
-                              child: widget.article.description != null
-                                  ? Text(
-                                      widget.article.description.substring(
-                                              0,
-                                              (widget.article.description
-                                                      .length ~/
-                                                  3)) +
-                                          "...",
-                                      style: TextStyle(
-                                        color: Colors.white70,
-                                        fontWeight: FontWeight.w900,
-                                      ),
-                                    )
-                                  : Container(),
-                            ),
-                          ),
-                        ],
+                        ),
                       ),
-                    )
-                  ],
-                ),
-              ],
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
         ),

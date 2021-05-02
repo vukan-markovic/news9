@@ -163,12 +163,18 @@ class _TopicSelectScreenState extends State<TopicSelectScreen> {
               child: Card(
                 color: _selectedCategories.contains(_categories[index].title)
                     ? HexColor.fromHex(ColorConstants.primaryColor)
-                    : Colors.white,
+                    : HexColor.fromHex(ColorConstants.secondaryWhite),
                 child: Padding(
                   padding: const EdgeInsets.only(left: 4),
                   child: Row(
                     children: [
-                      Icon(_categories[index].icon),
+                      Icon(
+                        _categories[index].icon,
+                        color: _selectedCategories
+                                .contains(_categories[index].title)
+                            ? HexColor.fromHex(ColorConstants.secondaryWhite)
+                            : HexColor.fromHex(ColorConstants.lightBlack),
+                      ),
                       SizedBox(width: 4),
                       Text(
                         AppLocalizations.of(context)

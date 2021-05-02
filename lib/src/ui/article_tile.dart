@@ -116,7 +116,12 @@ class _ArticleTileState extends State<ArticleTile> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text(article.source.name),
+                                Text(
+                                  article.source.name,
+                                  style: TextStyle(
+                                    color: HexColor.fromHex(ColorConstants.lightBlack),
+                                  ),
+                                ),
                                 Text(
                                   formatDate(article.publishedAt),
                                   style: TextStyle(

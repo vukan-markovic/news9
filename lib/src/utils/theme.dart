@@ -12,7 +12,8 @@ final TextTheme textThemeLight = ThemeData.light().textTheme.copyWith(
     ),
     subtitle2: TextStyle(
       color: HexColor.fromHex(ColorConstants.primaryColor),
-    ));
+    ),
+);
 
 final TextTheme textThemeDark = ThemeData.dark().textTheme.copyWith(
     headline4: TextStyle(
@@ -22,7 +23,8 @@ final TextTheme textThemeDark = ThemeData.dark().textTheme.copyWith(
     ),
     subtitle2: TextStyle(
       color: HexColor.fromHex(ColorConstants.primaryColor),
-    ));
+    ),
+);
 
 ThemeData _buildLightTheme() {
   return ThemeData(brightness: Brightness.light, textTheme: textThemeLight);

@@ -19,16 +19,16 @@
   "dark_mode": "Тамни режим",
   "your_topics": "Ваше теме",
   "advanced_search": "Напредна претрага",
-  "log_out": "Одјави се",
-  "reset_password": "Ресетуј шифру",
-  "sign_up": "Региструј се",
+  "log_out": "Одјавите се",
+  "reset_password": "Ресетујте шифру",
+  "sign_up": "Региструјте се",
   "sign_in": "Пријавите се",
   "log_in": "Пријавите се",
   "login": "Пријавите се",
   "gender": "Пол",
   "male": "Мушки",
   "female": "Женски",
-  "create_account": "Региструј се",
+  "create_account": "Региструјте се",
   "source_not_stated": "Извор није наведен",
   "published": "Објављено",
   "by": "Од стране",
@@ -94,5 +94,6 @@
   "Norwegian": "норвешки",
   "Portuguese": "португалски",
   "Russian": "руски",
-  "Chinese": "кинески"
+  "Chinese": "кинески",
+  "or": "или"
 }
