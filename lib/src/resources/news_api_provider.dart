@@ -9,7 +9,7 @@ import '../models/article/article_model.dart';
 class NewsApiProvider {
   Client client = Client();
   String country;
-  static final String _apiKey = 'dac629f785f04e6d9167d54f6c493349';
+  static final String _apiKey = '4460355a5e504e9db438ca6df6fc1df1';
   Uri _testUrl;
 
   Future<ArticleModel> fetchNewsList({
@@ -45,10 +45,9 @@ class NewsApiProvider {
         'from': Jiffy(DateTime.parse(dateFrom)).format('yyyy-MM-dd'),
         'to': Jiffy(DateTime.parse(dateTo)).format('yyyy-MM-dd'),
         'pageSize': paging,
-        'q': query,
+        'q': query.isEmpty ? 'a' : query,
         'language': languageCode,
         'apiKey': _apiKey,
-        'sources': 'bbc-news', //TODO Add new default sources
       });
     }
 
@@ -57,7 +56,6 @@ class NewsApiProvider {
     if (response.statusCode == 200) {
       return ArticleModel.fromJson(json.decode(response.body));
     } else {
-      print(response.body);
       throw Exception('Failed to load news');
     }
   }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:news/src/models/article/article_model.dart';
 import 'article_details.dart';
 import 'favorite_news_screen.dart';
@@ -63,69 +64,76 @@ class _NewsTileState extends State<NewsTile> {
               }),
         ));
       },
-      child: ConstrainedBox(
-        constraints: new BoxConstraints(
-          minWidth: MediaQuery.of(context).size.width / 2,
-        ),
-        child: Card(
-          child: Row(
-            children: [
-              Stack(
-                alignment: Alignment.center,
-                children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(6),
-                    child: Image.network(
-                      widget.article.urlToImage ?? _placeholderImageUrl,
-                      height: MediaQuery.of(context).size.height,
-                      width: MediaQuery.of(context).size.width / 2,
-                      fit: BoxFit.cover,
-                      errorBuilder: (BuildContext context, Object exception,
-                          StackTrace stackTrace) {
-                        return Image.asset('assets/placeholder.png');
-                      },
+      child: MouseRegion(
+        cursor: SystemMouseCursors.click,
+        child: ConstrainedBox(
+          constraints: new BoxConstraints(
+            minWidth: MediaQuery.of(context).size.width / 2,
+          ),
+          child: Card(
+            child: Row(
+              children: [
+                Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(6),
+                      child: Image.network(
+                        widget.article.urlToImage ?? _placeholderImageUrl,
+                        height: MediaQuery.of(context).size.height,
+                        width: MediaQuery.of(context).size.width / 2,
+                        fit: BoxFit.cover,
+                        errorBuilder: (BuildContext context, Object exception,
+                            StackTrace stackTrace) {
+                          return Image.asset('assets/placeholder.png');
+                        },
+                      ),
                     ),
-                  ),
-                  Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Expanded(
-                          child: Container(
-                            width: MediaQuery.of(context).size.width / 2,
-                            padding: EdgeInsets.all(8.0),
-                            child: Text(
-                              widget.article.title,
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.w500,
+                    Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Expanded(
+                            child: Container(
+                              width: MediaQuery.of(context).size.width / 2,
+                              padding: EdgeInsets.all(8.0),
+                              child: Text(
+                                widget.article.title,
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w900,
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                        Expanded(
-                          child: Container(
-                            width: MediaQuery.of(context).size.width / 2,
-                            padding: EdgeInsets.all(8.0),
-                            child: Text(
-                              widget.article.description.substring(
-                                      0,
-                                      (widget.article.description.length ~/
-                                          3)) +
-                                  "...",
-                              style: TextStyle(
-                                color: Colors.white70,
-                              ),
+                          Expanded(
+                            child: Container(
+                              width: MediaQuery.of(context).size.width / 2,
+                              padding: EdgeInsets.all(8.0),
+                              child: widget.article.description != null
+                                  ? Text(
+                                      widget.article.description.substring(
+                                              0,
+                                              (widget.article.description
+                                                      .length ~/
+                                                  3)) +
+                                          "...",
+                                      style: TextStyle(
+                                        color: Colors.white70,
+                                        fontWeight: FontWeight.w900,
+                                      ),
+                                    )
+                                  : Container(),
                             ),
                           ),
-                        ),
-                      ],
-                    ),
-                  )
-                ],
-              ),
-            ],
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),

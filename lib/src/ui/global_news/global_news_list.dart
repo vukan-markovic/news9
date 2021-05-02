@@ -9,11 +9,28 @@ class GlobalNewsList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SliverList(
-      delegate: SliverChildBuilderDelegate(
-        (context, index) => ArticleTile(article: snapshot.data.articles[index]),
-        childCount: snapshot.data.articles.length,
-      ),
-    );
+    if (MediaQuery.of(context).size.width > 400) {
+      return SliverGrid(
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          childAspectRatio: MediaQuery.of(context).size.width /
+              MediaQuery.of(context).size.height,
+          crossAxisCount: 2,
+        ),
+        delegate: SliverChildBuilderDelegate(
+          (BuildContext context, int index) {
+            return ArticleTile(article: snapshot.data.articles[index]);
+          },
+          childCount: snapshot.data.articles.length,
+        ),
+      );
+    } else {
+      return SliverList(
+        delegate: SliverChildBuilderDelegate(
+          (context, index) =>
+              ArticleTile(article: snapshot.data.articles[index]),
+          childCount: snapshot.data.articles.length,
+        ),
+      );
+    }
   }
 }

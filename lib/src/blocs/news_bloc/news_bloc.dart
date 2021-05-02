@@ -186,7 +186,7 @@ class NewsBloc {
     _offlineNewsFetcher.close();
   }
 
-  void sortRecommendedNews() async {
+  void sortRecommendedNews() {
     if (optionsRecommended == SortOptions.title) {
       _newsFetcherByCategory.sink.add(Sort.sortByTitle(news, orderRecommended));
     } else if (optionsRecommended == SortOptions.date) {
@@ -197,7 +197,7 @@ class NewsBloc {
     }
   }
 
-  void sortFavoritesNews() async {
+  void sortFavoritesNews() {
     if (optionsFavorites == SortOptions.title) {
       _favoriteNewsFetcher.sink.add(Sort.sortByTitle(articles, orderFavorites));
     } else if (optionsFavorites == SortOptions.date) {

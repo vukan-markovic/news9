@@ -1,12 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news/src/blocs/advanced_search_bloc/advanced_search_bloc.dart';
+import 'package:news/src/blocs/connectivity_bloc/connectivity_bloc.dart';
 import 'package:news/src/blocs/news_bloc/news_bloc.dart';
 import 'package:news/src/constants/countries.dart';
 import 'package:news/src/models/article/article_model.dart';
 import 'package:news/src/models/source_model.dart';
 import 'package:news/src/utils/app_localizations.dart';
+import 'package:provider/provider.dart';
 
 Source source;
 String country;
@@ -53,7 +56,9 @@ class _AdvancedSearchInputState extends State<AdvancedSearchInput> {
                   ),
                   SizedBox(height: 8),
                   _DateInput(state.dateFrom, state.dateTo),
-                  _SourceInput(),
+                  if (Provider.of<ConnectivityStatus>(context) !=
+                      ConnectivityStatus.Offline)
+                    _SourceInput(),
                   Divider(height: 16),
                   Text(
                     AppLocalizations.of(context)
@@ -90,36 +95,39 @@ class __CountryInputState extends State<_CountryInput> {
         ),
         Expanded(
           flex: 3,
-          child: DropdownButton<String>(
-            value: country,
-            icon: const Icon(Icons.arrow_downward),
-            iconSize: 24,
-            elevation: 16,
-            onChanged: (String newValue) {
-              setState(() {
-                country = newValue;
-                source = Source(name: 'All', id: 'all');
+          child: MouseRegion(
+            cursor: SystemMouseCursors.click,
+            child: DropdownButton<String>(
+              value: country,
+              icon: const Icon(Icons.arrow_downward),
+              iconSize: 24,
+              elevation: 16,
+              onChanged: (String newValue) {
+                setState(() {
+                  country = newValue;
+                  source = Source(name: 'All', id: 'all');
 
-                BlocProvider.of<AdvancedSearchBloc>(context).add(
-                  AdvancedSearchSelected(
-                      source: source.id,
-                      dateFrom: '',
-                      dateTo: '',
-                      country: country),
+                  BlocProvider.of<AdvancedSearchBloc>(context).add(
+                    AdvancedSearchSelected(
+                        source: source.id,
+                        dateFrom: '',
+                        dateTo: '',
+                        country: country),
+                  );
+                });
+              },
+              items: countries.values
+                  .map<DropdownMenuItem<String>>((String value) {
+                return DropdownMenuItem<String>(
+                  value: value,
+                  child: value == 'All'
+                      ? Text(
+                          AppLocalizations.of(context).translate('all'),
+                        )
+                      : Text(value),
                 );
-              });
-            },
-            items:
-                countries.values.map<DropdownMenuItem<String>>((String value) {
-              return DropdownMenuItem<String>(
-                value: value,
-                child: value == 'All'
-                    ? Text(
-                        AppLocalizations.of(context).translate('all'),
-                      )
-                    : Text(value),
-              );
-            }).toList(),
+              }).toList(),
+            ),
           ),
         ),
       ],
@@ -153,36 +161,39 @@ class __SourceInputState extends State<_SourceInput> {
                 ),
                 Expanded(
                   flex: 3,
-                  child: DropdownButton<Source>(
-                    value: source,
-                    icon: const Icon(Icons.arrow_downward),
-                    iconSize: 24,
-                    elevation: 16,
-                    onChanged: (Source newValue) {
-                      setState(() {
-                        source = newValue;
-                        country = 'All';
+                  child: MouseRegion(
+                    cursor: SystemMouseCursors.click,
+                    child: DropdownButton<Source>(
+                      value: source,
+                      icon: const Icon(Icons.arrow_downward),
+                      iconSize: 24,
+                      elevation: 16,
+                      onChanged: (Source newValue) {
+                        setState(() {
+                          source = newValue;
+                          country = 'All';
 
-                        BlocProvider.of<AdvancedSearchBloc>(context).add(
-                          AdvancedSearchSelected(
-                              source: source.id,
-                              dateFrom: '',
-                              dateTo: '',
-                              country: country),
+                          BlocProvider.of<AdvancedSearchBloc>(context).add(
+                            AdvancedSearchSelected(
+                                source: source.id,
+                                dateFrom: '',
+                                dateTo: '',
+                                country: country),
+                          );
+                        });
+                      },
+                      items: snapshot.data.sources
+                          .map<DropdownMenuItem<Source>>((Source value) {
+                        return DropdownMenuItem<Source>(
+                          value: value,
+                          child: value.name == 'All'
+                              ? Text(
+                                  AppLocalizations.of(context).translate('all'),
+                                )
+                              : Text(value.name),
                         );
-                      });
-                    },
-                    items: snapshot.data.sources
-                        .map<DropdownMenuItem<Source>>((Source value) {
-                      return DropdownMenuItem<Source>(
-                        value: value,
-                        child: value.name == 'All'
-                            ? Text(
-                                AppLocalizations.of(context).translate('all'),
-                              )
-                            : Text(value.name),
-                      );
-                    }).toList(),
+                      }).toList(),
+                    ),
                   ),
                 ),
               ],
@@ -220,26 +231,29 @@ class __PagingInputState extends State<_PagingInput> {
         SizedBox(width: 8),
         Expanded(
           flex: 3,
-          child: DropdownButton<String>(
-            value: paging,
-            icon: const Icon(Icons.arrow_downward),
-            iconSize: 24,
-            elevation: 16,
-            onChanged: (String newValue) {
-              setState(() {
-                paging = newValue;
-                BlocProvider.of<AdvancedSearchBloc>(context).add(
-                  AdvancedSearchPagingSelected(newValue),
+          child: MouseRegion(
+            cursor: SystemMouseCursors.click,
+            child: DropdownButton<String>(
+              value: paging,
+              icon: const Icon(Icons.arrow_downward),
+              iconSize: 24,
+              elevation: 16,
+              onChanged: (String newValue) {
+                setState(() {
+                  paging = newValue;
+                  BlocProvider.of<AdvancedSearchBloc>(context).add(
+                    AdvancedSearchPagingSelected(newValue),
+                  );
+                });
+              },
+              items: <String>['10', '20', '50', '100']
+                  .map<DropdownMenuItem<String>>((String value) {
+                return DropdownMenuItem<String>(
+                  value: value,
+                  child: Text(value),
                 );
-              });
-            },
-            items: <String>['10', '20', '50', '100']
-                .map<DropdownMenuItem<String>>((String value) {
-              return DropdownMenuItem<String>(
-                value: value,
-                child: Text(value),
-              );
-            }).toList(),
+              }).toList(),
+            ),
           ),
         ),
       ],
@@ -311,11 +325,14 @@ class __DateInputState extends State<_DateInput> {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        GestureDetector(
-          child: Icon(
-            Icons.calendar_today,
+        MouseRegion(
+          cursor: SystemMouseCursors.click,
+          child: GestureDetector(
+            child: Icon(
+              Icons.calendar_today,
+            ),
+            onTap: () => _selectDate(context),
           ),
-          onTap: () => _selectDate(context),
         ),
         SizedBox(width: 16),
         Text(AppLocalizations.of(context).translate('from') +
