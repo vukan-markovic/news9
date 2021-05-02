@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:news/src/constants/ColorConstants.dart';
 import 'package:news/src/extensions/Color.dart';
 
 final ThemeData kLightTheme = _buildLightTheme();
 
-final TextTheme textThemeLight = ThemeData.light().textTheme.copyWith(
+final TextTheme textThemeLight = GoogleFonts.latoTextTheme(ThemeData.light().textTheme).copyWith(
     headline4: TextStyle(
       fontWeight: FontWeight.bold,
       fontSize: 28,
@@ -15,7 +16,7 @@ final TextTheme textThemeLight = ThemeData.light().textTheme.copyWith(
     ),
 );
 
-final TextTheme textThemeDark = ThemeData.dark().textTheme.copyWith(
+final TextTheme textThemeDark = GoogleFonts.latoTextTheme(ThemeData.dark().textTheme).copyWith(
     headline4: TextStyle(
       fontWeight: FontWeight.bold,
       fontSize: 28,

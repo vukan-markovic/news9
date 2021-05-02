@@ -43,6 +43,7 @@ dependencies:
   flutter_slidable: ^0.6.0
   share: ^2.0.1
   google_sign_in: ^5.0.2
+  google_fonts: ^2.0.0
 
 flutter_icons:
   android: "launcher_icon"
@@ -63,11 +64,4 @@ flutter:
     - assets/placeholder.png
     - assets/langs/
     - assets/user_placeholder.png
-
-  # fonts:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
-  #       - asset: fonts/Schyler-Italic.ttf
-  #         style: italic
-  #         weight: 700
+    - google_fonts/
