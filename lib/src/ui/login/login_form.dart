@@ -72,8 +72,10 @@ class LoginForm extends StatelessWidget {
                   AppLocalizations.of(context).translate('or'),
                 ),
                 SizedBox(height: 16.0),
-                _GoogleLoginButton(),
-                SizedBox(height: 16.0),
+                if (Theme.of(context).platform != TargetPlatform.macOS) ...[
+                  _GoogleLoginButton(),
+                  SizedBox(height: 16.0),
+                ],
                 TextButton(
                   onPressed: () => Navigator.of(context)
                       .pushReplacement(ResetPasswordPage.route()),
