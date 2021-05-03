@@ -10,6 +10,19 @@
 	<string>54</string>
 	<key>objects</key>
 	<dict>
+		<key>0029393E2FDE18CE1A02D264</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>1E75B183E96EB66CA25F14AE</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>Frameworks</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
 		<key>1498D2321E8E86230040F4C2</key>
 		<dict>
 			<key>isa</key>
@@ -40,6 +53,19 @@
 			<string>1498D2331E8E89220040F4C2</string>
 			<key>isa</key>
 			<string>PBXBuildFile</string>
+		</dict>
+		<key>1E75B183E96EB66CA25F14AE</key>
+		<dict>
+			<key>explicitFileType</key>
+			<string>wrapper.framework</string>
+			<key>includeInIndex</key>
+			<string>0</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>path</key>
+			<string>Pods_Runner.framework</string>
+			<key>sourceTree</key>
+			<string>BUILT_PRODUCTS_DIR</string>
 		</dict>
 		<key>249021D3217E4FDB00AE95B9</key>
 		<dict>
@@ -180,6 +206,36 @@
 			<key>name</key>
 			<string>Profile</string>
 		</dict>
+		<key>258A0D6B098693E3A827BBFF</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.xcconfig</string>
+			<key>name</key>
+			<string>Pods-Runner.release.xcconfig</string>
+			<key>path</key>
+			<string>Target Support Files/Pods-Runner/Pods-Runner.release.xcconfig</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>30CA75E1B3C6E967F475343E</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.xcconfig</string>
+			<key>name</key>
+			<string>Pods-Runner.debug.xcconfig</string>
+			<key>path</key>
+			<string>Target Support Files/Pods-Runner/Pods-Runner.debug.xcconfig</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
 		<key>3B06AD1E1E4923F5004D2608</key>
 		<dict>
 			<key>buildActionMask</key>
@@ -223,76 +279,12 @@
 			<key>isa</key>
 			<string>PBXBuildFile</string>
 		</dict>
-		<key>433B25E5EBAA163311B0F8C3</key>
+		<key>532CC8A968608FECE0F1BC9C</key>
 		<dict>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>files</key>
-			<array/>
-			<key>inputFileListPaths</key>
-			<array>
-				<string>${PODS_ROOT}/Target Support Files/Pods-Runner/Pods-Runner-frameworks-${CONFIGURATION}-input-files.xcfilelist</string>
-			</array>
+			<key>fileRef</key>
+			<string>1E75B183E96EB66CA25F14AE</string>
 			<key>isa</key>
-			<string>PBXShellScriptBuildPhase</string>
-			<key>name</key>
-			<string>[CP] Embed Pods Frameworks</string>
-			<key>outputFileListPaths</key>
-			<array>
-				<string>${PODS_ROOT}/Target Support Files/Pods-Runner/Pods-Runner-frameworks-${CONFIGURATION}-output-files.xcfilelist</string>
-			</array>
-			<key>runOnlyForDeploymentPostprocessing</key>
-			<string>0</string>
-			<key>shellPath</key>
-			<string>/bin/sh</string>
-			<key>shellScript</key>
-			<string>"${PODS_ROOT}/Target Support Files/Pods-Runner/Pods-Runner-frameworks.sh"
-</string>
-			<key>showEnvVarsInLog</key>
-			<string>0</string>
-		</dict>
-		<key>486BE413D0C94D15DDA00949</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>text.xcconfig</string>
-			<key>name</key>
-			<string>Pods-Runner.release.xcconfig</string>
-			<key>path</key>
-			<string>Target Support Files/Pods-Runner/Pods-Runner.release.xcconfig</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>56698FDA3F28F981272BACE1</key>
-		<dict>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>files</key>
-			<array/>
-			<key>inputFileListPaths</key>
-			<array>
-				<string>${PODS_ROOT}/Target Support Files/Pods-Runner/Pods-Runner-resources-${CONFIGURATION}-input-files.xcfilelist</string>
-			</array>
-			<key>isa</key>
-			<string>PBXShellScriptBuildPhase</string>
-			<key>name</key>
-			<string>[CP] Copy Pods Resources</string>
-			<key>outputFileListPaths</key>
-			<array>
-				<string>${PODS_ROOT}/Target Support Files/Pods-Runner/Pods-Runner-resources-${CONFIGURATION}-output-files.xcfilelist</string>
-			</array>
-			<key>runOnlyForDeploymentPostprocessing</key>
-			<string>0</string>
-			<key>shellPath</key>
-			<string>/bin/sh</string>
-			<key>shellScript</key>
-			<string>"${PODS_ROOT}/Target Support Files/Pods-Runner/Pods-Runner-resources.sh"
-</string>
-			<key>showEnvVarsInLog</key>
-			<string>0</string>
+			<string>PBXBuildFile</string>
 		</dict>
 		<key>5AC6B6B5263D58FB0090704A</key>
 		<dict>
@@ -384,18 +376,33 @@
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
-		<key>83A4460CE2B58603CC01F4B4</key>
+		<key>81611DBAF33B157BA8B4AAAE</key>
 		<dict>
-			<key>explicitFileType</key>
-			<string>wrapper.framework</string>
-			<key>includeInIndex</key>
-			<string>0</string>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array/>
+			<key>inputFileListPaths</key>
+			<array>
+				<string>${PODS_ROOT}/Target Support Files/Pods-Runner/Pods-Runner-resources-${CONFIGURATION}-input-files.xcfilelist</string>
+			</array>
 			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>path</key>
-			<string>Pods_Runner.framework</string>
-			<key>sourceTree</key>
-			<string>BUILT_PRODUCTS_DIR</string>
+			<string>PBXShellScriptBuildPhase</string>
+			<key>name</key>
+			<string>[CP] Copy Pods Resources</string>
+			<key>outputFileListPaths</key>
+			<array>
+				<string>${PODS_ROOT}/Target Support Files/Pods-Runner/Pods-Runner-resources-${CONFIGURATION}-output-files.xcfilelist</string>
+			</array>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+			<key>shellPath</key>
+			<string>/bin/sh</string>
+			<key>shellScript</key>
+			<string>"${PODS_ROOT}/Target Support Files/Pods-Runner/Pods-Runner-resources.sh"
+</string>
+			<key>showEnvVarsInLog</key>
+			<string>0</string>
 		</dict>
 		<key>9705A1C41CF9048500538489</key>
 		<dict>
@@ -491,7 +498,7 @@
 				<string>97C146F01CF9000F007C117D</string>
 				<string>97C146EF1CF9000F007C117D</string>
 				<string>E1C57BD52432FB59456820B9</string>
-				<string>A2160451BB1EE38286B1BEE6</string>
+				<string>0029393E2FDE18CE1A02D264</string>
 			</array>
 			<key>isa</key>
 			<string>PBXGroup</string>
@@ -580,7 +587,7 @@
 			<string>2147483647</string>
 			<key>files</key>
 			<array>
-				<string>F942BDA1FF632DB9488F20D4</string>
+				<string>532CC8A968608FECE0F1BC9C</string>
 			</array>
 			<key>isa</key>
 			<string>PBXFrameworksBuildPhase</string>
@@ -610,15 +617,15 @@
 			<string>97C147051CF9000F007C117D</string>
 			<key>buildPhases</key>
 			<array>
-				<string>DC528183583A2AFD70312A2A</string>
+				<string>C906611A457057B7AD373F3E</string>
 				<string>9740EEB61CF901F6004384FC</string>
 				<string>97C146EA1CF9000F007C117D</string>
 				<string>97C146EB1CF9000F007C117D</string>
 				<string>97C146EC1CF9000F007C117D</string>
 				<string>9705A1C41CF9048500538489</string>
 				<string>3B06AD1E1E4923F5004D2608</string>
-				<string>433B25E5EBAA163311B0F8C3</string>
-				<string>56698FDA3F28F981272BACE1</string>
+				<string>F85FD489EC95872A47484D7E</string>
+				<string>81611DBAF33B157BA8B4AAAE</string>
 			</array>
 			<key>buildRules</key>
 			<array/>
@@ -1083,20 +1090,7 @@
 			<key>name</key>
 			<string>Release</string>
 		</dict>
-		<key>A2160451BB1EE38286B1BEE6</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>83A4460CE2B58603CC01F4B4</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>name</key>
-			<string>Frameworks</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>BE3679DE6D18ECEB1C27A303</key>
+		<key>BE46D26A27EDFAC501960188</key>
 		<dict>
 			<key>includeInIndex</key>
 			<string>1</string>
@@ -1111,22 +1105,7 @@
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
-		<key>DAE21CDACF24A50E9B6F1ADE</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>text.xcconfig</string>
-			<key>name</key>
-			<string>Pods-Runner.debug.xcconfig</string>
-			<key>path</key>
-			<string>Target Support Files/Pods-Runner/Pods-Runner.debug.xcconfig</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>DC528183583A2AFD70312A2A</key>
+		<key>C906611A457057B7AD373F3E</key>
 		<dict>
 			<key>buildActionMask</key>
 			<string>2147483647</string>
@@ -1170,9 +1149,9 @@ echo "SUCCESS" &gt; "${SCRIPT_OUTPUT_FILE_0}"
 		<dict>
 			<key>children</key>
 			<array>
-				<string>DAE21CDACF24A50E9B6F1ADE</string>
-				<string>486BE413D0C94D15DDA00949</string>
-				<string>BE3679DE6D18ECEB1C27A303</string>
+				<string>30CA75E1B3C6E967F475343E</string>
+				<string>258A0D6B098693E3A827BBFF</string>
+				<string>BE46D26A27EDFAC501960188</string>
 			</array>
 			<key>isa</key>
 			<string>PBXGroup</string>
@@ -1181,12 +1160,33 @@ echo "SUCCESS" &gt; "${SCRIPT_OUTPUT_FILE_0}"
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
-		<key>F942BDA1FF632DB9488F20D4</key>
+		<key>F85FD489EC95872A47484D7E</key>
 		<dict>
-			<key>fileRef</key>
-			<string>83A4460CE2B58603CC01F4B4</string>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array/>
+			<key>inputFileListPaths</key>
+			<array>
+				<string>${PODS_ROOT}/Target Support Files/Pods-Runner/Pods-Runner-frameworks-${CONFIGURATION}-input-files.xcfilelist</string>
+			</array>
 			<key>isa</key>
-			<string>PBXBuildFile</string>
+			<string>PBXShellScriptBuildPhase</string>
+			<key>name</key>
+			<string>[CP] Embed Pods Frameworks</string>
+			<key>outputFileListPaths</key>
+			<array>
+				<string>${PODS_ROOT}/Target Support Files/Pods-Runner/Pods-Runner-frameworks-${CONFIGURATION}-output-files.xcfilelist</string>
+			</array>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+			<key>shellPath</key>
+			<string>/bin/sh</string>
+			<key>shellScript</key>
+			<string>"${PODS_ROOT}/Target Support Files/Pods-Runner/Pods-Runner-frameworks.sh"
+</string>
+			<key>showEnvVarsInLog</key>
+			<string>0</string>
 		</dict>
 	</dict>
 	<key>rootObject</key>
