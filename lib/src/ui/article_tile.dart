@@ -17,9 +17,13 @@ class ArticleTile extends StatefulWidget {
   final Article article;
   final String backgroundColor;
   final bool enabled;
+  final bool isParentFavoriteScreen;
 
   ArticleTile(
-      {@required this.article, this.backgroundColor, @required this.enabled});
+      {@required this.article,
+      this.backgroundColor,
+      @required this.enabled,
+      @required this.isParentFavoriteScreen});
 }
 
 class _ArticleTileState extends State<ArticleTile> {
@@ -53,11 +57,13 @@ class _ArticleTileState extends State<ArticleTile> {
     Navigator.of(context).push(MaterialPageRoute(
       builder: (context) => ArticleDetails(
           article: article,
+          isParentFavoriteScreen: widget.isParentFavoriteScreen,
           isFavorite: isArticleFavorite,
           callback: (value) {
-            setState(() {
-              isArticleFavorite = value;
-            });
+            if (!widget.isParentFavoriteScreen)
+              setState(() {
+                isArticleFavorite = value;
+              });
           }),
     ));
   }

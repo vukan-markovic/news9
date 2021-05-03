@@ -19,6 +19,7 @@ class RecommendedNewsList extends StatelessWidget {
             physics: ClampingScrollPhysics(),
             itemBuilder: (context, index) {
               return ArticleTile(
+                isParentFavoriteScreen: false,
                 article: snapshot.data.articles[index],
                 enabled: true,
               );
@@ -41,6 +42,7 @@ class RecommendedNewsList extends StatelessWidget {
               physics: ClampingScrollPhysics(),
               itemBuilder: (context, index) {
                 return ArticleTile(
+                  isParentFavoriteScreen: false,
                   article: snapshot.data.articles[index],
                   enabled: true,
                 );

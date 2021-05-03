@@ -28,7 +28,7 @@ class ArticleModel {
 
   String get status => _status;
 
-  int get totalarticles => _totalResults;
+  int get totalArticles => _totalResults;
 
   List<Article> get articles => _articles;
 

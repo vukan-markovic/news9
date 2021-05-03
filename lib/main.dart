@@ -22,6 +22,7 @@ Future<void> main() async {
   if (!kIsWeb) {
     final appDocumentDirectory =
         await path_provider.getApplicationDocumentsDirectory();
+
     Hive
       ..init(appDocumentDirectory.path)
       ..registerAdapter(AppUserAdapter())

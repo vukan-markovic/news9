@@ -22,7 +22,7 @@ class ArticleDetails extends StatefulWidget {
   ArticleDetails(
       {this.article,
       this.isFavorite,
-      this.isParentFavoriteScreen,
+      @required this.isParentFavoriteScreen,
       this.callback});
 
   @override
