@@ -57,7 +57,7 @@ class NewsApiProvider {
       if (response.statusCode == 200) {
         return ArticleModel.fromJson(json.decode(response.body));
       } else {
-        throw Exception('Failed to load news');
+        return ArticleModel.fromDatabase([]);
       }
     } catch (e) {
       return ArticleModel.fromDatabase([]);
@@ -69,12 +69,16 @@ class NewsApiProvider {
       'apiKey': _apiKey,
     });
 
-    final response = await client.get(_url);
+    try {
+      final response = await client.get(_url);
 
-    if (response.statusCode == 200) {
-      return SourceModel.fromJson(json.decode(response.body));
-    } else {
-      throw Exception('Failed to load sources');
+      if (response.statusCode == 200) {
+        return SourceModel.fromJson(json.decode(response.body));
+      } else {
+        return SourceModel();
+      }
+    } catch (e) {
+      return SourceModel();
     }
   }
 
@@ -102,12 +106,16 @@ class NewsApiProvider {
           : '',
     });
 
-    final response = await client.get(_testUrl);
+    try {
+      final response = await client.get(_testUrl);
 
-    if (response.statusCode == 200) {
-      return ArticleModel.fromJson(json.decode(response.body));
-    } else {
-      throw Exception('Failed to load news');
+      if (response.statusCode == 200) {
+        return ArticleModel.fromJson(json.decode(response.body));
+      } else {
+        return ArticleModel.fromDatabase([]);
+      }
+    } catch (e) {
+      return ArticleModel.fromDatabase([]);
     }
   }
 
@@ -125,7 +133,7 @@ class NewsApiProvider {
     if (response.statusCode == 200) {
       return ArticleModel.fromJson(json.decode(response.body));
     } else {
-      throw Exception('Failed to load most popular news');
+      return ArticleModel.fromDatabase([]);
     }
   }
 }
