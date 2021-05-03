@@ -114,14 +114,16 @@ class _ArticleTileState extends State<ArticleTile> {
                           Flexible(
                             fit: FlexFit.loose,
                             child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              mainAxisSize: MainAxisSize.min,
                               children: [
                                 Text(
                                   article.source.name,
                                   style: TextStyle(
-                                    color: HexColor.fromHex(ColorConstants.lightBlack),
+                                    color: HexColor.fromHex(
+                                        ColorConstants.lightBlack),
                                   ),
                                 ),
+                                Spacer(),
                                 Text(
                                   formatDate(article.publishedAt),
                                   style: TextStyle(
@@ -162,6 +164,7 @@ class _ArticleTileState extends State<ArticleTile> {
                             flex: 2,
                             child: Text(
                               article.title,
+                              overflow: TextOverflow.fade,
                               style: TextStyle(
                                   color: Colors.black87,
                                   fontSize: 20,

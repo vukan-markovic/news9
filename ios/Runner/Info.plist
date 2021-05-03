@@ -48,13 +48,34 @@
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Need to upload image</string>
 	<key>LSApplicationQueriesSchemes</key>
-	<array>
-	<string>facebook</string>
-	<string>twitter</string>
-	<string>whatsapp</string>
-	</array>
+	    <array>
+	        <string>facebook</string>
+	        <string>twitter</string>
+	        <string>whatsapp</string>
+	        <string>fbapi</string>
+            <string>fbauth</string>
+            <string>fbauth2</string>
+            <string>fbshareextension</string>
+            <string>fbapi20130214</string>
+            <string>fbapi20130410</string>
+            <string>fbapi20130702</string>
+            <string>fbapi20131010</string>
+            <string>fbapi20131219</string>
+            <string>fbapi20140410</string>
+            <string>fbapi20140116</string>
+            <string>fbapi20150313</string>
+            <string>fbapi20150629</string>
+            <string>https</string>
+            <string>http</string>
+	    </array>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+    <string>Allow $(PRODUCT_NAME) access to your photo library to upload your profile picture?</string>
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>Allow $(PRODUCT_NAME) access to your photo library to upload your profile picture?</string>
 	<key>FacebookAppID</key>
 	<string>503907637685958</string>
+	<key>FacebookDisplayName</key>
+    <string>News9</string>
 	<key>CFBundleURLTypes</key>
     <array>
         <dict>
