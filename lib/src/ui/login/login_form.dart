@@ -17,11 +17,9 @@ class LoginForm extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocListener<LoginCubit, LoginState>(
       listener: (context, state) {
-        var connection =
-            Provider.of<ConnectivityStatus>(context, listen: false);
-
         if (state.status.isSubmissionFailure &&
-            (connection == ConnectivityStatus.Offline || connection == null)) {
+            Provider.of<ConnectivityStatus>(context, listen: false) ==
+                ConnectivityStatus.Offline) {
           MessageDialog.showMessageDialog(
             context: context,
             title: AppLocalizations.of(context).translate('no_connection'),
