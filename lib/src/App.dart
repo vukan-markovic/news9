@@ -61,6 +61,7 @@ class _AppViewState extends State<AppView> {
                     locale: languageState.locale,
                     localizationsDelegates: [
                       GlobalMaterialLocalizations.delegate,
+                      GlobalCupertinoLocalizations.delegate,
                       GlobalWidgetsLocalizations.delegate,
                       AppLocalizations.delegate,
                     ],
