@@ -95,6 +95,8 @@ class Article {
   Source get source => _source;
 
   bool get isFavorite => _isFavorite;
+
+  set setFavorite(bool isFavorite) => _isFavorite = isFavorite;
 }
 
 @HiveType(typeId: 2)

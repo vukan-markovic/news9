@@ -60,10 +60,11 @@ class _ArticleTileState extends State<ArticleTile> {
           isParentFavoriteScreen: widget.isParentFavoriteScreen,
           isFavorite: isArticleFavorite,
           callback: (value) {
-            if (!widget.isParentFavoriteScreen)
+            if (this.mounted && !widget.isParentFavoriteScreen) {
               setState(() {
                 isArticleFavorite = value;
               });
+            }
           }),
     ));
   }
@@ -77,6 +78,7 @@ class _ArticleTileState extends State<ArticleTile> {
     newsBloc.insertNewsByUid("favorite_news", article);
     setState(() {
       isArticleFavorite = !isArticleFavorite;
+      article.setFavorite = isArticleFavorite;
     });
   }
 
