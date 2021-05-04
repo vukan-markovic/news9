@@ -134,6 +134,7 @@ class _NewsTileState extends State<NewsTile> {
                                                         .secondaryWhite),
                                                 fontWeight: FontWeight.w900,
                                               ),
+                                              overflow: TextOverflow.fade,
                                             )
                                           : Container(),
                                     ),

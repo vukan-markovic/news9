@@ -125,18 +125,23 @@ class _ArticleTileState extends State<ArticleTile> {
                             child: Row(
                               mainAxisSize: MainAxisSize.min,
                               children: [
-                                Text(
-                                  article.source.name,
-                                  style: TextStyle(
-                                    color: HexColor.fromHex(
-                                        ColorConstants.lightBlack),
+                                Expanded(
+                                  child: Text(
+                                    article.source.name,
+                                    style: TextStyle(
+                                      color: HexColor.fromHex(
+                                          ColorConstants.lightBlack),
+                                    ),
                                   ),
+                                  flex: 3,
                                 ),
-                                Spacer(),
-                                Text(
-                                  formatDate(article.publishedAt),
-                                  style: TextStyle(
-                                    color: Colors.grey,
+                                Expanded(
+                                  child: Text(
+                                    formatDate(article.publishedAt),
+                                    style: TextStyle(
+                                      color: Colors.grey,
+                                    ),
+                                    textAlign: TextAlign.end,
                                   ),
                                 ),
                               ],

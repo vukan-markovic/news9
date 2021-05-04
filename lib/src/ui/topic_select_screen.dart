@@ -49,152 +49,174 @@ class _TopicSelectScreenState extends State<TopicSelectScreen> {
         title: Text('Flutter News9'),
         backgroundColor: HexColor.fromHex(ColorConstants.primaryColor),
       ),
-      body: Container(
-        padding: EdgeInsets.all(16),
-        child: Column(
-          children: [
-            Expanded(
-              flex: 2,
-              child: Container(
-                alignment: Alignment.centerLeft,
-                padding: EdgeInsets.only(top: 38, left: 8),
-                child: Text(
-                  AppLocalizations.of(context).translate('topic_title'),
-                  style: TextStyle(
-                    fontSize: 28,
-                    fontWeight: FontWeight.bold,
-                    color: HexColor.fromHex(ColorConstants.lightBlack),
-                  ),
-                ),
-              ),
-            ),
-            Expanded(
-              child: Container(
-                alignment: Alignment.centerLeft,
-                padding: EdgeInsets.only(top: 8, left: 8),
-                child: Text(
-                  AppLocalizations.of(context).translate('topic_subtitle'),
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                    color: HexColor.fromHex(ColorConstants.silverGray),
-                  ),
-                ),
-              ),
-            ),
-            Expanded(
-              flex: 4,
-              child: Container(
-                alignment: Alignment.center,
-                child: _gridView(),
-              ),
-            ),
-            Expanded(
-              child: Container(
-                alignment: Alignment.bottomCenter,
-                child: ConstrainedBox(
-                  constraints: BoxConstraints.tightFor(
-                      width: double.infinity, height: 60),
-                  child: ElevatedButton(
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(
-                        _selectedCategories.length >= 2
-                            ? HexColor.fromHex(ColorConstants.primaryColor)
-                            : HexColor.fromHex(
-                                ColorConstants.primaryColorDisabled),
-                      ),
-                    ),
-                    onPressed: _selectedCategories.length >= 2
-                        ? () async {
-                            categoryBloc.deleteCategoriesByUid(
-                                FirebaseAuth.instance.currentUser?.uid ??
-                                    "wOJ3BsX5EnNgFAZYvPeGdK3TCVf2");
-                            categoryBloc.insetCategoryList(_selectedCategories);
-
-                            final sharedPrefService =
-                                await SharedPreferencesTopicSelectService
-                                    .instance;
-
-                            if (sharedPrefService.isFirstTime()) {
-                              sharedPrefService.setValue();
-
-                              Navigator.of(context).pushAndRemoveUntil<void>(
-                                NavigationScreen.route(),
-                                (route) => false,
-                              );
-                            } else {
-                              Navigator.of(context).pop();
-                            }
-                          }
-                        : null,
+      body: Center(
+        child: Container(
+          constraints: BoxConstraints(maxWidth: 600),
+          padding: EdgeInsets.all(16),
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Flexible(
+                  child: Container(
+                    alignment: Alignment.centerLeft,
+                    padding: EdgeInsets.only(top: 8, left: 8),
                     child: Text(
-                      AppLocalizations.of(context).translate('finish'),
+                      AppLocalizations.of(context).translate('topic_title'),
                       style: TextStyle(
-                        color: HexColor.fromHex(ColorConstants.secondaryWhite),
+                        fontSize: 28,
+                        fontWeight: FontWeight.bold,
+                        color: HexColor.fromHex(ColorConstants.lightBlack),
                       ),
                     ),
                   ),
                 ),
-              ),
-            )
-          ],
+                Flexible(
+                  child: Container(
+                    alignment: Alignment.centerLeft,
+                    padding: EdgeInsets.only(
+                      top: 8,
+                      left: 8,
+                      bottom: 8,
+                    ),
+                    child: Text(
+                      AppLocalizations.of(context).translate('topic_subtitle'),
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                        color: HexColor.fromHex(ColorConstants.silverGray),
+                      ),
+                    ),
+                  ),
+                ),
+                Flexible(
+                  child: Container(
+                    alignment: Alignment.center,
+                    child: _gridView(),
+                  ),
+                ),
+                Flexible(
+                  child: Container(
+                    alignment: Alignment.bottomCenter,
+                    child: ConstrainedBox(
+                      constraints: BoxConstraints.tightFor(
+                          width: double.infinity, height: 60),
+                      child: ElevatedButton(
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all(
+                            _selectedCategories.length >= 2
+                                ? HexColor.fromHex(ColorConstants.primaryColor)
+                                : HexColor.fromHex(
+                                    ColorConstants.primaryColorDisabled),
+                          ),
+                        ),
+                        onPressed: _selectedCategories.length >= 2
+                            ? () async {
+                                categoryBloc.deleteCategoriesByUid(
+                                    FirebaseAuth.instance.currentUser?.uid ??
+                                        "wOJ3BsX5EnNgFAZYvPeGdK3TCVf2");
+                                categoryBloc
+                                    .insetCategoryList(_selectedCategories);
+
+                                final sharedPrefService =
+                                    await SharedPreferencesTopicSelectService
+                                        .instance;
+
+                                if (sharedPrefService.isFirstTime()) {
+                                  sharedPrefService.setValue();
+
+                                  Navigator.of(context)
+                                      .pushAndRemoveUntil<void>(
+                                    NavigationScreen.route(),
+                                    (route) => false,
+                                  );
+                                } else {
+                                  Navigator.of(context).pop();
+                                }
+                              }
+                            : null,
+                        child: Text(
+                          AppLocalizations.of(context).translate('finish'),
+                          style: TextStyle(
+                            color:
+                                HexColor.fromHex(ColorConstants.secondaryWhite),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                )
+              ],
+            ),
+          ),
         ),
       ),
     );
   }
 
   Widget _gridView() {
-    return GridView.builder(
-        scrollDirection: Axis.vertical,
-        shrinkWrap: true,
-        gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-            maxCrossAxisExtent: 220,
-            childAspectRatio: 5 / 2.5,
-            crossAxisSpacing: 12,
-            mainAxisSpacing: 12),
-        itemCount: _categories.length,
-        itemBuilder: (context, index) {
-          return MouseRegion(
-            cursor: SystemMouseCursors.click,
-            child: GestureDetector(
-              onTap: () {
-                setTileState(index);
-              },
-              child: Card(
-                color: _selectedCategories.contains(_categories[index].title)
-                    ? HexColor.fromHex(ColorConstants.primaryColor)
-                    : HexColor.fromHex(ColorConstants.secondaryWhite),
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 4),
-                  child: Row(
-                    children: [
-                      Icon(
-                        _categories[index].icon,
-                        color: _selectedCategories
-                                .contains(_categories[index].title)
-                            ? HexColor.fromHex(ColorConstants.secondaryWhite)
-                            : HexColor.fromHex(ColorConstants.lightBlack),
-                      ),
-                      SizedBox(width: 4),
-                      Text(
-                        AppLocalizations.of(context)
-                            .translate(_categories[index].title),
-                        style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                          fontSize: 16,
-                          color: _selectedCategories
-                                  .contains(_categories[index].title)
-                              ? HexColor.fromHex(ColorConstants.secondaryWhite)
-                              : HexColor.fromHex(ColorConstants.lightBlack),
+    return Container(
+      margin: EdgeInsets.all(8),
+      child: GridView.builder(
+          physics: NeverScrollableScrollPhysics(),
+          shrinkWrap: true,
+          scrollDirection: Axis.vertical,
+          gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+              maxCrossAxisExtent: 220,
+              childAspectRatio: 5 / 2.5,
+              crossAxisSpacing: 12,
+              mainAxisSpacing: 12),
+          itemCount: _categories.length,
+          itemBuilder: (context, index) {
+            return MouseRegion(
+              cursor: SystemMouseCursors.click,
+              child: GestureDetector(
+                onTap: () {
+                  setTileState(index);
+                },
+                child: Card(
+                  color: _selectedCategories.contains(_categories[index].title)
+                      ? HexColor.fromHex(ColorConstants.primaryColor)
+                      : HexColor.fromHex(ColorConstants.secondaryWhite),
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 4),
+                    child: Row(
+                      children: [
+                        Flexible(
+                          child: Icon(
+                            _categories[index].icon,
+                            color: _selectedCategories
+                                    .contains(_categories[index].title)
+                                ? HexColor.fromHex(
+                                    ColorConstants.secondaryWhite)
+                                : HexColor.fromHex(ColorConstants.lightBlack),
+                          ),
                         ),
-                      ),
-                    ],
+                        SizedBox(width: 4),
+                        Flexible(
+                          flex: 3,
+                          child: Text(
+                            AppLocalizations.of(context)
+                                .translate(_categories[index].title),
+                            style: TextStyle(
+                              fontWeight: FontWeight.w600,
+                              fontSize: 16,
+                              color: _selectedCategories
+                                      .contains(_categories[index].title)
+                                  ? HexColor.fromHex(
+                                      ColorConstants.secondaryWhite)
+                                  : HexColor.fromHex(ColorConstants.lightBlack),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          );
-        });
+            );
+          }),
+    );
   }
 
   void setTileState(int index) {
