@@ -231,34 +231,37 @@ class _ArticleTileState extends State<ArticleTile> {
               ),
               onTap: () => _saveArticle(),
             ),
-            SizedBox(
-              height: 15,
-            ),
-            SlideAction(
-              child: Container(
-                height: 60,
-                child: Card(
-                  color: HexColor.fromHex(ColorConstants.primaryColor),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        AppLocalizations.of(context).translate('Share') + " ",
-                        style: TextStyle(
+            if (Theme.of(context).platform != TargetPlatform.macOS) ...[
+              SizedBox(
+                height: 15,
+              ),
+              SlideAction(
+                child: Container(
+                  height: 60,
+                  child: Card(
+                    color: HexColor.fromHex(ColorConstants.primaryColor),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          AppLocalizations.of(context).translate('Share') + " ",
+                          style: TextStyle(
+                            color:
+                                HexColor.fromHex(ColorConstants.secondaryWhite),
+                          ),
+                        ),
+                        Icon(
+                          Icons.share_outlined,
                           color:
                               HexColor.fromHex(ColorConstants.secondaryWhite),
                         ),
-                      ),
-                      Icon(
-                        Icons.share_outlined,
-                        color: HexColor.fromHex(ColorConstants.secondaryWhite),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
+                onTap: () => _shareArticle(),
               ),
-              onTap: () => _shareArticle(),
-            ),
+            ]
           ],
         ),
       ],
