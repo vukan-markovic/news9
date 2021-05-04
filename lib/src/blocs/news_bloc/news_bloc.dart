@@ -48,9 +48,8 @@ class NewsBloc {
         paging: paging,
         query: query);
 
-    deleteNewsBox("offline_news");
-    insertNewsList(news);
     _newsFetcher.sink.add(news);
+    deleteNewsBox("offline_news").then((value) => insertNewsList(news));
 
     ArticleModel popularNews =
         await _repository.fetchMostPopularNews(languageCode, country);
@@ -120,6 +119,7 @@ class NewsBloc {
 
   void insertNewsList(ArticleModel articlesModel) {
     int counter = 0;
+    print("added offline");
     articlesModel.articles.forEach((element) {
       if (counter > 30) return;
       insertNews("offline_news", element);
@@ -142,7 +142,7 @@ class NewsBloc {
     _repository.insertNews(boxName, article);
   }
 
-  void deleteNewsBox(boxName) {
+  Future<void> deleteNewsBox(boxName) async {
     _repository.deleteNewsBox(boxName);
   }
 

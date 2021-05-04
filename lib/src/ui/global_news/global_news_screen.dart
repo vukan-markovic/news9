@@ -37,7 +37,7 @@ class _GlobalNewsState extends State<GlobalNews> {
     if (connectionState == ConnectivityStatus.Offline) {
       newsBloc.fetchNewsFromDatabase();
       activeStream = newsBloc.offlineNews;
-      print("showing news From db");
+      newsBloc.offlineNews.length.then((value) => print(value));
     } else if (connectionState == null ||
         connectionState == ConnectivityStatus.Cellular ||
         connectionState == ConnectivityStatus.WiFi) {
@@ -51,7 +51,6 @@ class _GlobalNewsState extends State<GlobalNews> {
           source: state.source);
 
       activeStream = newsBloc.allNews;
-      print("showing news From api");
     }
 
     super.didChangeDependencies();
