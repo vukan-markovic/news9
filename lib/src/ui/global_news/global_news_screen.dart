@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news/src/blocs/connectivity_bloc/connectivity_bloc.dart';
 import 'package:news/src/blocs/language_bloc/language_bloc.dart';
+import 'package:news/src/blocs/news_bloc/news_bloc.dart';
+import 'package:news/src/ui/search/search_app_bar.dart';
 import 'package:provider/provider.dart';
 import 'package:news/src/blocs/advanced_search_bloc/advanced_search_bloc.dart';
-import 'package:news/src/ui/news_list.dart';
-import 'package:news/src/ui/search/search_app_bar.dart';
+import 'package:news/src/ui/global_news/global_news_list.dart';
+import 'package:news/src/ui/global_news/silver_app_bar_globals.dart';
 import 'package:news/src/utils/app_localizations.dart';
-import '../blocs/news_bloc/news_bloc.dart';
-import '../models/article/article_model.dart';
+import '../../models/article/article_model.dart';
 
 class GlobalNews extends StatefulWidget {
   @override
@@ -18,25 +19,27 @@ class GlobalNews extends StatefulWidget {
 class _GlobalNewsState extends State<GlobalNews> {
   var activeStream;
   Widget _appBarTitle;
+  var connectionState;
   final TextEditingController _filter = new TextEditingController();
   AdvancedSearchState state;
 
   @override
   void initState() {
     state = BlocProvider.of<AdvancedSearchBloc>(context).state;
-
     super.initState();
   }
 
   @override
   void didChangeDependencies() {
-    var connectionState = Provider.of<ConnectivityStatus>(context);
+    connectionState = Provider.of<ConnectivityStatus>(context);
     print(connectionState);
+
     if (connectionState == ConnectivityStatus.Offline) {
       newsBloc.fetchNewsFromDatabase();
       activeStream = newsBloc.offlineNews;
       print("showing news From db");
-    } else if (connectionState == ConnectivityStatus.Cellular ||
+    } else if (connectionState == null ||
+        connectionState == ConnectivityStatus.Cellular ||
         connectionState == ConnectivityStatus.WiFi) {
       newsBloc.fetchAllNews(
           languageCode:
@@ -46,9 +49,11 @@ class _GlobalNewsState extends State<GlobalNews> {
           dateFrom: state.dateFrom,
           dateTo: state.dateTo,
           source: state.source);
+
       activeStream = newsBloc.allNews;
       print("showing news From api");
     }
+
     super.didChangeDependencies();
   }
 
@@ -104,7 +109,13 @@ class _GlobalNewsState extends State<GlobalNews> {
                     ),
                   );
                 } else {
-                  return NewsList(snapshot);
+                  return CustomScrollView(
+                    slivers: [
+                      if (connectionState != ConnectivityStatus.Offline)
+                        SilverAppBarGlobal(),
+                      GlobalNewsList(snapshot),
+                    ],
+                  );
                 }
               } else if (snapshot.hasError) {
                 print("Global news error");

@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:news/src/blocs/news_bloc/news_bloc.dart';
 import 'package:news/src/constants/ColorConstants.dart';
@@ -17,7 +18,11 @@ class ArticleDetails extends StatefulWidget {
   final bool isParentFavoriteScreen;
   final Function callback;
 
-  ArticleDetails({this.article, this.isFavorite, this.isParentFavoriteScreen, this.callback});
+  ArticleDetails(
+      {this.article,
+      this.isFavorite,
+      this.isParentFavoriteScreen,
+      this.callback});
 
   @override
   _ArticleDetailsState createState() => _ArticleDetailsState();
@@ -177,41 +182,45 @@ class _ArticleDetailsState extends State<ArticleDetails> {
                   ]),
                 ),
                 SizedBox(height: 10),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    IconButton(
-                      icon: Icon(FontAwesomeIcons.facebook),
-                      onPressed: () => _shareFacebook(context, article.url),
-                    ),
-                    IconButton(
-                      icon: Icon(FontAwesomeIcons.twitter),
-                      onPressed: () => _shareTwitter(context, article.url),
-                    ),
-                    IconButton(
-                      icon: Icon(FontAwesomeIcons.whatsapp),
-                      onPressed: () => _shareWhatsapp(context, article.url),
-                    ),
-                    IconButton(
-                      icon: Icon(FontAwesomeIcons.sms),
-                      onPressed: () => _shareSms(context, article.url),
-                    ),
-                    IconButton(
-                      icon: Icon(FontAwesomeIcons.envelope),
-                      onPressed: () => _shareEmail(context, article.url),
-                    ),
-                    IconButton(
-                      icon: Icon(FontAwesomeIcons.clipboard),
-                      onPressed: () => _copyToClipboard(context, article.url),
-                    ),
-                  ],
-                ),
+                if (Theme.of(context).platform != TargetPlatform.macOS &&
+                    !kIsWeb)
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      IconButton(
+                        icon: Icon(FontAwesomeIcons.facebook),
+                        onPressed: () => _shareFacebook(context, article.url),
+                      ),
+                      IconButton(
+                        icon: Icon(FontAwesomeIcons.twitter),
+                        onPressed: () => _shareTwitter(context, article.url),
+                      ),
+                      IconButton(
+                        icon: Icon(FontAwesomeIcons.whatsapp),
+                        onPressed: () => _shareWhatsapp(context, article.url),
+                      ),
+                      IconButton(
+                        icon: Icon(FontAwesomeIcons.sms),
+                        onPressed: () => _shareSms(context, article.url),
+                      ),
+                      IconButton(
+                        icon: Icon(FontAwesomeIcons.envelope),
+                        onPressed: () => _shareEmail(context, article.url),
+                      ),
+                      IconButton(
+                        icon: Icon(FontAwesomeIcons.clipboard),
+                        onPressed: () => _copyToClipboard(context, article.url),
+                      ),
+                    ],
+                  ),
                 SizedBox(height: 10),
                 Image.network(
                   article.urlToImage ?? _placeholderImageUrl,
-                  height: 200,
+                  height: MediaQuery.of(context).size.width > 400
+                      ? MediaQuery.of(context).size.height / 2
+                      : 200,
                   width: MediaQuery.of(context).size.width,
-                  fit: BoxFit.cover,
+                  fit: BoxFit.contain,
                   errorBuilder: (BuildContext context, Object exception,
                       StackTrace stackTrace) {
                     return Image.asset('assets/placeholder.png');

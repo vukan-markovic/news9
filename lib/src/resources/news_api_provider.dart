@@ -9,7 +9,7 @@ import '../models/article/article_model.dart';
 class NewsApiProvider {
   Client client = Client();
   String country;
-  static final String _apiKey = '8e1a97acfeb74d2b8f521ea7acdfc33d';
+  static final String _apiKey = '4460355a5e504e9db438ca6df6fc1df1';
   Uri _testUrl;
 
   Future<ArticleModel> fetchNewsList({
@@ -45,10 +45,9 @@ class NewsApiProvider {
         'from': Jiffy(DateTime.parse(dateFrom)).format('yyyy-MM-dd'),
         'to': Jiffy(DateTime.parse(dateTo)).format('yyyy-MM-dd'),
         'pageSize': paging,
-        'q': query,
+        'q': query.isEmpty ? 'a' : query,
         'language': languageCode,
         'apiKey': _apiKey,
-        'sources': 'bbc-news', //TODO Add new default sources
       });
     }
 
@@ -75,7 +74,7 @@ class NewsApiProvider {
     }
   }
 
-  Future<void> fetchNewsListByCategory({
+  Future<ArticleModel> fetchNewsListByCategory({
     String languageCode,
     String country,
     String paging,
@@ -105,6 +104,24 @@ class NewsApiProvider {
       return ArticleModel.fromJson(json.decode(response.body));
     } else {
       throw Exception('Failed to load news');
+    }
+  }
+
+  Future<ArticleModel> fetchMostPopularNews(
+      String languageCode, String country) async {
+    _testUrl = Uri.https('newsapi.org', '/v2/everything', {
+      if (languageCode != 'sr') 'language': languageCode,
+      'apiKey': _apiKey,
+      'sortBy': 'popularity',
+      'q': 'a',
+    });
+
+    final response = await client.get(_testUrl);
+
+    if (response.statusCode == 200) {
+      return ArticleModel.fromJson(json.decode(response.body));
+    } else {
+      throw Exception('Failed to load most popular news');
     }
   }
 }

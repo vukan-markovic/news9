@@ -36,10 +36,10 @@ class ResetPasswordForm extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Align(
-                  alignment: Alignment.centerLeft,
+                  alignment: Alignment.center,
                   child: Text(
                     AppLocalizations.of(context).translate('reset_password'),
-                    textAlign: TextAlign.left,
+                    textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
@@ -73,19 +73,25 @@ class _EmailInput extends StatelessWidget {
     return BlocBuilder<ResetPasswordCubit, ResetPasswordState>(
       buildWhen: (previous, current) => previous.email != current.email,
       builder: (context, state) {
-        return TextField(
-          key: const Key('resetPasswordForm_emailInput_textField'),
-          onChanged: (email) =>
-              context.read<ResetPasswordCubit>().emailChanged(email),
-          keyboardType: TextInputType.emailAddress,
-          decoration: InputDecoration(
-            prefixIcon: Icon(Icons.person),
-            labelText: AppLocalizations.of(context).translate('email'),
-            helperText: '',
-            errorText: state.email.invalid
-                ? AppLocalizations.of(context).translate('invalid_email')
-                : null,
-          ),
+        return ConstrainedBox(
+          constraints: BoxConstraints(maxWidth: 400),
+          child: TextField(
+              key: const Key('resetPasswordForm_emailInput_textField'),
+              onChanged: (email) =>
+                  context.read<ResetPasswordCubit>().emailChanged(email),
+              keyboardType: TextInputType.emailAddress,
+              decoration: InputDecoration(
+                prefixIcon: Icon(Icons.person),
+                labelText: AppLocalizations.of(context).translate('email'),
+                helperText: '',
+                errorText: state.email.invalid
+                    ? AppLocalizations.of(context).translate('invalid_email')
+                    : null,
+              ),
+              onSubmitted: (value) async {
+                if (state.status.isValidated)
+                  await context.read<ResetPasswordCubit>().resetPassword();
+              }),
         );
       },
     );

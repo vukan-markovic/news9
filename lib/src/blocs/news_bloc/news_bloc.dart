@@ -13,6 +13,7 @@ class NewsBloc {
   final _sourcesFetcher = PublishSubject<SourceModel>();
   final _favoriteNewsFetcher = PublishSubject<ArticleModel>();
   final _offlineNewsFetcher = PublishSubject<ArticleModel>();
+  final _mostPopularNewsFetcher = PublishSubject<ArticleModel>();
 
   Stream<ArticleModel> get allNews => _newsFetcher.stream;
 
@@ -24,10 +25,12 @@ class NewsBloc {
 
   Stream<SourceModel> get allSources => _sourcesFetcher.stream;
 
+  Stream<ArticleModel> get mostPopularNews => _mostPopularNewsFetcher.stream;
+
   ArticleModel news;
   ArticleModel articles;
 
-  fetchAllNews({
+  Future<void> fetchAllNews({
     String languageCode,
     String dateFrom,
     String dateTo,
@@ -48,6 +51,10 @@ class NewsBloc {
     deleteNewsBox("offline_news");
     insertNewsList(news);
     _newsFetcher.sink.add(news);
+
+    ArticleModel popularNews =
+        await _repository.fetchMostPopularNews(languageCode, country);
+    _mostPopularNewsFetcher.sink.add(popularNews);
   }
 
   Future<void> fetchAllNewsByCategory({
@@ -68,12 +75,17 @@ class NewsBloc {
     sortRecommendedNews();
   }
 
-  fetchAllSources() async {
+  Future<void> fetchMostPopularNews({
+    String languageCode,
+    String country,
+  }) async {}
+
+  Future<void> fetchAllSources() async {
     SourceModel sources = await _repository.fetchAllSources();
     _sourcesFetcher.sink.add(sources);
   }
 
-  fetchFavoriteNewsFromDatabase() async {
+  Future<void> fetchFavoriteNewsFromDatabase() async {
     var news = await _repository.fetchNews("favorite_news");
 
     articles = ArticleModel();
@@ -106,7 +118,7 @@ class NewsBloc {
     _offlineNewsFetcher.sink.add(articles);
   }
 
-  insertNewsList(ArticleModel articlesModel) {
+  void insertNewsList(ArticleModel articlesModel) {
     int counter = 0;
     articlesModel.articles.forEach((element) {
       if (counter > 30) return;
@@ -115,7 +127,7 @@ class NewsBloc {
     });
   }
 
-  insertNewsByUid(boxName, article) async {
+  Future<void> insertNewsByUid(boxName, article) async {
     if (!article.isFavorite) {
       print("added to favorites");
       _repository.insertNewsByUuid(boxName, article, article.title);
@@ -126,15 +138,15 @@ class NewsBloc {
     fetchFavoriteNewsFromDatabase();
   }
 
-  insertNews(boxName, Article article) {
+  void insertNews(boxName, Article article) {
     _repository.insertNews(boxName, article);
   }
 
-  deleteNewsBox(boxName) {
+  void deleteNewsBox(boxName) {
     _repository.deleteNewsBox(boxName);
   }
 
-  deleteNewsByUuid(String uuid) {
+  void deleteNewsByUuid(String uuid) {
     _repository.deleteNewsByUuid('favorite_news', uuid);
   }
 
@@ -165,15 +177,16 @@ class NewsBloc {
       return false;
   }
 
-  dispose() {
+  void dispose() {
     _newsFetcher.close();
     _sourcesFetcher.close();
     _favoriteNewsFetcher.close();
     _newsFetcherByCategory.close();
+    _mostPopularNewsFetcher.close();
     _offlineNewsFetcher.close();
   }
 
-  void sortRecommendedNews() async {
+  void sortRecommendedNews() {
     if (optionsRecommended == SortOptions.title) {
       _newsFetcherByCategory.sink.add(Sort.sortByTitle(news, orderRecommended));
     } else if (optionsRecommended == SortOptions.date) {
@@ -184,7 +197,7 @@ class NewsBloc {
     }
   }
 
-  void sortFavoritesNews() async {
+  void sortFavoritesNews() {
     if (optionsFavorites == SortOptions.title) {
       _favoriteNewsFetcher.sink.add(Sort.sortByTitle(articles, orderFavorites));
     } else if (optionsFavorites == SortOptions.date) {
