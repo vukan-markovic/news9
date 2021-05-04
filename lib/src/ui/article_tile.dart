@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:jiffy/jiffy.dart';
@@ -231,7 +232,8 @@ class _ArticleTileState extends State<ArticleTile> {
               ),
               onTap: () => _saveArticle(),
             ),
-            if (Theme.of(context).platform != TargetPlatform.macOS) ...[
+            if (Theme.of(context).platform != TargetPlatform.macOS &&
+                !kIsWeb) ...[
               SizedBox(
                 height: 15,
               ),
