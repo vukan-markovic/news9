@@ -67,7 +67,6 @@ class FavoriteNewsScreenState extends State<FavoriteNewsScreen> {
           stream: newsBloc.favoriteNews,
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              print("i have data");
               if (snapshot.data.articles.length == 0) {
                 return Center(
                   child: Text(
@@ -143,11 +142,5 @@ class FavoriteNewsScreenState extends State<FavoriteNewsScreen> {
   _shareArticle() {
     Share.share(
         "${AppLocalizations.of(context).translate('checkout_article')} \n ${selectedArticles.first.url}");
-  }
-
-  @override
-  void dispose() {
-    // newsBloc.dispose();
-    super.dispose();
   }
 }

@@ -56,6 +56,7 @@
   "verification_email_title": "Послат је имејл за верификацију!",
   "verification_email_body": "Молимо проверите своју пријемну пошту и следите упутства.",
   "checkout_article": "Погледајте овај чланак",
+  "checkout_articles": "Погледајте ове чланке",
   "global": "Глобално",
   "favorites": "Омиљено",
   "recommended": "Препоручено",
@@ -95,5 +96,6 @@
   "Portuguese": "португалски",
   "Russian": "руски",
   "Chinese": "кинески",
-  "or": "или"
+  "or": "или",
+  "search": "Претражи"
 }
