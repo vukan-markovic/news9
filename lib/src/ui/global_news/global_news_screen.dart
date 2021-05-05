@@ -60,7 +60,8 @@ class _GlobalNewsState extends State<GlobalNews> {
     if (connectionState == ConnectivityStatus.Offline) {
       newsBloc.fetchNewsFromDatabase(keyword: _filter.text);
     } else if (connectionState == ConnectivityStatus.Cellular ||
-        connectionState == ConnectivityStatus.WiFi) {
+        connectionState == ConnectivityStatus.WiFi ||
+        connectionState == null) {
       newsBloc.fetchAllNews(
           languageCode:
               BlocProvider.of<LanguageBloc>(context).state.locale.languageCode,
