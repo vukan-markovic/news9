@@ -66,7 +66,8 @@ class _TopicSelectScreenState extends State<TopicSelectScreen> {
                       style: TextStyle(
                         fontSize: 28,
                         fontWeight: FontWeight.bold,
-                        color: HexColor.fromHex(ColorConstants.lightBlack),
+                        color:
+                            HexColor.fromHex(ColorConstants.primaryTextColor),
                       ),
                     ),
                   ),
@@ -105,9 +106,9 @@ class _TopicSelectScreenState extends State<TopicSelectScreen> {
                         style: ButtonStyle(
                           backgroundColor: MaterialStateProperty.all(
                             _selectedCategories.length >= 2
-                                ? HexColor.fromHex(ColorConstants.primaryColor)
+                                ? HexColor.fromHex(ColorConstants.callToAction)
                                 : HexColor.fromHex(
-                                    ColorConstants.primaryColorDisabled),
+                                    ColorConstants.callToActionDisables),
                           ),
                         ),
                         onPressed: _selectedCategories.length >= 2
@@ -138,8 +139,8 @@ class _TopicSelectScreenState extends State<TopicSelectScreen> {
                         child: Text(
                           AppLocalizations.of(context).translate('finish'),
                           style: TextStyle(
-                            color:
-                                HexColor.fromHex(ColorConstants.secondaryWhite),
+                            color: HexColor.fromHex(
+                                ColorConstants.selectedTextColor),
                           ),
                         ),
                       ),
@@ -176,8 +177,8 @@ class _TopicSelectScreenState extends State<TopicSelectScreen> {
                 },
                 child: Card(
                   color: _selectedCategories.contains(_categories[index].title)
-                      ? HexColor.fromHex(ColorConstants.primaryColor)
-                      : HexColor.fromHex(ColorConstants.secondaryWhite),
+                      ? HexColor.fromHex(ColorConstants.callToAction)
+                      : HexColor.fromHex(ColorConstants.secondaryColor),
                   child: Padding(
                     padding: const EdgeInsets.only(left: 4),
                     child: Row(
@@ -188,8 +189,9 @@ class _TopicSelectScreenState extends State<TopicSelectScreen> {
                             color: _selectedCategories
                                     .contains(_categories[index].title)
                                 ? HexColor.fromHex(
-                                    ColorConstants.secondaryWhite)
-                                : HexColor.fromHex(ColorConstants.lightBlack),
+                                    ColorConstants.secondaryColor)
+                                : HexColor.fromHex(
+                                    ColorConstants.primaryTextColor),
                           ),
                         ),
                         SizedBox(width: 4),
@@ -204,8 +206,9 @@ class _TopicSelectScreenState extends State<TopicSelectScreen> {
                               color: _selectedCategories
                                       .contains(_categories[index].title)
                                   ? HexColor.fromHex(
-                                      ColorConstants.secondaryWhite)
-                                  : HexColor.fromHex(ColorConstants.lightBlack),
+                                      ColorConstants.secondaryColor)
+                                  : HexColor.fromHex(
+                                      ColorConstants.primaryTextColor),
                             ),
                           ),
                         ),

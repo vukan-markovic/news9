@@ -79,16 +79,38 @@ class LoginForm extends StatelessWidget {
                 TextButton(
                   onPressed: () => Navigator.of(context)
                       .pushReplacement(ResetPasswordPage.route()),
-                  child: Text(
-                    AppLocalizations.of(context).translate('reset_password'),
+                  child: RichText(
+                    text: TextSpan(
+                      children: <TextSpan>[
+                        TextSpan(
+                          text: "Forgot your password? "
+                        ),
+                        TextSpan(
+                            style: TextStyle(
+                                color: HexColor.fromHex(
+                                    ColorConstants.callToAction)),
+                            text: AppLocalizations.of(context)
+                                .translate('reset_password'))
+                      ],
+                    ),
                   ),
                 ),
-                SizedBox(height: 24.0),
                 TextButton(
                   onPressed: () =>
                       Navigator.of(context).pushReplacement(SignUpPage.route()),
-                  child:
-                      Text(AppLocalizations.of(context).translate('sign_up')),
+                  child: RichText(
+                    text: TextSpan(
+                      children: <TextSpan>[
+                        TextSpan(text: "Don't have an account? "),
+                        TextSpan(
+                            style: TextStyle(
+                                color: HexColor.fromHex(
+                                    ColorConstants.callToAction)),
+                            text: AppLocalizations.of(context)
+                                .translate('sign_up'))
+                      ],
+                    ),
+                  ),
                 ),
               ],
             ),
@@ -174,7 +196,7 @@ class _LoginButton extends StatelessWidget {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(5),
                   ),
-                  primary: HexColor.fromHex(ColorConstants.primaryColor),
+                  primary: HexColor.fromHex(ColorConstants.callToAction),
                 ),
                 child: Text(
                   AppLocalizations.of(context).translate('log_in'),
@@ -203,7 +225,7 @@ class _GoogleLoginButton extends StatelessWidget {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(5),
         ),
-        primary: HexColor.fromHex(ColorConstants.primaryColor),
+        primary: HexColor.fromHex(ColorConstants.callToAction),
       ),
       icon: Padding(
         padding: const EdgeInsets.all(4),

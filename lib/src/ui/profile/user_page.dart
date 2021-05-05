@@ -216,7 +216,7 @@ class _UserPageState extends State<UserPage> {
                                     borderRadius: BorderRadius.circular(5),
                                   ),
                                   primary: HexColor.fromHex(
-                                      ColorConstants.primaryColor),
+                                      ColorConstants.callToAction),
                                 ),
                                 onPressed: state.status.isValidated
                                     ? () async {
