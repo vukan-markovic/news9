@@ -5,26 +5,28 @@ import 'package:news/src/extensions/Color.dart';
 
 final ThemeData kLightTheme = _buildLightTheme();
 
-final TextTheme textThemeLight = GoogleFonts.latoTextTheme(ThemeData.light().textTheme).copyWith(
-    headline4: TextStyle(
-      fontWeight: FontWeight.bold,
-      fontSize: 28,
-      color: Colors.black,
-    ),
-    subtitle2: TextStyle(
-      color: HexColor.fromHex(ColorConstants.primaryColor),
-    ),
+final TextTheme textThemeLight =
+    GoogleFonts.latoTextTheme(ThemeData.light().textTheme).copyWith(
+  headline4: TextStyle(
+    fontWeight: FontWeight.bold,
+    fontSize: 28,
+    color: Colors.black,
+  ),
+  subtitle2: TextStyle(
+    color: HexColor.fromHex(ColorConstants.primaryColor),
+  ),
 );
 
-final TextTheme textThemeDark = GoogleFonts.latoTextTheme(ThemeData.dark().textTheme).copyWith(
-    headline4: TextStyle(
-      fontWeight: FontWeight.bold,
-      fontSize: 28,
-      color: Colors.white,
-    ),
-    subtitle2: TextStyle(
-      color: HexColor.fromHex(ColorConstants.primaryColor),
-    ),
+final TextTheme textThemeDark =
+    GoogleFonts.latoTextTheme(ThemeData.dark().textTheme).copyWith(
+  headline4: TextStyle(
+    fontWeight: FontWeight.bold,
+    fontSize: 28,
+    color: Colors.white,
+  ),
+  subtitle2: TextStyle(
+    color: HexColor.fromHex(ColorConstants.primaryColor),
+  ),
 );
 
 ThemeData _buildLightTheme() {

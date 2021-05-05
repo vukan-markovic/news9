@@ -7,7 +7,6 @@ import 'package:news/src/models/forms/first_name.dart';
 import 'package:news/src/models/forms/last_name.dart';
 import 'package:news/src/models/forms/password.dart';
 import 'package:news/src/resources/user_repository.dart';
-
 part 'sign_up_state.dart';
 
 class SignUpCubit extends Cubit<SignUpState> {

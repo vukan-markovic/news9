@@ -88,8 +88,9 @@ class NewsBloc {
     var news = await _repository.fetchNews("favorite_news");
 
     articles = ArticleModel();
-    news.forEach((article) {
-      articles.articles.add(mapArticle(article));
+    news.forEach((article) async {
+      var art = await mapArticle(article);
+      articles.articles.add(art);
     });
 
     sortFavoritesNews();
@@ -107,11 +108,13 @@ class NewsBloc {
   Future<void> fetchNewsFromDatabase({String keyword}) async {
     var news = await _repository.fetchNews("offline_news");
     ArticleModel articles = ArticleModel();
-    news.forEach((article) {
+    news.forEach((article) async {
       if (keyword == null) {
-        articles.articles.add(mapArticle(article));
+        var art = await mapArticle(article);
+        articles.articles.add(art);
       } else if (article.title.toLowerCase().contains(keyword)) {
-        articles.articles.add(mapArticle(article));
+        var art = await mapArticle(article);
+        articles.articles.add(art);
       }
     });
     _offlineNewsFetcher.sink.add(articles);
@@ -132,7 +135,8 @@ class NewsBloc {
       print("added to favorites");
       _repository.insertNewsByUuid(boxName, article, article.title);
     } else {
-      _repository.deleteNewsByUuid(boxName, article.title);
+      _repository.deleteNewsByUuid(
+          boxName, article.title.replaceAll(RegExp(r'[^\x20-\x7E]'), ''));
       print("deleted from favorites");
     }
     fetchFavoriteNewsFromDatabase();
@@ -157,7 +161,8 @@ class NewsBloc {
     });
   }
 
-  Article mapArticle(Article article) {
+  Future<Article> mapArticle(Article article) async {
+    bool isFavorite = await isArticleInFavorites(article.title);
     return Article.create(
         article.author,
         article.title,
@@ -166,7 +171,7 @@ class NewsBloc {
         article.urlToImage,
         article.publishedAt,
         Source(id: article.source?.id, name: article.source?.name),
-        true);
+        isFavorite);
   }
 
   Future<bool> isArticleInFavorites(String articleTitle) async {

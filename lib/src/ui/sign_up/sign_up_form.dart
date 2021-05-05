@@ -276,7 +276,7 @@ class __GenderInputState extends State<_GenderInput> {
           Flexible(
               child: Text(AppLocalizations.of(context).translate('gender'))),
           Expanded(
-            flex: 2,
+            flex: 3,
             child: Column(
               children: <Widget>[
                 ListTile(

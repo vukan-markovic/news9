@@ -45,6 +45,9 @@ dependencies:
   google_sign_in: ^5.0.2
   google_fonts: ^2.0.0
   cached_network_image: ^3.0.0
+  firebase_analytics: ^8.0.2
+  firebase_crashlytics: ^2.0.2
+  flutter_flavor: ^2.0.0
 
 flutter_icons:
   android: "launcher_icon"

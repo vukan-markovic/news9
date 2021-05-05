@@ -6,7 +6,6 @@ import 'package:news/src/models/forms/first_name.dart';
 import 'package:news/src/models/forms/last_name.dart';
 import 'package:news/src/models/user/user.dart';
 import 'package:news/src/resources/user_repository.dart';
-
 part 'user_page_state.dart';
 
 class UserPageCubit extends Cubit<UserPageState> {

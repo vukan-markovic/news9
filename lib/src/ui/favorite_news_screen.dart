@@ -118,11 +118,13 @@ class FavoriteNewsScreenState extends State<FavoriteNewsScreen> {
   ArticleTile _getArticleTileType(Article article) {
     if (!selectedArticles.contains(article)) {
       return ArticleTile(
+        isParentFavoriteScreen: true,
         article: article,
         enabled: false,
       );
     } else
       return ArticleTile(
+        isParentFavoriteScreen: true,
         article: article,
         backgroundColor: ColorConstants.primaryColor,
         enabled: false,

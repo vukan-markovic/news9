@@ -331,20 +331,29 @@ class __DateInputState extends State<_DateInput> {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        MouseRegion(
-          cursor: SystemMouseCursors.click,
-          child: GestureDetector(
-            child: Icon(
-              Icons.calendar_today,
+        Expanded(
+          child: MouseRegion(
+            cursor: SystemMouseCursors.click,
+            child: GestureDetector(
+              child: Icon(
+                Icons.calendar_today,
+              ),
+              onTap: () => _selectDate(context),
             ),
-            onTap: () => _selectDate(context),
           ),
         ),
         SizedBox(width: 16),
-        Text(AppLocalizations.of(context).translate('from') +
-            ': $labelTextFrom'),
+        Expanded(
+          flex: 5,
+          child: Text(AppLocalizations.of(context).translate('from') +
+              ': $labelTextFrom'),
+        ),
         SizedBox(width: 16),
-        Text(AppLocalizations.of(context).translate('to') + ': $labelTextTo'),
+        Expanded(
+          flex: 5,
+          child: Text(
+              AppLocalizations.of(context).translate('to') + ': $labelTextTo'),
+        ),
       ],
     );
   }

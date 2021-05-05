@@ -5,7 +5,6 @@ import 'package:meta/meta.dart';
 import 'package:news/src/models/user/user.dart';
 import 'package:news/src/resources/user_repository.dart';
 import 'package:pedantic/pedantic.dart';
-
 part 'authentication_event.dart';
 part 'authentication_state.dart';
 

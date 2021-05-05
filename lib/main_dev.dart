@@ -42,7 +42,8 @@ Future<void> main() async {
   await Hive.openBox<AppUser>('user');
 
   FlavorConfig(
-    color: Colors.red,
+    name: "DEVELOP",
+    color: Colors.green,
     location: BannerLocation.topStart,
   );
 

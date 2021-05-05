@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:jiffy/jiffy.dart';
@@ -17,9 +18,13 @@ class ArticleTile extends StatefulWidget {
   final Article article;
   final String backgroundColor;
   final bool enabled;
+  final bool isParentFavoriteScreen;
 
   ArticleTile(
-      {@required this.article, this.backgroundColor, @required this.enabled});
+      {@required this.article,
+      this.backgroundColor,
+      @required this.enabled,
+      @required this.isParentFavoriteScreen});
 }
 
 class _ArticleTileState extends State<ArticleTile> {
@@ -53,11 +58,14 @@ class _ArticleTileState extends State<ArticleTile> {
     Navigator.of(context).push(MaterialPageRoute(
       builder: (context) => ArticleDetails(
           article: article,
+          isParentFavoriteScreen: widget.isParentFavoriteScreen,
           isFavorite: isArticleFavorite,
           callback: (value) {
-            setState(() {
-              isArticleFavorite = value;
-            });
+            if (this.mounted && !widget.isParentFavoriteScreen) {
+              setState(() {
+                isArticleFavorite = value;
+              });
+            }
           }),
     ));
   }
@@ -71,6 +79,7 @@ class _ArticleTileState extends State<ArticleTile> {
     newsBloc.insertNewsByUid("favorite_news", article);
     setState(() {
       isArticleFavorite = !isArticleFavorite;
+      article.setFavorite = isArticleFavorite;
     });
   }
 
@@ -117,18 +126,23 @@ class _ArticleTileState extends State<ArticleTile> {
                             child: Row(
                               mainAxisSize: MainAxisSize.min,
                               children: [
-                                Text(
-                                  article.source.name,
-                                  style: TextStyle(
-                                    color: HexColor.fromHex(
-                                        ColorConstants.lightBlack),
+                                Expanded(
+                                  child: Text(
+                                    article.source.name,
+                                    style: TextStyle(
+                                      color: HexColor.fromHex(
+                                          ColorConstants.lightBlack),
+                                    ),
                                   ),
+                                  flex: 3,
                                 ),
-                                Spacer(),
-                                Text(
-                                  formatDate(article.publishedAt),
-                                  style: TextStyle(
-                                    color: Colors.grey,
+                                Expanded(
+                                  child: Text(
+                                    formatDate(article.publishedAt),
+                                    style: TextStyle(
+                                      color: Colors.grey,
+                                    ),
+                                    textAlign: TextAlign.end,
                                   ),
                                 ),
                               ],
@@ -218,34 +232,38 @@ class _ArticleTileState extends State<ArticleTile> {
               ),
               onTap: () => _saveArticle(),
             ),
-            SizedBox(
-              height: 15,
-            ),
-            SlideAction(
-              child: Container(
-                height: 60,
-                child: Card(
-                  color: HexColor.fromHex(ColorConstants.primaryColor),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        AppLocalizations.of(context).translate('Share') + " ",
-                        style: TextStyle(
+            if (Theme.of(context).platform != TargetPlatform.macOS &&
+                !kIsWeb) ...[
+              SizedBox(
+                height: 15,
+              ),
+              SlideAction(
+                child: Container(
+                  height: 60,
+                  child: Card(
+                    color: HexColor.fromHex(ColorConstants.primaryColor),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          AppLocalizations.of(context).translate('Share') + " ",
+                          style: TextStyle(
+                            color:
+                                HexColor.fromHex(ColorConstants.secondaryWhite),
+                          ),
+                        ),
+                        Icon(
+                          Icons.share_outlined,
                           color:
                               HexColor.fromHex(ColorConstants.secondaryWhite),
                         ),
-                      ),
-                      Icon(
-                        Icons.share_outlined,
-                        color: HexColor.fromHex(ColorConstants.secondaryWhite),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
+                onTap: () => _shareArticle(),
               ),
-              onTap: () => _shareArticle(),
-            ),
+            ]
           ],
         ),
       ],

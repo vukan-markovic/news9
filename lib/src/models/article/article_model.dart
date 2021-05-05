@@ -28,7 +28,7 @@ class ArticleModel {
 
   String get status => _status;
 
-  int get totalarticles => _totalResults;
+  int get totalArticles => _totalResults;
 
   List<Article> get articles => _articles;
 
@@ -95,6 +95,8 @@ class Article {
   Source get source => _source;
 
   bool get isFavorite => _isFavorite;
+
+  set setFavorite(bool isFavorite) => _isFavorite = isFavorite;
 }
 
 @HiveType(typeId: 2)

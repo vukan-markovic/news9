@@ -19,6 +19,7 @@ class GlobalNewsList extends StatelessWidget {
         delegate: SliverChildBuilderDelegate(
           (BuildContext context, int index) {
             return ArticleTile(
+              isParentFavoriteScreen: false,
               article: snapshot.data.articles[index],
               enabled: true,
             );
@@ -30,6 +31,7 @@ class GlobalNewsList extends StatelessWidget {
       return SliverList(
         delegate: SliverChildBuilderDelegate(
           (context, index) => ArticleTile(
+            isParentFavoriteScreen: false,
             article: snapshot.data.articles[index],
             enabled: true,
           ),
