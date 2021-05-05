@@ -63,7 +63,7 @@
   "profile": "Profilo",
   "Save": "Salva",
   "Edit": "Modifica", 
-  "no_news": "Nessuna notizia per i criteri selezionati!",
+  "no_news": "Nessuna notizia!",
   "country": "Paese",
   "source": "Fonte",
   "paging": "Notizie per pagina",
@@ -83,5 +83,18 @@
   "asc": "Ascendente",
   "desc": "Discendente",
   "no_favorites": "Attualmente non hai preferenze",
-  "no_internet": "Si prega di fornire una connessione internet!"
+  "no_internet": "Si prega di fornire una connessione internet!",
+  "no_connection": "No internet",
+  "English": "Inglese",
+  "Serbian": "Serbo",
+  "German": "Tedesco",
+  "Spanish": "Spagnolo",
+  "French": "Francese",
+  "Italian": "Italiano",
+  "Dutch": "Olandese",
+  "Norwegian": "Norvegese",
+  "Portuguese": "Portoghese",
+  "Russian": "Russo",
+  "Chinese": "Cinese",
+  "or": "о"
 }

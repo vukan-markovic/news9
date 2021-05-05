@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'package:connectivity/connectivity.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 
 class ConnectivityBloc {
   StreamController<ConnectivityStatus> connectionStatusController =

@@ -182,12 +182,15 @@ class _CategoryTileState extends State<CategoryTile> {
           child: Card(
             color: widget.category == _selectedCategory
                 ? HexColor.fromHex(ColorConstants.primaryColor)
-                : Colors.white,
+                : HexColor.fromHex(ColorConstants.secondaryWhite),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Icon(
                   getIconOfCategory(widget.category),
+                  color: widget.category == _selectedCategory
+                      ? HexColor.fromHex(ColorConstants.secondaryWhite)
+                      : HexColor.fromHex(ColorConstants.lightBlack),
                 ),
                 SizedBox(width: 4),
                 Text(

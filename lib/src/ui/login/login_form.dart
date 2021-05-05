@@ -2,10 +2,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:formz/formz.dart';
+import 'package:news/src/blocs/connectivity_bloc/connectivity_bloc.dart';
 import 'package:news/src/blocs/login_bloc/login_cubit.dart';
+import 'package:news/src/constants/ColorConstants.dart';
+import 'package:news/src/extensions/Color.dart';
 import 'package:news/src/ui/reset-password/reset_password_page.dart';
 import 'package:news/src/ui/sign_up/sign_up_page.dart';
 import 'package:news/src/utils/app_localizations.dart';
+import 'package:provider/provider.dart';
 import '../dialogs/message_dialog.dart';
 
 class LoginForm extends StatelessWidget {
@@ -13,7 +17,15 @@ class LoginForm extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocListener<LoginCubit, LoginState>(
       listener: (context, state) {
-        if (state.status.isSubmissionFailure) {
+        if (state.status.isSubmissionFailure &&
+            Provider.of<ConnectivityStatus>(context, listen: false) ==
+                ConnectivityStatus.Offline) {
+          MessageDialog.showMessageDialog(
+            context: context,
+            title: AppLocalizations.of(context).translate('no_connection'),
+            body: AppLocalizations.of(context).translate('no_internet'),
+          );
+        } else if (state.status.isSubmissionFailure) {
           MessageDialog.showMessageDialog(
             context: context,
             title: AppLocalizations.of(context)
@@ -55,6 +67,10 @@ class LoginForm extends StatelessWidget {
                 _PasswordInput(),
                 SizedBox(height: 8.0),
                 _LoginButton(),
+                SizedBox(height: 16.0),
+                Text(
+                  AppLocalizations.of(context).translate('or'),
+                ),
                 SizedBox(height: 16.0),
                 _GoogleLoginButton(),
                 SizedBox(height: 16.0),
@@ -150,31 +166,23 @@ class _LoginButton extends StatelessWidget {
       builder: (context, state) {
         return state.status.isSubmissionInProgress
             ? CircularProgressIndicator()
-            : Container(
-                width: 200,
-                child: ElevatedButton(
-                  key: const Key('loginForm_continue_raisedButton'),
-                  style: ElevatedButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(5.0),
-                    ),
-                    primary: Colors.blue,
+            : ElevatedButton(
+                key: const Key('loginForm_continue_raisedButton'),
+                style: ElevatedButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(5),
                   ),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 4),
-                    child: Text(
-                      AppLocalizations.of(context).translate('log_in'),
-                      style: TextStyle(fontSize: 24),
-                    ),
-                  ),
-                  onPressed: state.status.isValidated
-                      ? () async {
-                          await context
-                              .read<LoginCubit>()
-                              .logInWithCredentials();
-                        }
-                      : null,
+                  primary: HexColor.fromHex(ColorConstants.primaryColor),
                 ),
+                child: Text(
+                  AppLocalizations.of(context).translate('log_in'),
+                  style: TextStyle(fontSize: 16),
+                ),
+                onPressed: state.status.isValidated
+                    ? () async {
+                        await context.read<LoginCubit>().logInWithCredentials();
+                      }
+                    : null,
               );
       },
     );
@@ -184,24 +192,21 @@ class _LoginButton extends StatelessWidget {
 class _GoogleLoginButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     return ElevatedButton.icon(
       key: Key('loginForm_googleLogin_raisedButton'),
       label: Text(
         'Google',
-        style: TextStyle(color: Colors.white),
       ),
       style: ElevatedButton.styleFrom(
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(30.0),
+          borderRadius: BorderRadius.circular(5),
         ),
-        primary: theme.accentColor,
+        primary: HexColor.fromHex(ColorConstants.primaryColor),
       ),
       icon: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(4),
         child: Icon(
           FontAwesomeIcons.google,
-          color: Colors.white,
         ),
       ),
       onPressed: () => context.read<LoginCubit>().logInWithGoogle(),

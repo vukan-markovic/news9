@@ -18,7 +18,10 @@ class RecommendedNewsList extends StatelessWidget {
             shrinkWrap: true,
             physics: ClampingScrollPhysics(),
             itemBuilder: (context, index) {
-              return ArticleTile(article: snapshot.data.articles[index]);
+              return ArticleTile(
+                article: snapshot.data.articles[index],
+                enabled: true,
+              );
             },
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
@@ -37,7 +40,10 @@ class RecommendedNewsList extends StatelessWidget {
               shrinkWrap: true,
               physics: ClampingScrollPhysics(),
               itemBuilder: (context, index) {
-                return ArticleTile(article: snapshot.data.articles[index]);
+                return ArticleTile(
+                  article: snapshot.data.articles[index],
+                  enabled: true,
+                );
               }),
         ),
       );

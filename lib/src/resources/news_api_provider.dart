@@ -9,7 +9,7 @@ import '../models/article/article_model.dart';
 class NewsApiProvider {
   Client client = Client();
   String country;
-  static final String _apiKey = '4460355a5e504e9db438ca6df6fc1df1';
+  static final String _apiKey = '69c15680e2a14e278e775bdd7b82921c';
   Uri _testUrl;
 
   Future<ArticleModel> fetchNewsList({
@@ -51,12 +51,16 @@ class NewsApiProvider {
       });
     }
 
-    final response = await client.get(_testUrl);
+    try {
+      final response = await client.get(_testUrl);
 
-    if (response.statusCode == 200) {
-      return ArticleModel.fromJson(json.decode(response.body));
-    } else {
-      throw Exception('Failed to load news');
+      if (response.statusCode == 200) {
+        return ArticleModel.fromJson(json.decode(response.body));
+      } else {
+        throw Exception('Failed to load news');
+      }
+    } catch (e) {
+      return ArticleModel.fromDatabase([]);
     }
   }
 

@@ -63,7 +63,7 @@
   "profile": "Perfil",
   "Save": "Guardar",
   "Edit": "Editar", 
-  "no_news": "Nenhuma notícia para critérios seleccionados!",
+  "no_news": "Nenhuma notícia!",
   "country": "País",
   "source": "Fonte",
   "paging": "Notícias por página",
@@ -83,5 +83,18 @@
   "asc": "Ascendente",
   "desc": "Descendente",
   "no_favorites": "Actualmente não tem favoritos",
-  "no_internet": "Por favor, providenciem ligação à Internet!"
+  "no_internet": "Por favor, providenciem ligação à Internet!",
+  "no_connection": "Sem internet",
+  "English": "Inglês",
+  "Serbian": "Sérvio",
+  "German": "Alemão",
+  "Spanish": "Espanhol",
+  "French": "Francês",
+  "Italian": "Italiano",
+  "Dutch": "Holandês",
+  "Norwegian": "Norueguês",
+  "Portuguese": "Português",
+  "Russian": "Russo",
+  "Chinese": "Chinês",
+  "or": "ou"
 }

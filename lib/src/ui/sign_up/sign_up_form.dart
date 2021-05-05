@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
+import 'package:news/src/blocs/connectivity_bloc/connectivity_bloc.dart';
 import 'package:news/src/blocs/sign_up_bloc/sign_up_cubit.dart';
+import 'package:news/src/constants/ColorConstants.dart';
 import 'package:news/src/constants/enums.dart';
+import 'package:news/src/extensions/Color.dart';
 import 'package:news/src/ui/login/login_page.dart';
 import 'package:news/src/utils/app_localizations.dart';
+import 'package:provider/provider.dart';
 
 import '../dialogs/message_dialog.dart';
 
@@ -13,7 +17,15 @@ class SignUpForm extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocListener<SignUpCubit, SignUpState>(
       listener: (context, state) {
-        if (state.status.isSubmissionFailure) {
+        if (state.status.isSubmissionFailure &&
+            Provider.of<ConnectivityStatus>(context, listen: false) ==
+                ConnectivityStatus.Offline) {
+          MessageDialog.showMessageDialog(
+            context: context,
+            title: AppLocalizations.of(context).translate('no_connection'),
+            body: AppLocalizations.of(context).translate('no_internet'),
+          );
+        } else if (state.status.isSubmissionFailure) {
           MessageDialog.showMessageDialog(
             context: context,
             title:
@@ -261,7 +273,8 @@ class __GenderInputState extends State<_GenderInput> {
         children: [
           Flexible(child: Icon(Icons.person)),
           SizedBox(width: 8.0),
-          Flexible(child: Text(AppLocalizations.of(context).translate('gender'))),
+          Flexible(
+              child: Text(AppLocalizations.of(context).translate('gender'))),
           Expanded(
             flex: 2,
             child: Column(
@@ -311,12 +324,13 @@ class _SignUpButton extends StatelessWidget {
                 key: const Key('signUpForm_continue_raisedButton'),
                 child: Text(
                   AppLocalizations.of(context).translate('create_account'),
+                  style: TextStyle(fontSize: 16),
                 ),
                 style: ElevatedButton.styleFrom(
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(5),
                   ),
-                  primary: Colors.blue,
+                  primary: HexColor.fromHex(ColorConstants.primaryColor),
                 ),
                 onPressed: state.status.isValidated
                     ? () => _submitForm(context)

@@ -91,8 +91,14 @@ class _GlobalNewsState extends State<GlobalNews> {
 
   @override
   Widget build(BuildContext context) {
+    if (connectionState == ConnectivityStatus.Offline) {
+      this._appBarTitle = Text("Flutter News9 - Offline");
+    } else {
+      this._appBarTitle = Text("Flutter News9");
+    }
+
     return Scaffold(
-      appBar: SearchAppBar(_filter, searchNews, false, null),
+      appBar: SearchAppBar(_filter, searchNews, false, null, _appBarTitle),
       body: BlocBuilder<AdvancedSearchBloc, AdvancedSearchState>(
         builder: (context, state) {
           return StreamBuilder(

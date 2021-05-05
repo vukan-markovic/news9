@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:hive/hive.dart';
 
-  part 'category.g.dart';
+part 'category.g.dart';
 
 @HiveType(typeId: 0)
 class Category {

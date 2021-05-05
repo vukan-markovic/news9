@@ -18,7 +18,10 @@ class GlobalNewsList extends StatelessWidget {
         ),
         delegate: SliverChildBuilderDelegate(
           (BuildContext context, int index) {
-            return ArticleTile(article: snapshot.data.articles[index]);
+            return ArticleTile(
+              article: snapshot.data.articles[index],
+              enabled: true,
+            );
           },
           childCount: snapshot.data.articles.length,
         ),
@@ -26,8 +29,10 @@ class GlobalNewsList extends StatelessWidget {
     } else {
       return SliverList(
         delegate: SliverChildBuilderDelegate(
-          (context, index) =>
-              ArticleTile(article: snapshot.data.articles[index]),
+          (context, index) => ArticleTile(
+            article: snapshot.data.articles[index],
+            enabled: true,
+          ),
           childCount: snapshot.data.articles.length,
         ),
       );

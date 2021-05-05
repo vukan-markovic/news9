@@ -1,10 +1,14 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:formz/formz.dart';
+import 'package:news/src/blocs/connectivity_bloc/connectivity_bloc.dart';
 import 'package:news/src/blocs/reset_password_bloc/reset_password_cubit.dart';
 import 'package:news/src/blocs/reset_password_bloc/reset_password_state.dart';
+import 'package:news/src/constants/ColorConstants.dart';
+import 'package:news/src/extensions/Color.dart';
 import 'package:news/src/ui/login/login_page.dart';
 import 'package:news/src/utils/app_localizations.dart';
+import 'package:provider/provider.dart';
 import '../dialogs/message_dialog.dart';
 
 class ResetPasswordForm extends StatelessWidget {
@@ -12,7 +16,15 @@ class ResetPasswordForm extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocListener<ResetPasswordCubit, ResetPasswordState>(
       listener: (context, state) {
-        if (state.status.isSubmissionFailure) {
+        if (state.status.isSubmissionFailure &&
+            Provider.of<ConnectivityStatus>(context, listen: false) ==
+                ConnectivityStatus.Offline) {
+          MessageDialog.showMessageDialog(
+            context: context,
+            title: AppLocalizations.of(context).translate('no_connection'),
+            body: AppLocalizations.of(context).translate('no_internet'),
+          );
+        } else if (state.status.isSubmissionFailure) {
           MessageDialog.showMessageDialog(
             context: context,
             title: AppLocalizations.of(context).translate('invalid_email'),
@@ -110,9 +122,9 @@ class _ResetPasswordButton extends StatelessWidget {
                 key: const Key('resetPasswordForm_continue_raisedButton'),
                 style: ElevatedButton.styleFrom(
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(5.0),
+                    borderRadius: BorderRadius.circular(5),
                   ),
-                  primary: Colors.blue,
+                  primary: HexColor.fromHex(ColorConstants.primaryColor),
                 ),
                 child: Text(
                   AppLocalizations.of(context).translate('reset_password'),

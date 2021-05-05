@@ -63,7 +63,7 @@
   "profile": "Profil",
   "Save": "Lagre",
   "Edit": "Redigere", 
-  "no_news": "Ingen nyheter for utvalgte kriterier!",
+  "no_news": "Ingen nyheter!",
   "country": "Land",
   "source": "Kilde",
   "paging": "Nyheter per side",
@@ -83,5 +83,18 @@
   "asc": "Stigende",
   "desc": "Fallende",
   "no_favorites": "Du har for øyeblikket ingen favoritter",
-  "no_internet": "Vennligst oppgi internettforbindelse!"
+  "no_internet": "Vennligst oppgi internettforbindelse!",
+  "no_connection": "Ingen internett",
+  "English": "Engelsk",
+  "Serbian": " Serbisk",
+  "German": " tysk",
+  "Spanish": " Spansk",
+  "French": " fransk",
+  "Italian": " Italiensk",
+  "Dutch": " nederlandsk",
+  "Norwegian": " norsk",
+  "Portuguese": " Portugisisk",
+  "Russian": " Russisk",
+  "Chinese": " kinesisk",
+  "or": "eller"
 }

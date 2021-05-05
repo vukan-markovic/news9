@@ -63,7 +63,7 @@
   "profile": "Profiel",
   "Save": "Bewaar",
   "Edit": "Wijzig", 
-  "no_news": "Geen nieuws voor geselecteerde criteria!",
+  "no_news": "Geen nieuws!",
   "country": "Land",
   "source": "Bron",
   "paging": "Nieuws per pagina",
@@ -83,5 +83,18 @@
   "asc": "Oplopend",
   "desc": "Aflopend",
   "no_favorites": "U hebt momenteel geen favorieten",
-  "no_internet": "Zorg voor een internetverbinding!"
+  "no_internet": "Zorg voor een internetverbinding!",
+  "no_connection": "Geen internet",
+  "English": "Engels",
+  "Serbian": "Servisch",
+  "German": "Duits",
+  "Spanish": "Spaans",
+  "French": "Frans",
+  "Italian": "Italiaans",
+  "Dutch": "Nederlands",
+  "Norwegian": "Noors",
+  "Portuguese": "Portugees",
+  "Russian": "Russisch",
+  "Chinese": "Chinees",
+  "or": "of"
 }

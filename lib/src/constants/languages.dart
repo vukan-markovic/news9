@@ -1,15 +1,15 @@
 import 'package:news/src/constants/enums.dart';
 
-var languages = {
-  'en': Language.EN,
-  'de': Language.DE,
-  'es': Language.ES,
-  'fr': Language.FR,
-  'it': Language.IT,
-  'nl': Language.NL,
-  'no': Language.NO,
-  'pt': Language.PT,
-  'ru': Language.RU,
-  'zh': Language.ZH,
-  'sr': Language.SR,
+var supportedLanguages = {
+  'English': Language.EN,
+  'Serbian': Language.SR,
+  'German': Language.DE,
+  'Spanish': Language.ES,
+  'French': Language.FR,
+  'Italian': Language.IT,
+  'Dutch': Language.NL,
+  'Norwegian': Language.NO,
+  'Portuguese': Language.PT,
+  'Russian': Language.RU,
+  'Chinese': Language.ZH,
 };
