@@ -68,10 +68,6 @@
             <string>https</string>
             <string>http</string>
 	    </array>
-	<key>NSPhotoLibraryAddUsageDescription</key>
-    <string>Allow $(PRODUCT_NAME) access to your photo library to upload your profile picture?</string>
-    <key>NSPhotoLibraryUsageDescription</key>
-    <string>Allow $(PRODUCT_NAME) access to your photo library to upload your profile picture?</string>
 	<key>FacebookAppID</key>
 	<string>503907637685958</string>
 	<key>FacebookDisplayName</key>

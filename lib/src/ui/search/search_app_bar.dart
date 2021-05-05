@@ -67,7 +67,6 @@ class _SearchAppBarState extends State<SearchAppBar> {
   @override
   void didChangeDependencies() {
     var connectionState = Provider.of<ConnectivityStatus>(context);
-    print(connectionState);
     if (connectionState == ConnectivityStatus.Offline) {
       this._appBarTitle = Text("Flutter News9 - Offline");
     } else if (connectionState == ConnectivityStatus.Cellular ||

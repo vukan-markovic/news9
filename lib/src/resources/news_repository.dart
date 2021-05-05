@@ -54,7 +54,6 @@ class NewsRepository {
 
   insertNews(boxName, data) async {
     var box = await Hive.openBox(boxName);
-    print(data.title);
     box.add(data);
   }
 
@@ -63,7 +62,6 @@ class NewsRepository {
     box.put(data.title.replaceAll(RegExp(r'[^\x20-\x7E]'), ''), data);
   }
 
-  //function should call box.clear() but doesn't work
   deleteNewsBox(boxName) async {
     var box = await Hive.openBox(boxName);
     box.deleteAll(box.keys);
