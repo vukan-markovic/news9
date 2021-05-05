@@ -32,12 +32,10 @@ class _GlobalNewsState extends State<GlobalNews> {
   @override
   void didChangeDependencies() {
     connectionState = Provider.of<ConnectivityStatus>(context);
-    print(connectionState);
 
     if (connectionState == ConnectivityStatus.Offline) {
       newsBloc.fetchNewsFromDatabase();
       activeStream = newsBloc.offlineNews;
-      newsBloc.offlineNews.length.then((value) => print(value));
     } else if (connectionState == null ||
         connectionState == ConnectivityStatus.Cellular ||
         connectionState == ConnectivityStatus.WiFi) {
@@ -56,20 +54,14 @@ class _GlobalNewsState extends State<GlobalNews> {
     super.didChangeDependencies();
   }
 
-  @override
-  void dispose() {
-    // uncomment when saving articles offline is implemented? not disposing a bloc could lead to memory leak
-    // newsBloc.dispose();
-    super.dispose();
-  }
-
   searchNews() {
     var connectionState =
         Provider.of<ConnectivityStatus>(context, listen: false);
     if (connectionState == ConnectivityStatus.Offline) {
       newsBloc.fetchNewsFromDatabase(keyword: _filter.text);
     } else if (connectionState == ConnectivityStatus.Cellular ||
-        connectionState == ConnectivityStatus.WiFi) {
+        connectionState == ConnectivityStatus.WiFi ||
+        connectionState == null) {
       newsBloc.fetchAllNews(
           languageCode:
               BlocProvider.of<LanguageBloc>(context).state.locale.languageCode,
@@ -104,9 +96,7 @@ class _GlobalNewsState extends State<GlobalNews> {
           return StreamBuilder(
             stream: this.activeStream,
             builder: (context, AsyncSnapshot<ArticleModel> snapshot) {
-              print(snapshot);
               if (snapshot.hasData) {
-                print("Global news has data");
                 if (snapshot.data.articles.length == 0) {
                   return Center(
                     child: Text(
@@ -123,7 +113,6 @@ class _GlobalNewsState extends State<GlobalNews> {
                   );
                 }
               } else if (snapshot.hasError) {
-                print("Global news error");
                 return Text(snapshot.error.toString());
               }
 

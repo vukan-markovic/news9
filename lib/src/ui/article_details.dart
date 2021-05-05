@@ -172,7 +172,7 @@ class _ArticleDetailsState extends State<ArticleDetails> {
                 Text.rich(
                   TextSpan(children: [
                     TextSpan(
-                      text: 'By ',
+                      text: AppLocalizations.of(context).translate('by') + ' ',
                     ),
                     TextSpan(
                       text: article.author ??

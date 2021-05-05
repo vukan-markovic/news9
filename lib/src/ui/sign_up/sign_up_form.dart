@@ -9,7 +9,6 @@ import 'package:news/src/extensions/Color.dart';
 import 'package:news/src/ui/login/login_page.dart';
 import 'package:news/src/utils/app_localizations.dart';
 import 'package:provider/provider.dart';
-
 import '../dialogs/message_dialog.dart';
 
 class SignUpForm extends StatelessWidget {

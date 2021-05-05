@@ -122,7 +122,7 @@ class NewsBloc {
 
   void insertNewsList(ArticleModel articlesModel) {
     int counter = 0;
-    print("added offline");
+
     articlesModel.articles.forEach((element) {
       if (counter > 30) return;
       insertNews("offline_news", element);
@@ -132,12 +132,10 @@ class NewsBloc {
 
   Future<void> insertNewsByUid(boxName, article) async {
     if (!article.isFavorite) {
-      print("added to favorites");
       _repository.insertNewsByUuid(boxName, article, article.title);
     } else {
       _repository.deleteNewsByUuid(
           boxName, article.title.replaceAll(RegExp(r'[^\x20-\x7E]'), ''));
-      print("deleted from favorites");
     }
     fetchFavoriteNewsFromDatabase();
   }
@@ -156,7 +154,6 @@ class NewsBloc {
 
   deleteNewsList(List<Article> articles) {
     articles.forEach((element) {
-      print("deleting selected news");
       deleteNewsByUuid(element.title.replaceAll(RegExp(r'[^\x20-\x7E]'), ''));
     });
   }
