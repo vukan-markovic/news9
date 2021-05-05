@@ -66,9 +66,7 @@ class NewsRepository {
   //function should call box.clear() but doesn't work
   deleteNewsBox(boxName) async {
     var box = await Hive.openBox(boxName);
-    for (int i = 0; i < box.length; i++) {
-      box.deleteAt(i);
-    }
+    box.deleteAll(box.keys);
   }
 
   deleteNewsByUuid(boxName, uuid) async {
