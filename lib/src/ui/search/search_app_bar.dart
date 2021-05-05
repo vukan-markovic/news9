@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:news/src/blocs/connectivity_bloc/connectivity_bloc.dart';
 import 'package:news/src/constants/ColorConstants.dart';
 import 'package:news/src/extensions/Color.dart';
 import 'package:news/src/ui/dialogs/filter_news_dialog.dart';
 import 'package:news/src/ui/search/search_news.dart';
+import 'package:provider/provider.dart';
 
 class SearchAppBar extends StatefulWidget implements PreferredSizeWidget {
   SearchAppBar(
@@ -45,6 +47,19 @@ class _SearchAppBarState extends State<SearchAppBar> {
           ),
       ],
     );
+  }
+
+  @override
+  void didChangeDependencies() {
+    var connectionState = Provider.of<ConnectivityStatus>(context);
+    print(connectionState);
+    if (connectionState == ConnectivityStatus.Offline) {
+      this._appBarTitle = Text("Flutter News9 - Offline");
+    } else if (connectionState == ConnectivityStatus.Cellular ||
+        connectionState == ConnectivityStatus.WiFi) {
+      this._appBarTitle = Text("Flutter News9");
+    }
+    super.didChangeDependencies();
   }
 
   void _searchPressed() {
