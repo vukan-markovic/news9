@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:jiffy/jiffy.dart';
@@ -114,14 +115,16 @@ class _ArticleTileState extends State<ArticleTile> {
                           Flexible(
                             fit: FlexFit.loose,
                             child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              mainAxisSize: MainAxisSize.min,
                               children: [
                                 Text(
                                   article.source.name,
                                   style: TextStyle(
-                                    color: HexColor.fromHex(ColorConstants.lightBlack),
+                                    color: HexColor.fromHex(
+                                        ColorConstants.lightBlack),
                                   ),
                                 ),
+                                Spacer(),
                                 Text(
                                   formatDate(article.publishedAt),
                                   style: TextStyle(
@@ -140,16 +143,16 @@ class _ArticleTileState extends State<ArticleTile> {
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(6),
                               child: Center(
-                                child: Image.network(
-                                  article.urlToImage ?? _placeholderImageUrl,
+                                child: CachedNetworkImage(
+                                  imageUrl: article.urlToImage ??
+                                      _placeholderImageUrl,
                                   height: 200,
                                   width: MediaQuery.of(context).size.width,
                                   fit: BoxFit.cover,
-                                  errorBuilder: (BuildContext context,
-                                      Object exception, StackTrace stackTrace) {
-                                    return Image.asset(
-                                        'assets/placeholder.png');
-                                  },
+                                  errorWidget: (context, url, error) =>
+                                      Image.asset('assets/placeholder.png'),
+                                  placeholder: (context, url) =>
+                                      Image.asset('assets/placeholder.png'),
                                 ),
                               ),
                             ),
@@ -162,6 +165,7 @@ class _ArticleTileState extends State<ArticleTile> {
                             flex: 2,
                             child: Text(
                               article.title,
+                              overflow: TextOverflow.fade,
                               style: TextStyle(
                                   color: Colors.black87,
                                   fontSize: 20,

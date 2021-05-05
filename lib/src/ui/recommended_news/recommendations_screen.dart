@@ -93,11 +93,11 @@ class _RecommendationsScreenState extends State<RecommendationsScreen> {
                 if (snapshot.hasData) {
                   return Column(
                     children: [
-                      Expanded(
+                      Flexible(
                         child: CategoriesList(_selectedCategories),
                       ),
                       if (snapshot.data.articles.length == 0)
-                        Expanded(
+                        Flexible(
                           flex: 4,
                           child: Center(
                             child: Text(
@@ -106,7 +106,7 @@ class _RecommendationsScreenState extends State<RecommendationsScreen> {
                           ),
                         )
                       else
-                        Expanded(
+                        Flexible(
                           flex: 4,
                           child: RecommendedNewsList(snapshot),
                         ),

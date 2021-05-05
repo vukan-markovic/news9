@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:news/src/blocs/news_bloc/news_bloc.dart';
@@ -214,17 +215,17 @@ class _ArticleDetailsState extends State<ArticleDetails> {
                     ],
                   ),
                 SizedBox(height: 10),
-                Image.network(
-                  article.urlToImage ?? _placeholderImageUrl,
+                CachedNetworkImage(
+                  imageUrl: article.urlToImage ?? _placeholderImageUrl,
                   height: MediaQuery.of(context).size.width > 400
                       ? MediaQuery.of(context).size.height / 2
                       : 200,
                   width: MediaQuery.of(context).size.width,
                   fit: BoxFit.contain,
-                  errorBuilder: (BuildContext context, Object exception,
-                      StackTrace stackTrace) {
-                    return Image.asset('assets/placeholder.png');
-                  },
+                  errorWidget: (context, url, error) =>
+                      Image.asset('assets/placeholder.png'),
+                  placeholder: (context, url) =>
+                      Image.asset('assets/placeholder.png'),
                 ),
                 SizedBox(height: 10),
                 OutlinedButton(

@@ -118,11 +118,15 @@ class _UserPageState extends State<UserPage> {
                     Container(
                       margin: EdgeInsets.only(top: 8),
                       child: GestureDetector(
-                        onTap: () => editText == 'Edit'
+                        onTap: () => editText == 'Edit' ||
+                                Theme.of(context).platform ==
+                                    TargetPlatform.macOS
                             ? null
                             : getImage(user.email, user.gender),
                         child: MouseRegion(
-                          cursor: editText == 'Save'
+                          cursor: editText == 'Save' &&
+                                  Theme.of(context).platform !=
+                                      TargetPlatform.macOS
                               ? SystemMouseCursors.click
                               : SystemMouseCursors.basic,
                           child: CircleAvatar(
@@ -201,8 +205,7 @@ class _UserPageState extends State<UserPage> {
                         return state.status.isSubmissionInProgress
                             ? CircularProgressIndicator()
                             : ElevatedButton(
-                                key: const Key(
-                                    'edit_raisedButton'),
+                                key: const Key('edit_raisedButton'),
                                 child: Text(
                                   AppLocalizations.of(context)
                                       .translate(editText),
@@ -212,7 +215,8 @@ class _UserPageState extends State<UserPage> {
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(5),
                                   ),
-                                  primary: HexColor.fromHex(ColorConstants.primaryColor),
+                                  primary: HexColor.fromHex(
+                                      ColorConstants.primaryColor),
                                 ),
                                 onPressed: state.status.isValidated
                                     ? () async {

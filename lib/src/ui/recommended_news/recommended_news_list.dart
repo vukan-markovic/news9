@@ -9,7 +9,7 @@ class RecommendedNewsList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (MediaQuery.of(context).size.width > 400) {
+    if (MediaQuery.of(context).size.width > 600) {
       return Container(
         margin: EdgeInsets.only(top: 16),
         child: Scrollbar(

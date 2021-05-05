@@ -9,7 +9,7 @@ class GlobalNewsList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (MediaQuery.of(context).size.width > 400) {
+    if (MediaQuery.of(context).size.width > 600) {
       return SliverGrid(
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           childAspectRatio: MediaQuery.of(context).size.width /

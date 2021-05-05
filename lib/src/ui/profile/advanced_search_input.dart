@@ -156,7 +156,7 @@ class __SourceInputState extends State<_SourceInput> {
     return StreamBuilder(
         stream: newsBloc.allSources,
         builder: (context, AsyncSnapshot<SourceModel> snapshot) {
-          if (snapshot.hasData) {
+          if (snapshot.hasData && snapshot.data.sources.isNotEmpty) {
             return Row(
               children: [
                 Expanded(
@@ -207,7 +207,7 @@ class __SourceInputState extends State<_SourceInput> {
             return Text(snapshot.error.toString());
           }
 
-          return Center(child: CircularProgressIndicator());
+          return Container(width: 0.0, height: 0.0);
         });
   }
 }
