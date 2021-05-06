@@ -81,36 +81,23 @@ class LoginForm extends StatelessWidget {
                       .pushReplacement(ResetPasswordPage.route()),
                   child: RichText(
                     text: TextSpan(
-                      children: <TextSpan>[
-                        TextSpan(
-                          text: "Forgot your password? "
-                        ),
-                        TextSpan(
-                            style: TextStyle(
-                                color: HexColor.fromHex(
-                                    ColorConstants.callToAction)),
-                            text: AppLocalizations.of(context)
-                                .translate('reset_password'))
-                      ],
-                    ),
+                        style: TextStyle(
+                            color:
+                                HexColor.fromHex(ColorConstants.callToAction)),
+                        text: AppLocalizations.of(context)
+                            .translate('reset_password')),
                   ),
                 ),
                 TextButton(
                   onPressed: () =>
                       Navigator.of(context).pushReplacement(SignUpPage.route()),
                   child: RichText(
-                    text: TextSpan(
-                      children: <TextSpan>[
-                        TextSpan(text: "Don't have an account? "),
-                        TextSpan(
-                            style: TextStyle(
-                                color: HexColor.fromHex(
-                                    ColorConstants.callToAction)),
-                            text: AppLocalizations.of(context)
-                                .translate('sign_up'))
-                      ],
-                    ),
-                  ),
+                      text: TextSpan(
+                          style: TextStyle(
+                              color: HexColor.fromHex(
+                                  ColorConstants.callToAction)),
+                          text: AppLocalizations.of(context)
+                              .translate('sign_up'))),
                 ),
               ],
             ),

@@ -14,10 +14,6 @@ class ResetPasswordPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Flutter News9'),
-        backgroundColor: HexColor.fromHex(ColorConstants.primaryColor),
-      ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: BlocProvider(
