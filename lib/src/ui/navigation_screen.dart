@@ -44,11 +44,13 @@ class _NavigationScreenState extends State<NavigationScreen> {
                 icon: _currentIndex == 0
                     ? Icon(
                         Icons.home_rounded,
-                        color: HexColor.fromHex(ColorConstants.secondaryWhite),
+                        color:
+                            HexColor.fromHex(ColorConstants.selectedTextColor),
                       )
                     : Icon(
                         Icons.home_outlined,
-                        color: HexColor.fromHex(ColorConstants.secondaryWhite),
+                        color:
+                            HexColor.fromHex(ColorConstants.selectedTextColor),
                       ),
                 label: AppLocalizations.of(context).translate('global'),
                 backgroundColor: HexColor.fromHex(ColorConstants.primaryColor)),
@@ -56,11 +58,11 @@ class _NavigationScreenState extends State<NavigationScreen> {
               icon: _currentIndex == 1
                   ? Icon(
                       Icons.star_rounded,
-                      color: HexColor.fromHex(ColorConstants.secondaryWhite),
+                      color: HexColor.fromHex(ColorConstants.selectedTextColor),
                     )
                   : Icon(
                       Icons.star_border_rounded,
-                      color: HexColor.fromHex(ColorConstants.secondaryWhite),
+                      color: HexColor.fromHex(ColorConstants.selectedTextColor),
                     ),
               label: AppLocalizations.of(context).translate('recommended'),
               backgroundColor: HexColor.fromHex(ColorConstants.primaryColor),
@@ -69,11 +71,11 @@ class _NavigationScreenState extends State<NavigationScreen> {
               icon: _currentIndex == 2
                   ? Icon(
                       Icons.bookmark_rounded,
-                      color: HexColor.fromHex(ColorConstants.secondaryWhite),
+                      color: HexColor.fromHex(ColorConstants.selectedTextColor),
                     )
                   : Icon(
                       Icons.bookmark_border_rounded,
-                      color: HexColor.fromHex(ColorConstants.secondaryWhite),
+                      color: HexColor.fromHex(ColorConstants.selectedTextColor),
                     ),
               label: AppLocalizations.of(context).translate('favorites'),
               backgroundColor: HexColor.fromHex(ColorConstants.primaryColor),
@@ -82,11 +84,11 @@ class _NavigationScreenState extends State<NavigationScreen> {
               icon: _currentIndex == 3
                   ? Icon(
                       Icons.person_rounded,
-                      color: HexColor.fromHex(ColorConstants.secondaryWhite),
+                      color: HexColor.fromHex(ColorConstants.selectedTextColor),
                     )
                   : Icon(
                       Icons.person_outline_rounded,
-                      color: HexColor.fromHex(ColorConstants.secondaryWhite),
+                      color: HexColor.fromHex(ColorConstants.selectedTextColor),
                     ),
               label: AppLocalizations.of(context).translate('profile'),
               backgroundColor: HexColor.fromHex(ColorConstants.primaryColor),

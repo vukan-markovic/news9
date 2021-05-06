@@ -105,8 +105,6 @@ class _NewsTileState extends State<NewsTile> {
                                       child: Text(
                                         widget.article.title,
                                         style: TextStyle(
-                                          color: HexColor.fromHex(
-                                              ColorConstants.backgroundColor),
                                           fontWeight: FontWeight.w900,
                                         ),
                                       ),
@@ -131,7 +129,7 @@ class _NewsTileState extends State<NewsTile> {
                                               style: TextStyle(
                                                 color: HexColor.fromHex(
                                                     ColorConstants
-                                                        .secondaryWhite),
+                                                        .secondaryColor),
                                                 fontWeight: FontWeight.w900,
                                               ),
                                               overflow: TextOverflow.fade,

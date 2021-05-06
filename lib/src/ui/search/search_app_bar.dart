@@ -48,6 +48,7 @@ class _SearchAppBarState extends State<SearchAppBar> {
       actions: <Widget>[
         IconButton(
           icon: _searchIcon,
+          color: HexColor.fromHex(ColorConstants.selectedTextColor),
           onPressed: () => _searchPressed(),
         ),
         if (widget.showFilterButton)

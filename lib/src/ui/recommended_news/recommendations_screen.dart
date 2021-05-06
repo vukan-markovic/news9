@@ -181,16 +181,16 @@ class _CategoryTileState extends State<CategoryTile> {
           ),
           child: Card(
             color: widget.category == _selectedCategory
-                ? HexColor.fromHex(ColorConstants.primaryColor)
-                : HexColor.fromHex(ColorConstants.secondaryWhite),
+                ? HexColor.fromHex(ColorConstants.callToAction)
+                : HexColor.fromHex(ColorConstants.secondaryColor),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Icon(
                   getIconOfCategory(widget.category),
                   color: widget.category == _selectedCategory
-                      ? HexColor.fromHex(ColorConstants.secondaryWhite)
-                      : HexColor.fromHex(ColorConstants.lightBlack),
+                      ? HexColor.fromHex(ColorConstants.selectedTextColor)
+                      : HexColor.fromHex(ColorConstants.primaryTextColor),
                 ),
                 SizedBox(width: 4),
                 Text(
@@ -199,8 +199,8 @@ class _CategoryTileState extends State<CategoryTile> {
                     fontWeight: FontWeight.w600,
                     fontSize: 16,
                     color: widget.category == _selectedCategory
-                        ? HexColor.fromHex(ColorConstants.secondaryWhite)
-                        : HexColor.fromHex(ColorConstants.lightBlack),
+                        ? HexColor.fromHex(ColorConstants.selectedTextColor)
+                        : HexColor.fromHex(ColorConstants.primaryTextColor),
                   ),
                 ),
               ],

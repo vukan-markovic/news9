@@ -68,6 +68,8 @@ class ResetPasswordForm extends StatelessWidget {
                       Navigator.of(context).pushReplacement(LoginPage.route()),
                   child: Text(
                     AppLocalizations.of(context).translate('sign_in'),
+                    style: TextStyle(
+                        color: HexColor.fromHex(ColorConstants.callToAction)),
                   ),
                 ),
               ],

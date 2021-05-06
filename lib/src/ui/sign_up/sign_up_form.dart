@@ -79,7 +79,11 @@ class SignUpForm extends StatelessWidget {
                 TextButton(
                   onPressed: () =>
                       Navigator.of(context).pushReplacement(LoginPage.route()),
-                  child: Text(AppLocalizations.of(context).translate('log_in')),
+                  child: Text(
+                    AppLocalizations.of(context).translate('log_in'),
+                    style: TextStyle(
+                        color: HexColor.fromHex(ColorConstants.callToAction)),
+                  ),
                 ),
               ],
             ),
@@ -329,7 +333,7 @@ class _SignUpButton extends StatelessWidget {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(5),
                   ),
-                  primary: HexColor.fromHex(ColorConstants.primaryColor),
+                  primary: HexColor.fromHex(ColorConstants.callToAction),
                 ),
                 onPressed: state.status.isValidated
                     ? () => _submitForm(context)

@@ -1,8 +1,25 @@
 class ColorConstants {
-  static const String primaryColor = "#1942f5";
-  static const String primaryColorDisabled = "#b8c5fc";
-  static const String backgroundColor = "#F7F7F7";
-  static const String secondaryWhite = "#EFEFEF";
-  static const String lightBlack = "#303030";
-  static const String silverGray = "#C0C0C0";
+  static String primaryColor = "#1942f5";
+  static String secondaryColor = "#EFEFEF";
+  static String silverGray = "#C0C0C0";
+  static String primaryTextColor = "#EFEFEF";
+  static String selectedTextColor = "#EFEFEF";
+  static String callToAction = "#1942f5";
+  static String callToActionDisables = "#b8c5fc";
+
+  static void setLightColors() {
+    primaryColor = "#1942f5";
+    secondaryColor = "#EFEFEF";
+    primaryTextColor = "303030";
+    callToAction = "#1942f5";
+    callToActionDisables = "#b8c5fc";
+  }
+
+  static void setDarkColors() {
+    primaryColor = "#191919";
+    secondaryColor = "#262626";
+    primaryTextColor = "#EFEFEF";
+    callToAction = "#3DDCBA";
+    callToActionDisables = "#BAFCEE";
+  }
 }

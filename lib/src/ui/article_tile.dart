@@ -102,7 +102,7 @@ class _ArticleTileState extends State<ArticleTile> {
                 elevation: 3,
                 color: widget.backgroundColor != null
                     ? HexColor?.fromHex(widget.backgroundColor)
-                    : HexColor.fromHex(ColorConstants.secondaryWhite),
+                    : HexColor.fromHex(ColorConstants.secondaryColor),
                 child: Padding(
                   padding: const EdgeInsets.only(top: 8.0),
                   child: Container(
@@ -131,7 +131,7 @@ class _ArticleTileState extends State<ArticleTile> {
                                     article.source.name,
                                     style: TextStyle(
                                       color: HexColor.fromHex(
-                                          ColorConstants.lightBlack),
+                                          ColorConstants.primaryTextColor),
                                     ),
                                   ),
                                   flex: 3,
@@ -181,7 +181,7 @@ class _ArticleTileState extends State<ArticleTile> {
                               article.title,
                               overflow: TextOverflow.fade,
                               style: TextStyle(
-                                  color: Colors.black87,
+                                  color: HexColor.fromHex(ColorConstants.primaryTextColor),
                                   fontSize: 20,
                                   fontWeight: FontWeight.w500),
                             ),
@@ -204,7 +204,7 @@ class _ArticleTileState extends State<ArticleTile> {
               child: Container(
                 height: 60,
                 child: Card(
-                  color: HexColor.fromHex(ColorConstants.primaryColor),
+                  color: HexColor.fromHex(ColorConstants.callToAction),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -212,19 +212,19 @@ class _ArticleTileState extends State<ArticleTile> {
                         AppLocalizations.of(context).translate('Save') + " ",
                         style: TextStyle(
                           color:
-                              HexColor.fromHex(ColorConstants.secondaryWhite),
+                              HexColor.fromHex(ColorConstants.selectedTextColor),
                         ),
                       ),
                       isArticleFavorite
                           ? Icon(
                               Icons.bookmark_rounded,
                               color: HexColor.fromHex(
-                                  ColorConstants.secondaryWhite),
+                                  ColorConstants.selectedTextColor),
                             )
                           : Icon(
                               Icons.bookmark_border_rounded,
                               color: HexColor.fromHex(
-                                  ColorConstants.secondaryWhite),
+                                  ColorConstants.selectedTextColor),
                             ),
                     ],
                   ),
@@ -241,7 +241,7 @@ class _ArticleTileState extends State<ArticleTile> {
                 child: Container(
                   height: 60,
                   child: Card(
-                    color: HexColor.fromHex(ColorConstants.primaryColor),
+                    color: HexColor.fromHex(ColorConstants.callToAction),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -249,13 +249,13 @@ class _ArticleTileState extends State<ArticleTile> {
                           AppLocalizations.of(context).translate('Share') + " ",
                           style: TextStyle(
                             color:
-                                HexColor.fromHex(ColorConstants.secondaryWhite),
+                                HexColor.fromHex(ColorConstants.selectedTextColor),
                           ),
                         ),
                         Icon(
                           Icons.share_outlined,
                           color:
-                              HexColor.fromHex(ColorConstants.secondaryWhite),
+                              HexColor.fromHex(ColorConstants.selectedTextColor),
                         ),
                       ],
                     ),

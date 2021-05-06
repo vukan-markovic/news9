@@ -16,26 +16,26 @@ class SearchNews extends StatelessWidget {
       controller: filter,
       autofocus: true,
       style: TextStyle(
-        color: HexColor.fromHex(ColorConstants.secondaryWhite),
+        color: HexColor.fromHex(ColorConstants.selectedTextColor),
       ),
-      cursorColor: HexColor.fromHex(ColorConstants.secondaryWhite),
+      cursorColor: HexColor.fromHex(ColorConstants.selectedTextColor),
       decoration: new InputDecoration(
         prefixIcon: new Icon(
           Icons.search,
-          color: HexColor.fromHex(ColorConstants.secondaryWhite),
+          color: HexColor.fromHex(ColorConstants.selectedTextColor),
         ),
         hintText:
             AppLocalizations.of(context).translate('search') + '...',
         hintStyle:
-            TextStyle(color: HexColor.fromHex(ColorConstants.silverGray)),
+            TextStyle(color: HexColor.fromHex(ColorConstants.selectedTextColor)),
         focusedBorder: UnderlineInputBorder(
           borderSide: BorderSide(
-            color: HexColor.fromHex(ColorConstants.secondaryWhite),
+            color: HexColor.fromHex(ColorConstants.selectedTextColor),
           ),
         ),
         enabledBorder: UnderlineInputBorder(
           borderSide: BorderSide(
-            color: HexColor.fromHex(ColorConstants.secondaryWhite),
+            color: HexColor.fromHex(ColorConstants.secondaryColor),
           ),
         ),
       ),
