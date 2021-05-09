@@ -3,6 +3,24 @@
 # Edit at https://www.toptal.com/developers/gitignore?templates=flutter
 
 ### Flutter ###
+
+# Miscellaneous
+*.class
+*.log
+*.pyc
+*.swp
+.DS_Store
+.atom/
+.buildlog/
+.history
+.svn/
+
+# IntelliJ related
+*.iml
+*.ipr
+*.iws
+.idea/
+
 # Flutter/Dart/Pub related
 **/doc/api/
 .dart_tool/
@@ -54,6 +72,9 @@ lib/generated_plugin_registrant.dart
 **/ios/Flutter/flutter_export_environment.sh
 **/ios/ServiceDefinitions.json
 **/ios/Runner/GeneratedPluginRegistrant.*
+
+android/app/google-services.json
+ios/Runner/GoogleService-Info.plist
 
 # Exceptions to above rules.
 !**/ios/**/default.mode1v3
