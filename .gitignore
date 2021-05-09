@@ -72,9 +72,10 @@ lib/generated_plugin_registrant.dart
 **/ios/Flutter/flutter_export_environment.sh
 **/ios/ServiceDefinitions.json
 **/ios/Runner/GeneratedPluginRegistrant.*
+**/ios/Runner/GoogleService-Info.plist
 
 android/app/google-services.json
-ios/Runner/GoogleService-Info.plist
+web/firebase_config.js
 
 # Exceptions to above rules.
 !**/ios/**/default.mode1v3
